@@ -33,6 +33,10 @@ tokens = [
     'MINUS',
     'MULTIPLY',
     'DIVIDE',
+    'EQUAL',
+    'PLUS_PLUS',
+    'MINUS_MINUS',
+    'EQUAL_EQUAL',
     'LEFT_BR',
     'RIGHT_BR',
     'LEFT_BR_SQUARED',
@@ -78,6 +82,10 @@ t_PLUS = r'\+'
 t_MINUS = r'\-'
 t_MULTIPLY = r'\*'
 t_DIVIDE = r'\/'
+t_EQUAL = r'\='
+t_PLUS_PLUS = r'\++'
+t_MINUS_MINUS = r'--'
+t_EQUAL_EQUAL = r'=='
 t_LEFT_BR = r'\('
 t_RIGHT_BR = r'\)'
 t_LEFT_BR_SQUARED = r'\['
@@ -85,7 +93,7 @@ t_RIGHT_BR_SQUARED = r'\]'
 t_LEFT_BR_CURLY = r'\{'
 t_RIGHT_BR_CURLY = r'\}'
 
-t_NUMBER = r'[1-9][0-9]*.[0-9]*' #??????????
+t_NUMBER = r'(\d+(?:\.\d+)?)'
 t_VAR = r'[a-zA-Z_][a-zA-Z0-9_]*'
 
 
