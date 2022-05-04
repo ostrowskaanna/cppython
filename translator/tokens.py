@@ -11,6 +11,8 @@ tokens = [
     'BOOL',
     'FLOAT',
     'LONG',
+    'SHORT',
+    'UNSIGNED',
     'DOUBLE',
     'CLASS',
     'BREAK',
@@ -36,6 +38,55 @@ tokens = [
     'LEFT_BR_SQUARED',
     'RIGHT_BR_SQUARED',
     'LEFT_BR_CURLY',
-    'RIGHT_BR_CURLY'
+    'RIGHT_BR_CURLY',
+
+    'NUMBER',
+    'VAR'
 
 ]
+
+t_FOR = 'for'
+t_WHILE = 'while'
+t_PUBLIC = 'public'
+t_PRIVATE = 'private'
+t_PROTECTED = 'protected'
+t_INT = 'int'
+t_CHAR = 'char'
+t_STRING = 'string'
+t_BOOL = 'bool'
+t_FLOAT = 'float'
+t_LONG = 'long'
+t_SHORT = 'short'
+t_UNSIGNED = 'unsigned'
+t_DOUBLE = 'double'
+t_CLASS = 'class'
+t_BREAK = 'break'
+t_SWITCH = 'switch'
+t_CASE = 'case'
+t_IF = 'if'
+t_ELSE = 'else'
+t_RETURN = 'return'
+t_TRUE = 'true'
+t_FALSE = 'false'
+t_INCLUDE = 'include'
+t_USING = 'using'
+t_NAMESPACE = 'namespace'
+t_STD = 'std'
+t_VOID = 'void'
+
+t_PLUS = r'\+'
+t_MINUS = r'\-'
+t_MULTIPLY = r'\*'
+t_DIVIDE = r'\/'
+t_LEFT_BR = r'\('
+t_RIGHT_BR = r'\)'
+t_LEFT_BR_SQUARED = r'\['
+t_RIGHT_BR_SQUARED = r'\]'
+t_LEFT_BR_CURLY = r'\{'
+t_RIGHT_BR_CURLY = r'\}'
+
+t_NUMBER = r'[1-9][0-9]*.[0-9]*' #??????????
+t_VAR = r'[a-zA-Z_][a-zA-Z0-9_]*'
+
+
+
