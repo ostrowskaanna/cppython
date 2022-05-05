@@ -82,7 +82,6 @@ t_LEFT_BR_CURLY = r'\{'
 t_RIGHT_BR_CURLY = r'\}'
 t_SEMICOLON = r'\;'
 
-
 t_ignore = ' '
 
 
@@ -97,6 +96,54 @@ def t_INT_NUMBER(t):
     t.value = int(t.value)
     return t
 
+# wersja z parowaniem nawiasy
+# def t_LEFT_BR(t):
+#     r'\('
+#     t.type = 'LEFT_BR'
+#     t.lexer.br_count = 1
+#     return t
+#
+# def t_RIGHT_BR(t):
+#     r'\)'
+#     if t.lexer.br_count == 1:
+#         t.type = 'RIGHT_BR'
+#         t.lexer.br_count = 0
+#         return t
+#     else:
+#         print("No opening bracket for ')'")
+#
+# def t_LEFT_BR_SQUARED(t):
+#     r'\['
+#     t.type = 'LEFT_BR_SQUARED'
+#     t.lexer.br_squared_count = 1
+#     return t
+#
+# def t_RIGHT_BR_SQUARED(t):
+#     r'\]'
+#     if t.lexer.br_squared_count == 1:
+#         t.type = 'RIGHT_BR_SQUARED'
+#         t.lexer.br_squared_count = 0
+#         return t
+#     else:
+#         print("No opening bracket for ']'")
+#
+# def t_LEFT_BR_CURLY(t):
+#     r'\{'
+#     t.type = 'LEFT_BR_CURLY'
+#     t.lexer.br_curly_count = 1
+#     return t
+#
+# def t_RIGHT_BR_CURLY(t):
+#     r'\}'
+#     if t.lexer.br_curly_count == 1:
+#         t.type = 'RIGHT_BR_CURLY'
+#         t.lexer.br_curly_count = 0
+#         return t
+#     else:
+#         print("No opening bracket for '}'")
+
+
+t_VAR = r'[a-zA-Z_][a-zA-Z0-9_]*'
 
 def t_ID(t):
     r'[a-zA-Z_][a-zA-Z_0-9]*'
@@ -107,7 +154,10 @@ def t_error(t):
     print("Illegal character '%s'" % t.value[0])
     t.lexer.skip(1)
 
-t_VAR = r'[a-zA-Z_][a-zA-Z0-9_]*'
+def t_newline(t):
+    r'\n+'
+    t.lexer.lineno += t.value.count("\n")
+
 
 with open('TestInput\input2') as f:
     lines = f.readlines()
@@ -115,6 +165,10 @@ with open('TestInput\input2') as f:
 code = "".join(lines)
 
 lexer = lex.lex()
+
+#lexer.br_count = 0
+#lexer.br_squared_count = 0
+#lexer.br_curly_count = 0
 
 lexer.input(code)
 
@@ -124,4 +178,5 @@ while True:
         break
     else:
         print(tok)
+
 
