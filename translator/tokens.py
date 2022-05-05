@@ -99,10 +99,13 @@ def t_INT_NUMBER(t):
 
 
 def t_ID(t):
-    r'[a-zA-Z][a-zA-Z]*'
+    r'[a-zA-Z_][a-zA-Z_0-9]*'
     t.type = reserved.get(t.value, 'VAR')    # Check for reserved words if not in reserved words than its VAR
     return t
 
+def t_error(t):
+    print("Illegal character '%s'" % t.value[0])
+    t.lexer.skip(1)
 
 t_VAR = r'[a-zA-Z_][a-zA-Z0-9_]*'
 
