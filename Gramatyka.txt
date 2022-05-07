@@ -22,6 +22,8 @@ comparision = ('number' 'comparator' 'number')|('var' 'EQUAL' 'TRUE'|'FALSE')
 
 returning = ('RETURN' 'VAR' 'SEMICOLON')
 
+null = ' '
+
 instructions = (('operation'|assignment')*('returning'|null))
 
 class_defintion = ('CLASS' 'STRING' 'LEFT_BR_CURLY' ('PUBLIC'|'PRIVATE'|'PROTECTED') 'COLON' ('var_declaration'|'function_definition')* 'RIGHT_BR_CURLY' 'SEMICOLON')
