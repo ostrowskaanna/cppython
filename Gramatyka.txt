@@ -40,4 +40,6 @@ using_namespace_std = ('USING' 'NAMESPACE' 'STD' 'SEMICOLON')
 
 include = ('HASH' 'INCLUDE' 'LESS' 'VAR' 'GREATER') ---> nie wiemm czy VAR tu jest ok chodzi mi o słowo po prostu
 
-PYTAJNIK: w operation jest coś nie tak z inkre/dekrementacją chyba powinny być zamiast nich same ++ i -- dane albo nie kumam
+PYTAJNIKI: 
+1) w operation jest coś nie tak z inkre/dekrementacją chyba powinny być zamiast nich same ++ i -- dane albo nie kumam
+2) po co nam token "endl" jak "cin" i "cout" nie definiowaliśmy 
