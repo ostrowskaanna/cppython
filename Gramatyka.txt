@@ -24,7 +24,7 @@ returning = ('RETURN' 'VAR' 'SEMICOLON')
 
 null = ' '
 
-instructions = (('operation'|assignment')*('returning'|null))
+instructions = (('operation'|assignment')*('returning'|null)) ---> nie wiem czy mogę tu użyć *
 
 class_defintion = ('CLASS' 'STRING' 'LEFT_BR_CURLY' ('PUBLIC'|'PRIVATE'|'PROTECTED') 'COLON' ('var_declaration'|'function_definition')* 'RIGHT_BR_CURLY' 'SEMICOLON')
 
@@ -37,3 +37,7 @@ if_statement = ('IF' 'LEFT_BR' 'comparision' 'RIGHT_BR' 'LEFT_BR_CURLY' 'instruc
 while_loop = ('WHILE' 'LEFT_BR' 'comparision' 'RIGHT_BR' 'LEFT_BR_CURLY' 'instructions' 'RIGHT_BR_CURLY')
 
 using_namespace_std = ('USING' 'NAMESPACE' 'STD' 'SEMICOLON')
+
+include = ('HASH' 'INCLUDE' 'LESS' 'VAR' 'GREATER') ---> nie wiemm czy VAR tu jest ok chodzi mi o słowo po prostu
+
+PYTAJNIK: w operation jest coś nie tak z inkre/dekrementacją chyba powinny być zamiast nich same ++ i -- dane albo nie kumam
