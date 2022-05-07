@@ -28,7 +28,7 @@ instructions = (('operation'|assignment')*('returning'|null)) ---> nie wiem czy 
 
 class_defintion = ('CLASS' 'STRING' 'LEFT_BR_CURLY' ('PUBLIC'|'PRIVATE'|'PROTECTED') 'COLON' ('var_declaration'|'function_definition')* 'RIGHT_BR_CURLY' 'SEMICOLON')
 
-function_definition = ('type'|'VOID' 'STRING' 'LEFT_BR' 'type' 'VAR' 'RIGHT_BR' 'LEFT_BR_CURLY' ('instructions'|'if_statement'*|'while_loop'*) 'RIGHT_BR_CURLY')
+function_definition = ('type'|'VOID' 'STRING' 'LEFT_BR' (('type' 'VAR')|'null') 'RIGHT_BR' 'LEFT_BR_CURLY' ('instructions'|'if_statement'*|'while_loop'*) 'RIGHT_BR_CURLY')
 
 else_statement = ('ELSE' 'LEFT_BR_CURLY' 'instructions' 'RIGHT_BR_CURLY')
 
