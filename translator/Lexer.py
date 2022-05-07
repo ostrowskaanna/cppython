@@ -49,6 +49,7 @@ tokens = [
     'LEFT_BR_CURLY',
     'RIGHT_BR_CURLY',
     'SEMICOLON',
+    'COLON',
     'LESS',
     'LESS_EQUAL',
     'GREATER',
@@ -85,6 +86,7 @@ t_RIGHT_BR_SQUARED = r'\]'
 t_LEFT_BR_CURLY = r'\{'
 t_RIGHT_BR_CURLY = r'\}'
 t_SEMICOLON = r'\;'
+t_COLON = r'\:'
 t_LESS = r'\<'
 t_LESS_EQUAL = r'\<='
 t_GREATER = r'\>'
@@ -105,6 +107,44 @@ def t_INT_NUMBER(t):
     r'\d+'
     t.value = int(t.value)
     return t
+
+
+t_VAR = r'[a-zA-Z_][a-zA-Z0-9_]*'
+
+def t_ID(t):
+    r'[a-zA-Z_][a-zA-Z_0-9]*'
+    t.type = reserved.get(t.value, 'VAR')    # Check for reserved words if not in reserved words than its VAR
+    return t
+
+def t_error(t):
+    print("Illegal character '%s'" % t.value[0])
+    t.lexer.skip(1)
+
+def t_newline(t):
+    r'\n+'
+    t.lexer.lineno += t.value.count("\n")
+
+
+with open('TestInput\input') as f:
+    lines = f.readlines()
+
+code = "".join(lines)
+
+lexer = lex.lex()
+
+lexer.input(code)
+
+while True:
+    tok = lexer.token()
+    if not tok:
+        break
+    else:
+        print(tok)
+
+
+
+
+
 
 # wersja z parowaniem nawiasy
 # def t_LEFT_BR(t):
@@ -151,42 +191,4 @@ def t_INT_NUMBER(t):
 #         return t
 #     else:
 #         print("No opening bracket for '}'")
-
-
-t_VAR = r'[a-zA-Z_][a-zA-Z0-9_]*'
-
-def t_ID(t):
-    r'[a-zA-Z_][a-zA-Z_0-9]*'
-    t.type = reserved.get(t.value, 'VAR')    # Check for reserved words if not in reserved words than its VAR
-    return t
-
-def t_error(t):
-    print("Illegal character '%s'" % t.value[0])
-    t.lexer.skip(1)
-
-def t_newline(t):
-    r'\n+'
-    t.lexer.lineno += t.value.count("\n")
-
-
-with open('TestInput\input') as f:
-    lines = f.readlines()
-
-code = "".join(lines)
-
-lexer = lex.lex()
-
-#lexer.br_count = 0
-#lexer.br_squared_count = 0
-#lexer.br_curly_count = 0
-
-lexer.input(code)
-
-while True:
-    tok = lexer.token()
-    if not tok:
-        break
-    else:
-        print(tok)
-
 
