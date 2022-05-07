@@ -24,11 +24,11 @@ returning = ('RETURN' 'VAR' 'SEMICOLON')
 
 null = ' '
 
-instructions = (('operation'|assignment')*('returning'|null))
+instructions = (('operation'|assignment')*('returning'|null)) ---> nie wiem czy mogę tu użyć *
 
 class_defintion = ('CLASS' 'STRING' 'LEFT_BR_CURLY' ('PUBLIC'|'PRIVATE'|'PROTECTED') 'COLON' ('var_declaration'|'function_definition')* 'RIGHT_BR_CURLY' 'SEMICOLON')
 
-function_definition = ('type'|'VOID' 'STRING' 'LEFT_BR' 'type' 'VAR' 'RIGHT_BR' 'LEFT_BR_CURLY' ('instructions'|'if_statement'*|'while_loop'*) 'RIGHT_BR_CURLY')
+function_definition = ('type'|'VOID' 'STRING' 'LEFT_BR' (('type' 'VAR')|'null') 'RIGHT_BR' 'LEFT_BR_CURLY' ('instructions'|'if_statement'*|'while_loop'*) 'RIGHT_BR_CURLY')
 
 else_statement = ('ELSE' 'LEFT_BR_CURLY' 'instructions' 'RIGHT_BR_CURLY')
 
@@ -37,3 +37,9 @@ if_statement = ('IF' 'LEFT_BR' 'comparision' 'RIGHT_BR' 'LEFT_BR_CURLY' 'instruc
 while_loop = ('WHILE' 'LEFT_BR' 'comparision' 'RIGHT_BR' 'LEFT_BR_CURLY' 'instructions' 'RIGHT_BR_CURLY')
 
 using_namespace_std = ('USING' 'NAMESPACE' 'STD' 'SEMICOLON')
+
+include = ('HASH' 'INCLUDE' 'LESS' 'VAR' 'GREATER') ---> nie wiemm czy VAR tu jest ok chodzi mi o słowo po prostu
+
+PYTAJNIKI: 
+1) w operation jest coś nie tak z inkre/dekrementacją chyba powinny być zamiast nich same ++ i -- dane albo nie kumam
+2) po co nam token "endl" jak "cin" i "cout" nie definiowaliśmy 
