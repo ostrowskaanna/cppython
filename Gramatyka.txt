@@ -12,29 +12,29 @@
 
 "value" = ("number"|"bool_values"|'VAR'|"get_array_element"|"string_value")
 
-"increment" = ('VAR' 'PLUS_PLUS' 'SEMICOLON')
+"increment" = 'VAR' 'PLUS_PLUS' 'SEMICOLON'
 
-"decrement" = ('VAR' 'MINUS_MINUS' 'SEMICOLON')
+"decrement" = 'VAR' 'MINUS_MINUS' 'SEMICOLON'
 
-"get_array_element" = ('VAR' 'LEFT_BR_SQUARED' 'INT_NUMBER' 'RIGHT_BR_SQUARED')
+"get_array_element" = 'VAR' 'LEFT_BR_SQUARED' 'INT_NUMBER' 'RIGHT_BR_SQUARED'
 
 "operation" = ("increment"'SEMICOLON'|"decrement"'SEMICOLON'|"value" "operator" "value" 'SEMICOLON')
 
-"assignment" = ('VAR' 'EQUAL' "value" 'SEMICOLON')
+"assignment" = 'VAR' 'EQUAL' "value" 'SEMICOLON'
 
-"var_declaration" = ("type" 'VAR' 'SEMICOLON')
+"var_declaration" = "type" 'VAR' 'SEMICOLON'
 
-"comparision" = ("number" "comparator" "number")|('VAR' 'EQUAL' 'TRUE'|'FALSE')
+"comparision" = ("number" "comparator" "number"|'VAR' 'EQUAL' ('TRUE'|'FALSE'))
 
-"returning" = ('RETURN' "value" 'SEMICOLON')
+"returning" = 'RETURN' "value" 'SEMICOLON'
 
 "null" = ' '
 
-"else_statement" = ('ELSE' 'LEFT_BR_CURLY' "instructions" 'RIGHT_BR_CURLY')
+"else_statement" = 'ELSE' 'LEFT_BR_CURLY' "instructions" 'RIGHT_BR_CURLY'
 
-"if_statement" = ('IF' 'LEFT_BR' "comparision" 'RIGHT_BR' 'LEFT_BR_CURLY' "instructions" 'RIGHT_BR_CURLY' ("else_statement"|"null"))
+"if_statement" = 'IF' 'LEFT_BR' "comparision" 'RIGHT_BR' 'LEFT_BR_CURLY' "instructions" 'RIGHT_BR_CURLY' ("else_statement"|"null")
 
-"while_loop" = ('WHILE' 'LEFT_BR' "comparision" 'RIGHT_BR' 'LEFT_BR_CURLY' "instructions" 'RIGHT_BR_CURLY')
+"while_loop" = 'WHILE' 'LEFT_BR' "comparision" 'RIGHT_BR' 'LEFT_BR_CURLY' "instructions" 'RIGHT_BR_CURLY'
 
 "for_loop" = 
 
@@ -42,13 +42,14 @@
 
 "instructions" = {"loop"|"if_statement"|"assigment"|"operation"} 
 
-"function_definition" = ("type"|'VOID' 'VAR' 'LEFT_BR' ("type" 'VAR')|"null" 'RIGHT_BR' 'LEFT_BR_CURLY' "instructions" 'RIGHT_BR_CURLY')
+"function_definition" = ("type"|'VOID') 'VAR' 'LEFT_BR' ("type" 'VAR'|"null") 'RIGHT_BR' 'LEFT_BR_CURLY' "instructions" 'RIGHT_BR_CURLY'
 
-"class_defintion" = ('CLASS' 'STRING' 'LEFT_BR_CURLY' ('PUBLIC'|'PRIVATE'|'PROTECTED') 'COLON' {"var_declaration"|"function_definition"} 'RIGHT_BR_CURLY' 'SEMICOLON')
+"class_defintion" = 'CLASS' 'STRING' 'LEFT_BR_CURLY' ('PUBLIC'|'PRIVATE'|'PROTECTED') 'COLON' {"var_declaration"|"function_definition"} 'RIGHT_BR_CURLY' 'SEMICOLON'
 
-"using_namespace_std" = ('USING' 'NAMESPACE' 'STD' 'SEMICOLON')
+"using_namespace_std" = 'USING' 'NAMESPACE' 'STD' 'SEMICOLON'
 
-"include" = ('HASH' 'INCLUDE' 'TEXT' ) 
+"include" = 'HASH' 'INCLUDE' 'TEXT' 
 
 PYTAJNIKI: 
+1) jednak dałam nawiasy tak jak w tym PL/0 czyli jak są alternatywy 
 2) po co nam token "endl" jak "cin" i "cout" nie definiowaliśmy 
