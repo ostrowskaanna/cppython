@@ -4,13 +4,13 @@
 
 "type" = ('INT'|'CHAR'|'STRING'|'BOOL'|'FLOAT'|'LONG'|'SHORT')
 
-"string_value" = (" )
+"string_value" = ('TEXT'|'SIGN')
 
 "number" = ('INT_NUMBER'|'FLOAT_NUMBER')
 
 "bool_values" = ('TRUE'|'FALSE')
 
-"value" = ("number"|"bool_values"|'VAR'|"get_array_element")
+"value" = ("number"|"bool_values"|'VAR'|"get_array_element"|"string_value")
 
 "increment" = ('VAR' 'PLUS_PLUS' 'SEMICOLON')
 
@@ -30,12 +30,6 @@
 
 "null" = ' '
 
-"instructions" = ("loop"|"if_statement"|"assigment"|"operation") ---> nie wiem czy mogę tu użyć *
-
-"class_defintion" = ('CLASS' 'STRING' 'LEFT_BR_CURLY' ('PUBLIC'|'PRIVATE'|'PROTECTED') 'COLON' ("var_declaration"|"function_definition")* 'RIGHT_BR_CURLY' 'SEMICOLON')
-
-"function_definition" = ("type"|'VOID' 'STRING' 'LEFT_BR' (("type" 'VAR')|"null") 'RIGHT_BR' 'LEFT_BR_CURLY' ("instructions"|"if_statement"*|"while_loop"*) 'RIGHT_BR_CURLY')
-
 "else_statement" = ('ELSE' 'LEFT_BR_CURLY' "instructions" 'RIGHT_BR_CURLY')
 
 "if_statement" = ('IF' 'LEFT_BR' "comparision" 'RIGHT_BR' 'LEFT_BR_CURLY' "instructions" 'RIGHT_BR_CURLY' ("else_statement"|"null"))
@@ -46,10 +40,15 @@
 
 "loop" = ("while_loop"|"for_loop")
 
+"instructions" = {"loop"|"if_statement"|"assigment"|"operation"} 
+
+"function_definition" = ("type"|'VOID' 'VAR' 'LEFT_BR' ("type" 'VAR')|"null" 'RIGHT_BR' 'LEFT_BR_CURLY' "instructions" 'RIGHT_BR_CURLY')
+
+"class_defintion" = ('CLASS' 'STRING' 'LEFT_BR_CURLY' ('PUBLIC'|'PRIVATE'|'PROTECTED') 'COLON' {"var_declaration"|"function_definition"} 'RIGHT_BR_CURLY' 'SEMICOLON')
+
 "using_namespace_std" = ('USING' 'NAMESPACE' 'STD' 'SEMICOLON')
 
-"include" = ('HASH' 'INCLUDE' 'LESS' 'VAR' 'GREATER') ---> nie wiemm czy VAR tu jest ok chodzi mi o słowo po prostu
+"include" = ('HASH' 'INCLUDE' 'TEXT' ) 
 
 PYTAJNIKI: 
-1) w operation jest coś nie tak z inkre/dekrementacją chyba powinny być zamiast nich same ++ i -- dane albo nie kumam
 2) po co nam token "endl" jak "cin" i "cout" nie definiowaliśmy 
