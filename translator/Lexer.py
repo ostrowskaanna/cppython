@@ -50,7 +50,6 @@ tokens = [
     'RIGHT_BR_CURLY',
     'SEMICOLON',
     'COLON',
-    #'QUOTE',
     'LESS',
     'LESS_EQUAL',
     'GREATER',
@@ -62,6 +61,7 @@ tokens = [
     'FLOAT_NUMBER',
     'VAR',
     'TEXT',
+    'SIGN',
     # ID for keywords
     'ID'
 ] + list(reserved.values())
@@ -89,7 +89,6 @@ t_LEFT_BR_CURLY = r'\{'
 t_RIGHT_BR_CURLY = r'\}'
 t_SEMICOLON = r'\;'
 t_COLON = r'\:'
-#t_QUOTE = r'\"'
 t_LESS = r'\<'
 t_LESS_EQUAL = r'\<='
 t_GREATER = r'\>'
@@ -114,7 +113,9 @@ def t_INT_NUMBER(t):
 
 t_VAR = r'[a-zA-Z_][a-zA-Z0-9_]*'
 
-t_TEXT = r'\"[a-zA-Z_]*\"'
+t_TEXT = r'\".*\"'
+
+t_SIGN = r'\'.\''
 
 def t_ID(t):
     r'[a-zA-Z_][a-zA-Z_0-9]*'
