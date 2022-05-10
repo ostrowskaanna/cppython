@@ -50,6 +50,7 @@ tokens = [
     'RIGHT_BR_CURLY',
     'SEMICOLON',
     'COLON',
+    'QUOTE',
     'LESS',
     'LESS_EQUAL',
     'GREATER',
@@ -87,6 +88,7 @@ t_LEFT_BR_CURLY = r'\{'
 t_RIGHT_BR_CURLY = r'\}'
 t_SEMICOLON = r'\;'
 t_COLON = r'\:'
+t_QUOTE = r'\"'
 t_LESS = r'\<'
 t_LESS_EQUAL = r'\<='
 t_GREATER = r'\>'
@@ -125,7 +127,7 @@ def t_newline(t):
     t.lexer.lineno += t.value.count("\n")
 
 
-with open('TestInput\input') as f:
+with open('TestInput\input2') as f:
     lines = f.readlines()
 
 code = "".join(lines)
