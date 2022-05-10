@@ -1,44 +1,54 @@
-comparator = ('LESS'|'LESS_EQUAL'|'GREATER'|'GREATER_EQUAL'|'EQUAL_EQUAL'|'NOT_EQUAL')
+"comparator" = ('LESS'|'LESS_EQUAL'|'GREATER'|'GREATER_EQUAL'|'EQUAL_EQUAL'|'NOT_EQUAL')
 
-operator = ('PLUS'|'MINUS'|'MULTIPLY'|'DIVIDE'|'EQUAL')
+"operator" = ('PLUS'|'MINUS'|'MULTIPLY'|'DIVIDE')
 
-type = ('INT'|'CHAR'|'STRING'|'BOOL'|'FLOAT'|'LONG'|'SHORT')
+"type" = ('INT'|'CHAR'|'STRING'|'BOOL'|'FLOAT'|'LONG'|'SHORT')
 
-number = ('INT_NUMBER'|'FLOAT_NUMBER')
+"string_value" = (" )
 
-increment = ('number' 'PLUS_PLUS' 'SEMICOLON')
+"number" = ('INT_NUMBER'|'FLOAT_NUMBER')
 
-decrement = ('number' 'MINUS_MINUS' 'SEMICOLON')
+"bool_values" = ('TRUE'|'FALSE')
 
-get_array_element = ('VAR' 'LEFT_BR_SQUARED' 'INT_NUMBER' 'RIGHT_BR_SQUARED')
+"value" = ("number"|"bool_values"|'VAR'|"get_array_element")
 
-operation = ( (INT_NUMBER|FLOAT_NUMBER|VAR|'get_array_element') ( ('increment'|'decrement') 'SEMICOLON' | ('operator' (INT_NUMBER|FLOAT_NUMBER|VAR|'get_array_element') 'SEMICOLON') ) )
+"increment" = ('VAR' 'PLUS_PLUS' 'SEMICOLON')
 
-assignment = ('VAR' 'EQUAL' ('VAR'|'INT_NUMBER'|'FLOAT_NUMBER'|'get_array_element'|'TRUE'|'FALSE') 'SEMICOLON')
+"decrement" = ('VAR' 'MINUS_MINUS' 'SEMICOLON')
 
-var_declaration = ('type' 'VAR' 'SEMICOLON')
+"get_array_element" = ('VAR' 'LEFT_BR_SQUARED' 'INT_NUMBER' 'RIGHT_BR_SQUARED')
 
-comparision = ('number' 'comparator' 'number')|('var' 'EQUAL' 'TRUE'|'FALSE')
+"operation" = ("increment"'SEMICOLON'|"decrement"'SEMICOLON'|"value" "operator" "value" 'SEMICOLON')
 
-returning = ('RETURN' 'VAR' 'SEMICOLON')
+"assignment" = ('VAR' 'EQUAL' "value" 'SEMICOLON')
 
-null = ' '
+"var_declaration" = ("type" 'VAR' 'SEMICOLON')
 
-instructions = (('operation'|assignment')*('returning'|null)) ---> nie wiem czy mogę tu użyć *
+"comparision" = ("number" "comparator" "number")|('VAR' 'EQUAL' 'TRUE'|'FALSE')
 
-class_defintion = ('CLASS' 'STRING' 'LEFT_BR_CURLY' ('PUBLIC'|'PRIVATE'|'PROTECTED') 'COLON' ('var_declaration'|'function_definition')* 'RIGHT_BR_CURLY' 'SEMICOLON')
+"returning" = ('RETURN' "value" 'SEMICOLON')
 
-function_definition = ('type'|'VOID' 'STRING' 'LEFT_BR' (('type' 'VAR')|'null') 'RIGHT_BR' 'LEFT_BR_CURLY' ('instructions'|'if_statement'*|'while_loop'*) 'RIGHT_BR_CURLY')
+"null" = ' '
 
-else_statement = ('ELSE' 'LEFT_BR_CURLY' 'instructions' 'RIGHT_BR_CURLY')
+"instructions" = ("loop"|"if_statement"|"assigment"|"operation") ---> nie wiem czy mogę tu użyć *
 
-if_statement = ('IF' 'LEFT_BR' 'comparision' 'RIGHT_BR' 'LEFT_BR_CURLY' 'instructions' 'RIGHT_BR_CURLY' ('else_statement'|null))
+"class_defintion" = ('CLASS' 'STRING' 'LEFT_BR_CURLY' ('PUBLIC'|'PRIVATE'|'PROTECTED') 'COLON' ("var_declaration"|"function_definition")* 'RIGHT_BR_CURLY' 'SEMICOLON')
 
-while_loop = ('WHILE' 'LEFT_BR' 'comparision' 'RIGHT_BR' 'LEFT_BR_CURLY' 'instructions' 'RIGHT_BR_CURLY')
+"function_definition" = ("type"|'VOID' 'STRING' 'LEFT_BR' (("type" 'VAR')|"null") 'RIGHT_BR' 'LEFT_BR_CURLY' ("instructions"|"if_statement"*|"while_loop"*) 'RIGHT_BR_CURLY')
 
-using_namespace_std = ('USING' 'NAMESPACE' 'STD' 'SEMICOLON')
+"else_statement" = ('ELSE' 'LEFT_BR_CURLY' "instructions" 'RIGHT_BR_CURLY')
 
-include = ('HASH' 'INCLUDE' 'LESS' 'VAR' 'GREATER') ---> nie wiemm czy VAR tu jest ok chodzi mi o słowo po prostu
+"if_statement" = ('IF' 'LEFT_BR' "comparision" 'RIGHT_BR' 'LEFT_BR_CURLY' "instructions" 'RIGHT_BR_CURLY' ("else_statement"|"null"))
+
+"while_loop" = ('WHILE' 'LEFT_BR' "comparision" 'RIGHT_BR' 'LEFT_BR_CURLY' "instructions" 'RIGHT_BR_CURLY')
+
+"for_loop" = 
+
+"loop" = ("while_loop"|"for_loop")
+
+"using_namespace_std" = ('USING' 'NAMESPACE' 'STD' 'SEMICOLON')
+
+"include" = ('HASH' 'INCLUDE' 'LESS' 'VAR' 'GREATER') ---> nie wiemm czy VAR tu jest ok chodzi mi o słowo po prostu
 
 PYTAJNIKI: 
 1) w operation jest coś nie tak z inkre/dekrementacją chyba powinny być zamiast nich same ++ i -- dane albo nie kumam
