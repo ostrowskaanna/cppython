@@ -4,6 +4,8 @@
 
 "type" = ('INT'|'CHAR'|'STRING'|'BOOL'|'FLOAT'|'LONG'|'SHORT'|'VOID')
 
+"conjunctions" = ('AND'|'OR')
+
 "string_value" = ('TEXT'|'SIGN')
 
 "number" = ('INT_NUMBER'|'FLOAT_NUMBER')
@@ -32,21 +34,21 @@
 
 "null" = ''
 
-"else_statement" = 'ELSE' 'LEFT_BR_CURLY' "instructions" 'RIGHT_BR_CURLY'
+"else_statement" = 'ELSE' 'LEFT_BR_CURLY' {"instructions"} 'RIGHT_BR_CURLY'
 
-"if_statement" = 'IF' 'LEFT_BR' "comparision" 'RIGHT_BR' 'LEFT_BR_CURLY' "instructions" 'RIGHT_BR_CURLY'
+"if_statement" = 'IF' 'LEFT_BR' ("comparision"|{"comparision" "conjunctions" "comparision"}) 'RIGHT_BR' 'LEFT_BR_CURLY' {"instructions"} 'RIGHT_BR_CURLY'
 
-"while_loop" = 'WHILE' 'LEFT_BR' "comparision" 'RIGHT_BR' 'LEFT_BR_CURLY' "instructions" 'RIGHT_BR_CURLY'
+"while_loop" = 'WHILE' 'LEFT_BR' ("comparision"|{"comparision" "conjunctions" "comparision"})  'RIGHT_BR' 'LEFT_BR_CURLY' {"instructions"} 'RIGHT_BR_CURLY'
 
 "for_loop" ='FOR' 'LEFT_BR' 'INT' 'VAR' 'EQUAL' 'INT_NUMBER' 'SEMICOLON' 
 ('VAR' ('LESS'|'LESS_EQUAL') 'INT_NUMBER' 'SEMICOLON' 'increment'|'VAR' ('GREATER'|'GREATER_EQUAL') 'INT_NUMBER' 'SEMICOLON' 'decrement') 
-'RIGHT_BR' 'LEFT_BR_CURLY' "instructions" 'RIGHT_BR_CURLY'
+'RIGHT_BR' 'LEFT_BR_CURLY' {"instructions"} 'RIGHT_BR_CURLY'
 
 "loop" = ("while_loop"|"for_loop")
 
-"instructions" = {"loop"|"if_statement"|"assigment"|"operation"} 
+"instructions" = ("loop"|"if_statement"|"assigment"|"operation") 
 
-"function_definition" = "type" 'VAR' 'LEFT_BR' ("type" 'VAR'|"null") 'RIGHT_BR' 'LEFT_BR_CURLY' "instructions" ("returning"|"null") 'RIGHT_BR_CURLY'
+"function_definition" = "type" 'VAR' 'LEFT_BR' ("type" 'VAR'|"null") 'RIGHT_BR' 'LEFT_BR_CURLY' {"instructions"} ("returning"|"null") 'RIGHT_BR_CURLY'
 
 "class_defintion" = 'CLASS' 'STRING' 'LEFT_BR_CURLY' ('PUBLIC'|'PRIVATE'|'PROTECTED') 'COLON' {"var_declaration"|"function_definition"|} 'RIGHT_BR_CURLY' 'SEMICOLON'
 
