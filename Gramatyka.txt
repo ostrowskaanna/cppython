@@ -2,7 +2,7 @@
 
 "operator" = ('PLUS'|'MINUS'|'MULTIPLY'|'DIVIDE')
 
-"type" = ('INT'|'CHAR'|'STRING'|'BOOL'|'FLOAT'|'LONG'|'SHORT')
+"type" = ('INT'|'CHAR'|'STRING'|'BOOL'|'FLOAT'|'LONG'|'SHORT'|'VOID')
 
 "string_value" = ('TEXT'|'SIGN')
 
@@ -12,19 +12,21 @@
 
 "value" = ("number"|"bool_values"|'VAR'|"get_array_element"|"string_value")
 
-"increment" = 'VAR' 'PLUS_PLUS' 
+"increment" = 'VAR' 'PLUS_PLUS' 'SEMICOLON'
 
-"decrement" = 'VAR' 'MINUS_MINUS' 
+"decrement" = 'VAR' 'MINUS_MINUS' 'SEMICOLON'
 
 "get_array_element" = 'VAR' 'LEFT_BR_SQUARED' 'INT_NUMBER' 'RIGHT_BR_SQUARED'
 
-"operation" = ("increment"'SEMICOLON'|"decrement"'SEMICOLON'|"value" "operator" "value" 'SEMICOLON')
+"operation" = ("increment"|"decrement"|"value" "operator" "value" 'SEMICOLON')
 
 "assignment" = 'VAR' 'EQUAL' "value" 'SEMICOLON'
 
-"var_declaration" = "type" 'VAR' 'SEMICOLON'
+"var_declaration" = ("type" 'VAR' 'SEMICOLON')|"array_declaration"
 
-"comparision" = ("number" "comparator" "number"|'VAR' 'EQUAL' ('TRUE'|'FALSE'))
+"array_declaration" = "type" "get_array_element" 'SEMICOLON'
+
+"comparision" = "value" "comparator" "value"
 
 "returning" = 'RETURN' "value" 'SEMICOLON'
 
@@ -44,15 +46,11 @@
 
 "instructions" = {"loop"|"if_statement"|"assigment"|"operation"} 
 
-"function_definition" = ("type"|'VOID') 'VAR' 'LEFT_BR' ("type" 'VAR'|"null") 'RIGHT_BR' 'LEFT_BR_CURLY' "instructions" ("returning"|"null") 'RIGHT_BR_CURLY'
+"function_definition" = "type" 'VAR' 'LEFT_BR' ("type" 'VAR'|"null") 'RIGHT_BR' 'LEFT_BR_CURLY' "instructions" ("returning"|"null") 'RIGHT_BR_CURLY'
 
-"class_defintion" = 'CLASS' 'STRING' 'LEFT_BR_CURLY' ('PUBLIC'|'PRIVATE'|'PROTECTED') 'COLON' {"var_declaration"|"function_definition"} 'RIGHT_BR_CURLY' 'SEMICOLON'
+"class_defintion" = 'CLASS' 'STRING' 'LEFT_BR_CURLY' ('PUBLIC'|'PRIVATE'|'PROTECTED') 'COLON' {"var_declaration"|"function_definition"|} 'RIGHT_BR_CURLY' 'SEMICOLON'
 
 "using_namespace_std" = 'USING' 'NAMESPACE' 'STD' 'SEMICOLON'
 
-"include" = 'HASH' 'INCLUDE' 'TEXT' 
+"include" = 'HASH' 'INCLUDE' 'LIBRARY' 
 
-PYTAJNIKI: 
-1) jednak dałam nawiasy tak jak w tym PL/0 czyli jak są alternatywy 
-2) po co nam token "endl" jak "cin" i "cout" nie definiowaliśmy 
-3) a ten null to jest jako symbol pusty, a było takie w gramatyce (epsilon)
