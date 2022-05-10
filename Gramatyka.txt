@@ -28,11 +28,11 @@
 
 "returning" = 'RETURN' "value" 'SEMICOLON'
 
-"null" = ' '
+"null" = ''
 
 "else_statement" = 'ELSE' 'LEFT_BR_CURLY' "instructions" 'RIGHT_BR_CURLY'
 
-"if_statement" = 'IF' 'LEFT_BR' "comparision" 'RIGHT_BR' 'LEFT_BR_CURLY' "instructions" 'RIGHT_BR_CURLY' ("else_statement"|"null")
+"if_statement" = 'IF' 'LEFT_BR' "comparision" 'RIGHT_BR' 'LEFT_BR_CURLY' "instructions" 'RIGHT_BR_CURLY'
 
 "while_loop" = 'WHILE' 'LEFT_BR' "comparision" 'RIGHT_BR' 'LEFT_BR_CURLY' "instructions" 'RIGHT_BR_CURLY'
 
@@ -44,7 +44,7 @@
 
 "instructions" = {"loop"|"if_statement"|"assigment"|"operation"} 
 
-"function_definition" = ("type"|'VOID') 'VAR' 'LEFT_BR' ("type" 'VAR'|"null") 'RIGHT_BR' 'LEFT_BR_CURLY' "instructions" 'RIGHT_BR_CURLY'
+"function_definition" = ("type"|'VOID') 'VAR' 'LEFT_BR' ("type" 'VAR'|"null") 'RIGHT_BR' 'LEFT_BR_CURLY' "instructions" ("returning"|"null") 'RIGHT_BR_CURLY'
 
 "class_defintion" = 'CLASS' 'STRING' 'LEFT_BR_CURLY' ('PUBLIC'|'PRIVATE'|'PROTECTED') 'COLON' {"var_declaration"|"function_definition"} 'RIGHT_BR_CURLY' 'SEMICOLON'
 
@@ -55,3 +55,4 @@
 PYTAJNIKI: 
 1) jednak dałam nawiasy tak jak w tym PL/0 czyli jak są alternatywy 
 2) po co nam token "endl" jak "cin" i "cout" nie definiowaliśmy 
+3) a ten null to jest jako symbol pusty, a było takie w gramatyce (epsilon)
