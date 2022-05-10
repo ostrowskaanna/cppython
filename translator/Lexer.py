@@ -28,7 +28,9 @@ reserved = {
     'namespace': 'NAMESPACE',
     'std': 'STD',
     'void': 'VOID',
-    'endl': 'ENDL'
+    'endl': 'ENDL',
+    'cin': 'CIN',
+    'cout': 'COUT'
 }
 
 tokens = [
@@ -49,11 +51,15 @@ tokens = [
     'RIGHT_BR_CURLY',
     'SEMICOLON',
     'COLON',
+    'OUT',
+    'IN',
     'LESS',
     'LESS_EQUAL',
     'GREATER',
     'GREATER_EQUAL',
     'NOT_EQUAL',
+    'AND',
+    'OR',
     'HASH',
     'INT_NUMBER',
     'FLOAT_NUMBER',
@@ -87,11 +93,15 @@ t_LEFT_BR_CURLY = r'\{'
 t_RIGHT_BR_CURLY = r'\}'
 t_SEMICOLON = r'\;'
 t_COLON = r'\:'
+t_OUT = r'\<<'
+t_IN = r'>>'
 t_LESS = r'\<'
 t_LESS_EQUAL = r'\<='
 t_GREATER = r'\>'
 t_GREATER_EQUAL = r'\>='
 t_NOT_EQUAL = r'\!='
+t_AND = r'\&&'
+t_OR = r'\|\|'
 t_HASH = r'\#'
 
 t_ignore = ' '
@@ -131,7 +141,7 @@ def t_newline(t):
     t.lexer.lineno += t.value.count("\n")
 
 
-with open('TestInput\input2') as f:
+with open('TestInput\input') as f:
     lines = f.readlines()
 
 code = "".join(lines)
