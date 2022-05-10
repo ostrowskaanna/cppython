@@ -32,7 +32,6 @@ reserved = {
 }
 
 tokens = [
-    # operators and signs
     'COMMENT',
     'PLUS_PLUS',
     'MINUS_MINUS',
@@ -56,13 +55,12 @@ tokens = [
     'GREATER_EQUAL',
     'NOT_EQUAL',
     'HASH',
-    # numbers and variables
     'INT_NUMBER',
     'FLOAT_NUMBER',
     'VAR',
+    'LIBRARY',
     'TEXT',
     'SIGN',
-    # ID for keywords
     'ID'
 ] + list(reserved.values())
 
@@ -112,6 +110,8 @@ def t_INT_NUMBER(t):
 
 
 t_VAR = r'[a-zA-Z_][a-zA-Z0-9_]*'
+
+t_LIBRARY = r'\<.*\>'
 
 t_TEXT = r'\".*\"'
 
