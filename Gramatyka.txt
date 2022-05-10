@@ -12,9 +12,9 @@
 
 "value" = ("number"|"bool_values"|'VAR'|"get_array_element"|"string_value")
 
-"increment" = 'VAR' 'PLUS_PLUS' 'SEMICOLON'
+"increment" = 'VAR' 'PLUS_PLUS' 
 
-"decrement" = 'VAR' 'MINUS_MINUS' 'SEMICOLON'
+"decrement" = 'VAR' 'MINUS_MINUS' 
 
 "get_array_element" = 'VAR' 'LEFT_BR_SQUARED' 'INT_NUMBER' 'RIGHT_BR_SQUARED'
 
@@ -36,7 +36,9 @@
 
 "while_loop" = 'WHILE' 'LEFT_BR' "comparision" 'RIGHT_BR' 'LEFT_BR_CURLY' "instructions" 'RIGHT_BR_CURLY'
 
-"for_loop" = 
+"for_loop" ='FOR' 'LEFT_BR' 'INT' 'VAR' 'EQUAL' 'INT_NUMBER' 'SEMICOLON' 
+('VAR' ('LESS'|'LESS_EQUAL') 'INT_NUMBER' 'SEMICOLON' 'increment'|'VAR' ('GREATER'|'GREATER_EQUAL') 'INT_NUMBER' 'SEMICOLON' 'decrement') 
+'RIGHT_BR' 'LEFT_BR_CURLY' "instructions" 'RIGHT_BR_CURLY'
 
 "loop" = ("while_loop"|"for_loop")
 
