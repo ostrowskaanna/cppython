@@ -69,8 +69,8 @@ Grammar
 
 Rule 0     S' -> empty
 Rule 1     empty -> <empty>
-Rule 2     comparisions -> comparision
-Rule 3     comparisions -> comparision conjunction comparisions
+Rule 2     comparisons -> comparison
+Rule 3     comparisons -> comparison conjunction comparisons
 Rule 4     instructions -> instruction
 Rule 5     instructions -> instruction instructions
 Rule 6     class_declarations -> class_declaration
@@ -80,8 +80,8 @@ Rule 9     program_component -> class_definition
 Rule 10    program_component -> including
 Rule 11    program_component -> var_declaration
 Rule 12    program_component -> array_declaration
-Rule 13    progrram_components -> program_component
-Rule 14    progrram_components -> program_component program_components
+Rule 13    program_components -> program_component
+Rule 14    program_components -> program_component program_components
 Rule 15    program -> program_components
 Rule 16    start_symbol -> program
 
@@ -157,8 +157,8 @@ array_declaration    : 12
 class_declaration    : 6 7
 class_declarations   : 7
 class_definition     : 9
-comparision          : 2 3
-comparisions         : 3
+comparison          : 2 3
+comparisons         : 3
 conjunction          : 3
 empty                : 0
 function_definition  : 8

@@ -108,11 +108,11 @@ instruction : loop
 '''
 
 '''
-while_loop : WHILE LEFT_BR comparisions RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY 
+while_loop : WHILE LEFT_BR comparisons RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY 
 '''
 
 '''
-for_loop_statemnt : FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS INT_NUMBER
+for_loop_statement : FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS INT_NUMBER
     SEMICOLON increment RIGHT_BR
     | FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS_EQUAL INT_NUMBER
     SEMICOLON increment RIGHT_BR
@@ -136,14 +136,14 @@ else_statement : ELSE LEFT_BR_CURLY instructions RIGHT_BR_CURLY
 '''
 
 '''
-if_statement : IF LEFT_BR comparisions RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY
+if_statement : IF LEFT_BR comparisons RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY
 '''
 
 
-def p_comparisions(p):
+def p_comparisons(p):
     '''
-    comparisions : comparision
-        | comparision conjunction comparisions
+    comparisons : comparison
+        | comparison conjunction comparisons
     '''
     if len(p) == 2:
         p[0] = p[1]
@@ -235,7 +235,7 @@ array_declaration : type get_array_element SEMICOLON
 '''
 
 '''
-comparision : value comparator value 
+comparison : value comparator value 
 '''
 
 '''
