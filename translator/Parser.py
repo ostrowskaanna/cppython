@@ -32,7 +32,7 @@ def p_program_component(p):
         | var_declaration
         | array_declaration
     '''
-    t[0] = t[1]
+    p[0] = p[1]
 
 #-----------------HEADERS------------------------------------------
 '''
@@ -252,6 +252,6 @@ def p_error(p):
 
 
 parser = yacc.yacc()
-data = ""
+data = "int x = 3"
 t = parser.parse(data)
 print(t)
