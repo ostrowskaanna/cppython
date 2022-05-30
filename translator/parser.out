@@ -1,0 +1,174 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    AND
+    BOOL
+    BREAK
+    CHAR
+    CIN
+    CLASS
+    COLON
+    COMMENT
+    COUT
+    DIVIDE
+    DOUBLE
+    ELSE
+    ENDL
+    EQUAL
+    EQUAL_EQUAL
+    FALSE
+    FLOAT
+    FLOAT_NUMBER
+    FOR
+    GREATER
+    GREATER_EQUAL
+    HASH
+    ID
+    IF
+    IN
+    INCLUDE
+    INT
+    INT_NUMBER
+    LEFT_BR
+    LEFT_BR_CURLY
+    LEFT_BR_SQUARED
+    LESS
+    LESS_EQUAL
+    LIBRARY
+    LONG
+    MINUS
+    MINUS_MINUS
+    MULTIPLY
+    NAMESPACE
+    NOT_EQUAL
+    OR
+    OUT
+    PLUS
+    PLUS_PLUS
+    PRIVATE
+    PROTECTED
+    PUBLIC
+    RETURN
+    RIGHT_BR
+    RIGHT_BR_CURLY
+    RIGHT_BR_SQUARED
+    SEMICOLON
+    SHORT
+    SIGN
+    STD
+    STRING
+    TEXT
+    TRUE
+    USING
+    VAR
+    VOID
+    WHILE
+
+Grammar
+
+Rule 0     S' -> empty
+Rule 1     empty -> <empty>
+Rule 2     comparisions -> comparision
+Rule 3     comparisions -> comparision conjunction comparisions
+Rule 4     instructions -> instruction
+Rule 5     instructions -> instruction instructions
+Rule 6     class_declarations -> class_declaration
+Rule 7     class_declarations -> class_declaration class_declarations
+Rule 8     program_component -> function_definition
+Rule 9     program_component -> class_definition
+Rule 10    program_component -> including
+Rule 11    program_component -> var_declaration
+Rule 12    program_component -> array_declaration
+Rule 13    progrram_components -> program_component
+Rule 14    progrram_components -> program_component program_components
+Rule 15    program -> program_components
+Rule 16    start_symbol -> program
+
+Terminals, with rules where they appear
+
+AND                  : 
+BOOL                 : 
+BREAK                : 
+CHAR                 : 
+CIN                  : 
+CLASS                : 
+COLON                : 
+COMMENT              : 
+COUT                 : 
+DIVIDE               : 
+DOUBLE               : 
+ELSE                 : 
+ENDL                 : 
+EQUAL                : 
+EQUAL_EQUAL          : 
+FALSE                : 
+FLOAT                : 
+FLOAT_NUMBER         : 
+FOR                  : 
+GREATER              : 
+GREATER_EQUAL        : 
+HASH                 : 
+ID                   : 
+IF                   : 
+IN                   : 
+INCLUDE              : 
+INT                  : 
+INT_NUMBER           : 
+LEFT_BR              : 
+LEFT_BR_CURLY        : 
+LEFT_BR_SQUARED      : 
+LESS                 : 
+LESS_EQUAL           : 
+LIBRARY              : 
+LONG                 : 
+MINUS                : 
+MINUS_MINUS          : 
+MULTIPLY             : 
+NAMESPACE            : 
+NOT_EQUAL            : 
+OR                   : 
+OUT                  : 
+PLUS                 : 
+PLUS_PLUS            : 
+PRIVATE              : 
+PROTECTED            : 
+PUBLIC               : 
+RETURN               : 
+RIGHT_BR             : 
+RIGHT_BR_CURLY       : 
+RIGHT_BR_SQUARED     : 
+SEMICOLON            : 
+SHORT                : 
+SIGN                 : 
+STD                  : 
+STRING               : 
+TEXT                 : 
+TRUE                 : 
+USING                : 
+VAR                  : 
+VOID                 : 
+WHILE                : 
+error                : 
+
+Nonterminals, with rules where they appear
+
+array_declaration    : 12
+class_declaration    : 6 7
+class_declarations   : 7
+class_definition     : 9
+comparision          : 2 3
+comparisions         : 3
+conjunction          : 3
+empty                : 0
+function_definition  : 8
+including            : 10
+instruction          : 4 5
+instructions         : 5
+program              : 16
+program_component    : 13 14
+program_components   : 14 15
+program_components  :
+start_symbol         : 
+var_declaration      : 11
+

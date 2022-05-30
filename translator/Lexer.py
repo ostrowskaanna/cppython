@@ -156,4 +156,3 @@ while True:
         break
     else:
         print(tok)
-
