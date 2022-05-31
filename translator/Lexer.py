@@ -1,7 +1,6 @@
 from ply import lex
 from ply import yacc
 
-
 reserved = {
     'for': 'FOR',
     'while': 'WHILE',
@@ -34,41 +33,41 @@ reserved = {
 }
 
 tokens = [
-    'COMMENT',
-    'PLUS_PLUS',
-    'MINUS_MINUS',
-    'EQUAL_EQUAL',
-    'PLUS',
-    'MINUS',
-    'MULTIPLY',
-    'DIVIDE',
-    'EQUAL',
-    'LEFT_BR',
-    'RIGHT_BR',
-    'LEFT_BR_SQUARED',
-    'RIGHT_BR_SQUARED',
-    'LEFT_BR_CURLY',
-    'RIGHT_BR_CURLY',
-    'SEMICOLON',
-    'COLON',
-    'OUT',
-    'IN',
-    'LESS',
-    'LESS_EQUAL',
-    'GREATER',
-    'GREATER_EQUAL',
-    'NOT_EQUAL',
-    'AND',
-    'OR',
-    'HASH',
-    'INT_NUMBER',
-    'FLOAT_NUMBER',
-    'VAR',
-    'LIBRARY',
-    'TEXT',
-    'SIGN',
-    'ID'
-] + list(reserved.values())
+             'COMMENT',
+             'PLUS_PLUS',
+             'MINUS_MINUS',
+             'EQUAL_EQUAL',
+             'PLUS',
+             'MINUS',
+             'MULTIPLY',
+             'DIVIDE',
+             'EQUAL',
+             'LEFT_BR',
+             'RIGHT_BR',
+             'LEFT_BR_SQUARED',
+             'RIGHT_BR_SQUARED',
+             'LEFT_BR_CURLY',
+             'RIGHT_BR_CURLY',
+             'SEMICOLON',
+             'COLON',
+             'OUT',
+             'IN',
+             'LESS',
+             'LESS_EQUAL',
+             'GREATER',
+             'GREATER_EQUAL',
+             'NOT_EQUAL',
+             'AND',
+             'OR',
+             'HASH',
+             'INT_NUMBER',
+             'FLOAT_NUMBER',
+             'VAR',
+             'LIBRARY',
+             'TEXT',
+             'SIGN',
+             'ID'
+         ] + list(reserved.values())
 
 
 def t_comment(t):
@@ -127,14 +126,17 @@ t_TEXT = r'\".*\"'
 
 t_SIGN = r'\'.\''
 
+
 def t_ID(t):
     r'[a-zA-Z_][a-zA-Z_0-9]*'
-    t.type = reserved.get(t.value, 'VAR')    # Check for reserved words if not in reserved words than its VAR
+    t.type = reserved.get(t.value, 'VAR')  # Check for reserved words if not in reserved words than its VAR
     return t
+
 
 def t_error(t):
     print("Illegal character '%s'" % t.value[0])
     t.lexer.skip(1)
+
 
 def t_newline(t):
     r'\n+'

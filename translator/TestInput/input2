@@ -1,3 +1,30 @@
-int 1num_ = 1.3; for(int i=0; i++; i)<
-string word = "text_12#"
-char letter = '*'
+  *"comparator" = ('LESS'|'LESS_EQUAL'|'GREATER'|'GREATER_EQUAL'|'EQUAL_EQUAL'|'NOT_EQUAL')
+  *"operator" = ('PLUS'|'MINUS'|'MULTIPLY'|'DIVIDE')
+  *"type" = ('INT'|'CHAR'|'STRING'|'BOOL'|'FLOAT'|'LONG'|'SHORT'|'VOID')
+  *"conjunctions" = ('AND'|'OR')
+  *"string_value" = ('TEXT'|'SIGN')
+  *"number" = ('INT_NUMBER'|'FLOAT_NUMBER')
+  *"bool_values" = ('TRUE'|'FALSE')
+  *"value" = ("number"|"bool_values"|'VAR'|"get_array_element"|"string_value")
+  *"increment" = 'VAR' 'PLUS_PLUS' 'SEMICOLON'
+  *"decrement" = 'VAR' 'MINUS_MINUS' 'SEMICOLON'
+  *"get_array_element" = 'VAR' 'LEFT_BR_SQUARED' 'INT_NUMBER' 'RIGHT_BR_SQUARED'
+  *"operation" = ("increment"|"decrement"|"value" "operator" "value" 'SEMICOLON')
+  *"assignment" = 'VAR' 'EQUAL' "value" 'SEMICOLON'
+  *"var_declaration" = ("type" 'VAR' 'SEMICOLON')|"array_declaration"
+  *"array_declaration" = "type" "get_array_element" 'SEMICOLON'
+  *"comparision" = "value" "comparator" "value"
+  *"returning" = 'RETURN' "value" 'SEMICOLON'
+  *"null" = ''
+  *"else_statement" = 'ELSE' 'LEFT_BR_CURLY' {"instructions"} 'RIGHT_BR_CURLY'
+  *"if_statement" = 'IF' 'LEFT_BR' ("comparision"|{"comparision" "conjunctions" "comparision"}) 'RIGHT_BR' 'LEFT_BR_CURLY' {"instructions"} 'RIGHT_BR_CURLY'
+  *"while_loop" = 'WHILE' 'LEFT_BR' ("comparision"|{"comparision" "conjunctions" "comparision"})  'RIGHT_BR' 'LEFT_BR_CURLY' {"instructions"} 'RIGHT_BR_CURLY'
+  *"for_loop" ='FOR' 'LEFT_BR' 'INT' 'VAR' 'EQUAL' 'INT_NUMBER' 'SEMICOLON'
+  *('VAR' ('LESS'|'LESS_EQUAL') 'INT_NUMBER' 'SEMICOLON' 'increment'|'VAR' ('GREATER'|'GREATER_EQUAL') 'INT_NUMBER' 'SEMICOLON' 'decrement')
+  *'RIGHT_BR' 'LEFT_BR_CURLY' {"instructions"} 'RIGHT_BR_CURLY'
+  *"loop" = ("while_loop"|"for_loop")
+  *"instructions" = ("loop"|"if_statement"|"assigment"|"operation")
+  *"function_definition" = "type" 'VAR' 'LEFT_BR' ("type" 'VAR'|"null") 'RIGHT_BR' 'LEFT_BR_CURLY' {"instructions"} ("returning"|"null") 'RIGHT_BR_CURLY'
+  *"class_defintion" = 'CLASS' 'STRING' 'LEFT_BR_CURLY' ('PUBLIC'|'PRIVATE'|'PROTECTED') 'COLON' {"var_declaration"|"function_definition"|} 'RIGHT_BR_CURLY' 'SEMICOLON'
+  *"using_namespace_std" = 'USING' 'NAMESPACE' 'STD' 'SEMICOLON'
+  *"include" = 'HASH' 'INCLUDE' 'LIBRARY'

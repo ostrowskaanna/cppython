@@ -67,23 +67,23 @@ Unused terminals:
 
 Grammar
 
-Rule 0     S' -> empty
-Rule 1     empty -> <empty>
-Rule 2     comparisons -> comparison
-Rule 3     comparisons -> comparison conjunction comparisons
-Rule 4     instructions -> instruction
-Rule 5     instructions -> instruction instructions
-Rule 6     class_declarations -> class_declaration
-Rule 7     class_declarations -> class_declaration class_declarations
-Rule 8     program_component -> function_definition
-Rule 9     program_component -> class_definition
-Rule 10    program_component -> including
-Rule 11    program_component -> var_declaration
-Rule 12    program_component -> array_declaration
-Rule 13    program_components -> program_component
-Rule 14    program_components -> program_component program_components
-Rule 15    program -> program_components
-Rule 16    start_symbol -> program
+Rule 0     S' -> start_symbol
+Rule 1     start_symbol -> program
+Rule 2     program -> program_components
+Rule 3     program_components -> program_component
+Rule 4     program_components -> program_component program_components
+Rule 5     program_component -> function_definition
+Rule 6     program_component -> class_definition
+Rule 7     program_component -> including
+Rule 8     program_component -> var_declaration
+Rule 9     program_component -> array_declaration
+Rule 10    class_declarations -> class_declaration
+Rule 11    class_declarations -> class_declaration class_declarations
+Rule 12    instructions -> instruction
+Rule 13    instructions -> instruction instructions
+Rule 14    comparisons -> comparison
+Rule 15    comparisons -> comparison conjunction comparisons
+Rule 16    empty -> <empty>
 
 Terminals, with rules where they appear
 
@@ -153,22 +153,21 @@ error                :
 
 Nonterminals, with rules where they appear
 
-array_declaration    : 12
-class_declaration    : 6 7
-class_declarations   : 7
-class_definition     : 9
-comparison          : 2 3
-comparisons         : 3
-conjunction          : 3
-empty                : 0
-function_definition  : 8
-including            : 10
-instruction          : 4 5
-instructions         : 5
-program              : 16
-program_component    : 13 14
-program_components   : 14 15
-program_components  :
-start_symbol         : 
-var_declaration      : 11
+array_declaration    : 9
+class_declaration    : 10 11
+class_declarations   : 11 x
+class_definition     : 6
+comparison           : 14 15
+comparisons          : 15 x
+conjunction          : 15
+empty                : x
+function_definition  : 5
+including            : 7
+instruction          : 12 13
+instructions         : 13 x
+program              : 1 x
+program_component    : 3 4 x
+program_components   : 2 4 x
+start_symbol         : 0 x
+var_declaration      : 8
 
