@@ -66,6 +66,7 @@ tokens = [
              'LIBRARY',
              'TEXT',
              'SIGN',
+             'COMMA',
              'ID'
          ] + list(reserved.values())
 
@@ -102,7 +103,7 @@ t_NOT_EQUAL = r'\!='
 t_AND = r'\&&'
 t_OR = r'\|\|'
 t_HASH = r'\#'
-
+t_COMMA = r'\,'
 t_ignore = ' '
 
 
@@ -143,7 +144,7 @@ def t_newline(t):
     t.lexer.lineno += t.value.count("\n")
 
 
-with open('TestInput\input') as f:
+with open('TestInput\input2') as f:
     lines = f.readlines()
 
 code = "".join(lines)
@@ -152,12 +153,12 @@ lexer = lex.lex()
 
 lexer.input(code)
 
+# -----------------------------------------------GRAMMAR----------------------------------------------------------------
 
 def p_start_symbol(p):
     '''
     start_symbol : program
     '''
-    p[0] = p[1]
 
 
 def p_program(p):
@@ -165,7 +166,6 @@ def p_program(p):
     program : program_components
             | empty
     '''
-    p[0] = p[1]
 
 
 def p_program_components(p):
@@ -174,10 +174,6 @@ def p_program_components(p):
         | program_component program_components
         | empty
     '''
-    if len(p) == 2:
-        p[0] = p[1]
-    elif len(p) == 3:
-        p[0] = p[1] + p[2]
 
 
 def p_program_component(p):
@@ -189,7 +185,6 @@ def p_program_component(p):
         | array_declaration
         | empty
     '''
-    p[0] = p[1]
 
 
 # -----------------HEADERS------------------------------------------
@@ -223,11 +218,14 @@ def p_void_function_definition(p):
     '''
     void_function_definition : VOID VAR LEFT_BR function_var_declaration RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY
     '''
+    for x in p:
+        print(x)
 
 
 def p_function_var_declaration(p):
     '''
     function_var_declaration : type VAR
+        | type VAR COMMA function_var_declaration
         | empty
     '''
 
@@ -259,10 +257,6 @@ def p_class_declarations(p):
     class_declarations : class_declaration
         | class_declaration class_declarations
     '''
-    if len(p) == 2:
-        p[0] = p[1]
-    elif len(p) == 3:
-        p[0] = p[1] + p[2]
 
 
 # -----------------INSTRUCTIONS-------------------------------------------
@@ -271,10 +265,6 @@ def p_instructions(p):
     instructions : instruction
         | instruction instructions
     '''
-    if len(p) == 2:
-        p[0] = p[1]
-    elif len(p) == 3:
-        p[0] = p[1] + p[2]
 
 
 def p_instruction(p):
@@ -283,6 +273,8 @@ def p_instruction(p):
         | if_statement
         | assignment
         | operation
+        | empty
+        | var_declaration
     '''
 
 
@@ -294,10 +286,10 @@ def p_while_loop(p):
 
 def p_for_loop_statement(p):
     '''
-    for_loop_statement : FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS INT_NUMBER SEMICOLON increment RIGHT_BR
-        | FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS_EQUAL INT_NUMBER SEMICOLON increment RIGHT_BR
-        | FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER INT_NUMBER SEMICOLON decrement RIGHT_BR
-        | FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER_EQUAL INT_NUMBER SEMICOLON decrement RIGHT_BR
+    for_loop_statement : FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS INT_NUMBER SEMICOLON PLUS_PLUS RIGHT_BR
+        | FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS_EQUAL INT_NUMBER SEMICOLON PLUS_PLUS RIGHT_BR
+        | FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER INT_NUMBER SEMICOLON MINUS_MINUS RIGHT_BR
+        | FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER_EQUAL INT_NUMBER SEMICOLON MINUS_MINUS RIGHT_BR
     '''
 
 
@@ -434,6 +426,7 @@ def p_operation(p):
 def p_assignment(p):
     '''
     assignment : VAR EQUAL value SEMICOLON
+               | VAR EQUAL VAR SEMICOLON
     '''
 
 
@@ -441,6 +434,8 @@ def p_var_declaration(p):
     '''
     var_declaration : type VAR SEMICOLON
         | array_declaration
+        | type VAR EQUAL value SEMICOLON
+        | type VAR EQUAL VAR SEMICOLON
     '''
 
 
@@ -468,14 +463,9 @@ def p_empty(p):
 
 
 def p_error(p):
-    print("parsing error\n")
+    print("Syntax error at '%s'\n" % p.value)
 
 
+data = "void foo(){}"
 parser = yacc.yacc()
-
-while True:
-    try:
-        s = input("")
-    except EOFError:
-        break
-    parser.parse(s)
+parser.parse(code)

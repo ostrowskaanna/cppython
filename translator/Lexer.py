@@ -66,6 +66,7 @@ tokens = [
              'LIBRARY',
              'TEXT',
              'SIGN',
+             'COMMA',
              'ID'
          ] + list(reserved.values())
 
@@ -102,6 +103,7 @@ t_NOT_EQUAL = r'\!='
 t_AND = r'\&&'
 t_OR = r'\|\|'
 t_HASH = r'\#'
+t_COMMA = r'\,'
 
 t_ignore = ' '
 
