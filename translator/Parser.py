@@ -193,51 +193,60 @@ def p_program_component(p):
 
 
 # -----------------HEADERS------------------------------------------
-'''
-using_namespace_std : USING NAMESPACE STD SEMICOLON
-'''
+def p_using_namespace_std(p):
+    '''
+    using_namespace_std : USING NAMESPACE STD SEMICOLON
+    '''
 
-'''
-including : HASH INCLUDE LIBRARY 
-'''
+def p_including(p):
+    '''
+    including : HASH INCLUDE LIBRARY
+    '''
 
 # -----------------FUNCTION-------------------------------------------
-'''
-function_definition : type_function_definition 
-    | void_function_definition 
-'''
+def p_function_definition(p):
+    '''
+    function_definition : type_function_definition
+        | void_function_definition
+    '''
 
-'''
-type_function_definition : type VAR LEFT_BR function_var_declaration RIGHT_BR LEFT_BR_CURLY instructions returning RIGHT_BR_CURLY
-'''
+def p_type_function_definition(p):
+    '''
+    type_function_definition : type VAR LEFT_BR function_var_declaration RIGHT_BR LEFT_BR_CURLY instructions returning RIGHT_BR_CURLY
+    '''
 
-'''
-void_function_definition : VOID VAR LEFT_BR function_var_declaration RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY
-'''
+def p_void_function_definition(p):
+    '''
+    void_function_definition : VOID VAR LEFT_BR function_var_declaration RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY
+    '''
 
-'''
-function_var_declaration : type VAR
-    | empty
-'''
+def p_function_var_declaration(p):
+    '''
+    function_var_declaration : type VAR
+        | empty
+    '''
 
 # -----------------CLASS-------------------------------------------
-'''
-class_definition : CLASS STRING LEFT_BR_CURLY protection_level COLON class_declarations RIGHT_BR_CURLY SEMICOLON
-'''
+def p_class_definition(p):
+    '''
+    class_definition : CLASS STRING LEFT_BR_CURLY protection_level COLON class_declarations RIGHT_BR_CURLY SEMICOLON
+    '''
 
-'''
-protection_level " PUBLIC 
-    | PRIVATE 
-    | PROTECTED
-'''
+def p_protection_level(p):
+    '''
+    protection_level " PUBLIC
+        | PRIVATE
+        | PROTECTED
+    '''
 
-'''
-class_declaration : var_declaration
-    | function_definition
-'''
+def p_class_declaration(p):
+    '''
+    class_declaration : var_declaration
+        | function_definition
+    '''
 
 
-def p_class_var_declarations(p):
+def p_class_declarations(p):
     '''
     class_declarations : class_declaration
         | class_declaration class_declarations
@@ -259,42 +268,48 @@ def p_instructions(p):
     elif len(p) == 3:
         p[0] = p[1] + p[2]
 
+def p_instruction(p):
+    '''
+    instruction : loop
+        | if_statement
+        | assignment
+        | operation
+    '''
 
-'''
-instruction : loop 
-    | if_statement 
-    | assignment 
-    | operation 
-'''
+def p_while_loop(p):
+    '''
+    while_loop : WHILE LEFT_BR comparisons RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY
+    '''
 
-'''
-while_loop : WHILE LEFT_BR comparisons RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY 
-'''
+def p_for_loop_statement(p):
+    '''
+    for_loop_statement : FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS INT_NUMBER
+        SEMICOLON increment RIGHT_BR
+        | FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS_EQUAL INT_NUMBER
+        SEMICOLON increment RIGHT_BR
+        | FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER INT_NUMBER
+        SEMICOLON decrement RIGHT_BR
+        | FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER_EQUAL INT_NUMBER
+        SEMICOLON decrement RIGHT_BR
+    '''
 
-'''
-for_loop_statement : FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS INT_NUMBER
-    SEMICOLON increment RIGHT_BR
-    | FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS_EQUAL INT_NUMBER
-    SEMICOLON increment RIGHT_BR
-    | FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER INT_NUMBER
-    SEMICOLON decrement RIGHT_BR
-    | FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER_EQUAL INT_NUMBER
-    SEMICOLON decrement RIGHT_BR
-'''
+def p_for_loop(p):
+    '''
+    for_loop : for_loop_statement LEFT_BR_CURLY instructions RIGHT_BR_CURLY
+    '''
 
-'''
-for_loop : for_loop_statement LEFT_BR_CURLY instructions RIGHT_BR_CURLY
-'''
+def p_loop(p):
+    '''
+    loop : while_loop
+        | for_loop
+    '''
 
-'''
-loop : while_loop
-    | for_loop
-'''
+def else_statement(p):
+    '''
+    else_statement : ELSE LEFT_BR_CURLY instructions RIGHT_BR_CURLY
+    '''
 
-'''
-else_statement : ELSE LEFT_BR_CURLY instructions RIGHT_BR_CURLY
-'''
-
+def if_statement(p):
 '''
 if_statement : IF LEFT_BR comparisons RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY
 '''
