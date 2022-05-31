@@ -2,172 +2,2465 @@ Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 
 Unused terminals:
 
-    AND
-    BOOL
     BREAK
-    CHAR
     CIN
-    CLASS
-    COLON
     COMMENT
     COUT
-    DIVIDE
     DOUBLE
     ELSE
     ENDL
-    EQUAL
-    EQUAL_EQUAL
     FALSE
-    FLOAT
-    FLOAT_NUMBER
-    FOR
-    GREATER
-    GREATER_EQUAL
-    HASH
     ID
-    IF
     IN
-    INCLUDE
-    INT
-    INT_NUMBER
-    LEFT_BR
-    LEFT_BR_CURLY
-    LEFT_BR_SQUARED
-    LESS
-    LESS_EQUAL
-    LIBRARY
-    LONG
-    MINUS
-    MINUS_MINUS
-    MULTIPLY
-    NAMESPACE
-    NOT_EQUAL
-    OR
     OUT
-    PLUS
-    PLUS_PLUS
-    PRIVATE
-    PROTECTED
-    PUBLIC
-    RETURN
-    RIGHT_BR
-    RIGHT_BR_CURLY
-    RIGHT_BR_SQUARED
-    SEMICOLON
-    SHORT
-    SIGN
-    STD
-    STRING
-    TEXT
     TRUE
-    USING
-    VAR
-    VOID
-    WHILE
 
 Grammar
 
 Rule 0     S' -> start_symbol
 Rule 1     start_symbol -> program
 Rule 2     program -> program_components
-Rule 3     program_components -> program_component
-Rule 4     program_components -> program_component program_components
-Rule 5     program_component -> function_definition
-Rule 6     program_component -> class_definition
-Rule 7     program_component -> including
-Rule 8     program_component -> var_declaration
-Rule 9     program_component -> array_declaration
-Rule 10    class_declarations -> class_declaration
-Rule 11    class_declarations -> class_declaration class_declarations
-Rule 12    instructions -> instruction
-Rule 13    instructions -> instruction instructions
-Rule 14    comparisons -> comparison
-Rule 15    comparisons -> comparison conjunction comparisons
-Rule 16    empty -> <empty>
+Rule 3     program -> empty
+Rule 4     program_components -> program_component
+Rule 5     program_components -> program_component program_components
+Rule 6     program_components -> empty
+Rule 7     program_component -> function_definition
+Rule 8     program_component -> class_definition
+Rule 9     program_component -> including
+Rule 10    program_component -> var_declaration
+Rule 11    program_component -> array_declaration
+Rule 12    program_component -> empty
+Rule 13    using_namespace_std -> USING NAMESPACE STD SEMICOLON
+Rule 14    including -> HASH INCLUDE LIBRARY
+Rule 15    function_definition -> type_function_definition
+Rule 16    function_definition -> void_function_definition
+Rule 17    type_function_definition -> type VAR LEFT_BR function_var_declaration RIGHT_BR LEFT_BR_CURLY instructions returning RIGHT_BR_CURLY
+Rule 18    void_function_definition -> VOID VAR LEFT_BR function_var_declaration RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY
+Rule 19    function_var_declaration -> type VAR
+Rule 20    function_var_declaration -> empty
+Rule 21    class_definition -> CLASS STRING LEFT_BR_CURLY protection_level COLON class_declarations RIGHT_BR_CURLY SEMICOLON
+Rule 22    protection_level -> PUBLIC
+Rule 23    protection_level -> PRIVATE
+Rule 24    protection_level -> PROTECTED
+Rule 25    class_declaration -> var_declaration
+Rule 26    class_declaration -> function_definition
+Rule 27    class_declarations -> class_declaration
+Rule 28    class_declarations -> class_declaration class_declarations
+Rule 29    instructions -> instruction
+Rule 30    instructions -> instruction instructions
+Rule 31    instruction -> loop
+Rule 32    instruction -> if_statement
+Rule 33    instruction -> assignment
+Rule 34    instruction -> operation
+Rule 35    while_loop -> WHILE LEFT_BR comparisons RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY
+Rule 36    for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS INT_NUMBER SEMICOLON increment RIGHT_BR
+Rule 37    for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS_EQUAL INT_NUMBER SEMICOLON increment RIGHT_BR
+Rule 38    for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER INT_NUMBER SEMICOLON decrement RIGHT_BR
+Rule 39    for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER_EQUAL INT_NUMBER SEMICOLON decrement RIGHT_BR
+Rule 40    for_loop -> for_loop_statement LEFT_BR_CURLY instructions RIGHT_BR_CURLY
+Rule 41    loop -> while_loop
+Rule 42    loop -> for_loop
+Rule 43    if_statement -> IF LEFT_BR comparisons RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY
+Rule 44    comparisons -> comparison
+Rule 45    comparisons -> comparison conjunction comparisons
+Rule 46    comparator -> LESS
+Rule 47    comparator -> LESS_EQUAL
+Rule 48    comparator -> GREATER
+Rule 49    comparator -> GREATER_EQUAL
+Rule 50    comparator -> EQUAL_EQUAL
+Rule 51    comparator -> NOT_EQUAL
+Rule 52    operator -> PLUS
+Rule 53    operator -> MINUS
+Rule 54    operator -> MULTIPLY
+Rule 55    operator -> DIVIDE
+Rule 56    type -> INT
+Rule 57    type -> CHAR
+Rule 58    type -> STRING
+Rule 59    type -> BOOL
+Rule 60    type -> FLOAT
+Rule 61    type -> LONG
+Rule 62    type -> SHORT
+Rule 63    conjunction -> AND
+Rule 64    conjunction -> OR
+Rule 65    string_value -> TEXT
+Rule 66    string_value -> SIGN
+Rule 67    number -> INT_NUMBER
+Rule 68    number -> FLOAT_NUMBER
+Rule 69    value -> number
+Rule 70    value -> value
+Rule 71    increment -> VAR PLUS_PLUS SEMICOLON
+Rule 72    decrement -> VAR MINUS_MINUS SEMICOLON
+Rule 73    get_array_element -> VAR LEFT_BR_SQUARED INT_NUMBER RIGHT_BR_SQUARED
+Rule 74    operation -> increment
+Rule 75    operation -> decrement
+Rule 76    operation -> value operator value SEMICOLON
+Rule 77    assignment -> VAR EQUAL value SEMICOLON
+Rule 78    var_declaration -> type VAR SEMICOLON
+Rule 79    var_declaration -> array_declaration
+Rule 80    array_declaration -> type get_array_element SEMICOLON
+Rule 81    comparison -> value comparator value
+Rule 82    returning -> RETURN value SEMICOLON
+Rule 83    empty -> <empty>
 
 Terminals, with rules where they appear
 
-AND                  : 
-BOOL                 : 
+AND                  : 63
+BOOL                 : 59
 BREAK                : 
-CHAR                 : 
+CHAR                 : 57
 CIN                  : 
-CLASS                : 
-COLON                : 
+CLASS                : 21
+COLON                : 21
 COMMENT              : 
 COUT                 : 
-DIVIDE               : 
+DIVIDE               : 55
 DOUBLE               : 
 ELSE                 : 
 ENDL                 : 
-EQUAL                : 
-EQUAL_EQUAL          : 
+EQUAL                : 36 37 38 39 77
+EQUAL_EQUAL          : 50
 FALSE                : 
-FLOAT                : 
-FLOAT_NUMBER         : 
-FOR                  : 
-GREATER              : 
-GREATER_EQUAL        : 
-HASH                 : 
+FLOAT                : 60
+FLOAT_NUMBER         : 68
+FOR                  : 36 37 38 39
+GREATER              : 38 48
+GREATER_EQUAL        : 39 49
+HASH                 : 14
 ID                   : 
-IF                   : 
+IF                   : 43
 IN                   : 
-INCLUDE              : 
-INT                  : 
-INT_NUMBER           : 
-LEFT_BR              : 
-LEFT_BR_CURLY        : 
-LEFT_BR_SQUARED      : 
-LESS                 : 
-LESS_EQUAL           : 
-LIBRARY              : 
-LONG                 : 
-MINUS                : 
-MINUS_MINUS          : 
-MULTIPLY             : 
-NAMESPACE            : 
-NOT_EQUAL            : 
-OR                   : 
+INCLUDE              : 14
+INT                  : 36 37 38 39 56
+INT_NUMBER           : 36 36 37 37 38 38 39 39 67 73
+LEFT_BR              : 17 18 35 36 37 38 39 43
+LEFT_BR_CURLY        : 17 18 21 35 40 43
+LEFT_BR_SQUARED      : 73
+LESS                 : 36 46
+LESS_EQUAL           : 37 47
+LIBRARY              : 14
+LONG                 : 61
+MINUS                : 53
+MINUS_MINUS          : 72
+MULTIPLY             : 54
+NAMESPACE            : 13
+NOT_EQUAL            : 51
+OR                   : 64
 OUT                  : 
-PLUS                 : 
-PLUS_PLUS            : 
-PRIVATE              : 
-PROTECTED            : 
-PUBLIC               : 
-RETURN               : 
-RIGHT_BR             : 
-RIGHT_BR_CURLY       : 
-RIGHT_BR_SQUARED     : 
-SEMICOLON            : 
-SHORT                : 
-SIGN                 : 
-STD                  : 
-STRING               : 
-TEXT                 : 
+PLUS                 : 52
+PLUS_PLUS            : 71
+PRIVATE              : 23
+PROTECTED            : 24
+PUBLIC               : 22
+RETURN               : 82
+RIGHT_BR             : 17 18 35 36 37 38 39 43
+RIGHT_BR_CURLY       : 17 18 21 35 40 43
+RIGHT_BR_SQUARED     : 73
+SEMICOLON            : 13 21 36 36 37 37 38 38 39 39 71 72 76 77 78 80 82
+SHORT                : 62
+SIGN                 : 66
+STD                  : 13
+STRING               : 21 58
+TEXT                 : 65
 TRUE                 : 
-USING                : 
-VAR                  : 
-VOID                 : 
-WHILE                : 
+USING                : 13
+VAR                  : 17 18 19 36 36 37 37 38 38 39 39 71 72 73 77 78
+VOID                 : 18
+WHILE                : 35
 error                : 
 
 Nonterminals, with rules where they appear
 
-array_declaration    : 9
-class_declaration    : 10 11
-class_declarations   : 11 x
-class_definition     : 6
-comparison           : 14 15
-comparisons          : 15 x
-conjunction          : 15
-empty                : x
-function_definition  : 5
-including            : 7
-instruction          : 12 13
-instructions         : 13 x
-program              : 1 x
-program_component    : 3 4 x
-program_components   : 2 4 x
-start_symbol         : 0 x
-var_declaration      : 8
+array_declaration    : 11 79
+assignment           : 33
+class_declaration    : 27 28
+class_declarations   : 21 28
+class_definition     : 8
+comparator           : 81
+comparison           : 44 45
+comparisons          : 35 43 45
+conjunction          : 45
+decrement            : 38 39 75
+empty                : 3 6 12 20
+for_loop             : 42
+for_loop_statement   : 40
+function_definition  : 7 26
+function_var_declaration : 17 18
+get_array_element    : 80
+if_statement         : 32
+including            : 9
+increment            : 36 37 74
+instruction          : 29 30
+instructions         : 17 18 30 35 40 43
+loop                 : 31
+number               : 69
+operation            : 34
+operator             : 76
+program              : 1
+program_component    : 4 5
+program_components   : 2 5
+protection_level     : 21
+returning            : 17
+start_symbol         : 0
+string_value         : 
+type                 : 17 19 78 80
+type_function_definition : 15
+using_namespace_std  : 
+value                : 70 76 76 77 81 81 82
+var_declaration      : 10 25
+void_function_definition : 16
+while_loop           : 41
 
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . start_symbol
+    (1) start_symbol -> . program
+    (2) program -> . program_components
+    (3) program -> . empty
+    (4) program_components -> . program_component
+    (5) program_components -> . program_component program_components
+    (6) program_components -> . empty
+    (83) empty -> .
+    (7) program_component -> . function_definition
+    (8) program_component -> . class_definition
+    (9) program_component -> . including
+    (10) program_component -> . var_declaration
+    (11) program_component -> . array_declaration
+    (12) program_component -> . empty
+    (15) function_definition -> . type_function_definition
+    (16) function_definition -> . void_function_definition
+    (21) class_definition -> . CLASS STRING LEFT_BR_CURLY protection_level COLON class_declarations RIGHT_BR_CURLY SEMICOLON
+    (14) including -> . HASH INCLUDE LIBRARY
+    (78) var_declaration -> . type VAR SEMICOLON
+    (79) var_declaration -> . array_declaration
+    (80) array_declaration -> . type get_array_element SEMICOLON
+    (17) type_function_definition -> . type VAR LEFT_BR function_var_declaration RIGHT_BR LEFT_BR_CURLY instructions returning RIGHT_BR_CURLY
+    (18) void_function_definition -> . VOID VAR LEFT_BR function_var_declaration RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY
+    (56) type -> . INT
+    (57) type -> . CHAR
+    (58) type -> . STRING
+    (59) type -> . BOOL
+    (60) type -> . FLOAT
+    (61) type -> . LONG
+    (62) type -> . SHORT
+
+  ! shift/reduce conflict for CLASS resolved as shift
+  ! shift/reduce conflict for HASH resolved as shift
+  ! shift/reduce conflict for VOID resolved as shift
+  ! shift/reduce conflict for INT resolved as shift
+  ! shift/reduce conflict for CHAR resolved as shift
+  ! shift/reduce conflict for STRING resolved as shift
+  ! shift/reduce conflict for BOOL resolved as shift
+  ! shift/reduce conflict for FLOAT resolved as shift
+  ! shift/reduce conflict for LONG resolved as shift
+  ! shift/reduce conflict for SHORT resolved as shift
+    $end            reduce using rule 83 (empty -> .)
+    CLASS           shift and go to state 13
+    HASH            shift and go to state 15
+    VOID            shift and go to state 17
+    INT             shift and go to state 18
+    CHAR            shift and go to state 19
+    STRING          shift and go to state 14
+    BOOL            shift and go to state 20
+    FLOAT           shift and go to state 21
+    LONG            shift and go to state 22
+    SHORT           shift and go to state 23
+
+  ! CLASS           [ reduce using rule 83 (empty -> .) ]
+  ! HASH            [ reduce using rule 83 (empty -> .) ]
+  ! VOID            [ reduce using rule 83 (empty -> .) ]
+  ! INT             [ reduce using rule 83 (empty -> .) ]
+  ! CHAR            [ reduce using rule 83 (empty -> .) ]
+  ! STRING          [ reduce using rule 83 (empty -> .) ]
+  ! BOOL            [ reduce using rule 83 (empty -> .) ]
+  ! FLOAT           [ reduce using rule 83 (empty -> .) ]
+  ! LONG            [ reduce using rule 83 (empty -> .) ]
+  ! SHORT           [ reduce using rule 83 (empty -> .) ]
+
+    start_symbol                   shift and go to state 1
+    program                        shift and go to state 2
+    program_components             shift and go to state 3
+    empty                          shift and go to state 4
+    program_component              shift and go to state 5
+    function_definition            shift and go to state 6
+    class_definition               shift and go to state 7
+    including                      shift and go to state 8
+    var_declaration                shift and go to state 9
+    array_declaration              shift and go to state 10
+    type_function_definition       shift and go to state 11
+    void_function_definition       shift and go to state 12
+    type                           shift and go to state 16
+
+state 1
+
+    (0) S' -> start_symbol .
+
+
+
+state 2
+
+    (1) start_symbol -> program .
+
+    $end            reduce using rule 1 (start_symbol -> program .)
+
+
+state 3
+
+    (2) program -> program_components .
+
+    $end            reduce using rule 2 (program -> program_components .)
+
+
+state 4
+
+    (3) program -> empty .
+    (6) program_components -> empty .
+    (12) program_component -> empty .
+
+  ! reduce/reduce conflict for $end resolved using rule 3 (program -> empty .)
+  ! reduce/reduce conflict for $end resolved using rule 3 (program -> empty .)
+    $end            reduce using rule 3 (program -> empty .)
+    CLASS           reduce using rule 12 (program_component -> empty .)
+    HASH            reduce using rule 12 (program_component -> empty .)
+    VOID            reduce using rule 12 (program_component -> empty .)
+    INT             reduce using rule 12 (program_component -> empty .)
+    CHAR            reduce using rule 12 (program_component -> empty .)
+    STRING          reduce using rule 12 (program_component -> empty .)
+    BOOL            reduce using rule 12 (program_component -> empty .)
+    FLOAT           reduce using rule 12 (program_component -> empty .)
+    LONG            reduce using rule 12 (program_component -> empty .)
+    SHORT           reduce using rule 12 (program_component -> empty .)
+
+  ! $end            [ reduce using rule 6 (program_components -> empty .) ]
+  ! $end            [ reduce using rule 12 (program_component -> empty .) ]
+
+
+state 5
+
+    (4) program_components -> program_component .
+    (5) program_components -> program_component . program_components
+    (4) program_components -> . program_component
+    (5) program_components -> . program_component program_components
+    (6) program_components -> . empty
+    (7) program_component -> . function_definition
+    (8) program_component -> . class_definition
+    (9) program_component -> . including
+    (10) program_component -> . var_declaration
+    (11) program_component -> . array_declaration
+    (12) program_component -> . empty
+    (83) empty -> .
+    (15) function_definition -> . type_function_definition
+    (16) function_definition -> . void_function_definition
+    (21) class_definition -> . CLASS STRING LEFT_BR_CURLY protection_level COLON class_declarations RIGHT_BR_CURLY SEMICOLON
+    (14) including -> . HASH INCLUDE LIBRARY
+    (78) var_declaration -> . type VAR SEMICOLON
+    (79) var_declaration -> . array_declaration
+    (80) array_declaration -> . type get_array_element SEMICOLON
+    (17) type_function_definition -> . type VAR LEFT_BR function_var_declaration RIGHT_BR LEFT_BR_CURLY instructions returning RIGHT_BR_CURLY
+    (18) void_function_definition -> . VOID VAR LEFT_BR function_var_declaration RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY
+    (56) type -> . INT
+    (57) type -> . CHAR
+    (58) type -> . STRING
+    (59) type -> . BOOL
+    (60) type -> . FLOAT
+    (61) type -> . LONG
+    (62) type -> . SHORT
+
+  ! reduce/reduce conflict for $end resolved using rule 4 (program_components -> program_component .)
+  ! shift/reduce conflict for CLASS resolved as shift
+  ! shift/reduce conflict for HASH resolved as shift
+  ! shift/reduce conflict for VOID resolved as shift
+  ! shift/reduce conflict for INT resolved as shift
+  ! shift/reduce conflict for CHAR resolved as shift
+  ! shift/reduce conflict for STRING resolved as shift
+  ! shift/reduce conflict for BOOL resolved as shift
+  ! shift/reduce conflict for FLOAT resolved as shift
+  ! shift/reduce conflict for LONG resolved as shift
+  ! shift/reduce conflict for SHORT resolved as shift
+    $end            reduce using rule 4 (program_components -> program_component .)
+    CLASS           shift and go to state 13
+    HASH            shift and go to state 15
+    VOID            shift and go to state 17
+    INT             shift and go to state 18
+    CHAR            shift and go to state 19
+    STRING          shift and go to state 14
+    BOOL            shift and go to state 20
+    FLOAT           shift and go to state 21
+    LONG            shift and go to state 22
+    SHORT           shift and go to state 23
+
+  ! $end            [ reduce using rule 83 (empty -> .) ]
+  ! CLASS           [ reduce using rule 83 (empty -> .) ]
+  ! HASH            [ reduce using rule 83 (empty -> .) ]
+  ! VOID            [ reduce using rule 83 (empty -> .) ]
+  ! INT             [ reduce using rule 83 (empty -> .) ]
+  ! CHAR            [ reduce using rule 83 (empty -> .) ]
+  ! STRING          [ reduce using rule 83 (empty -> .) ]
+  ! BOOL            [ reduce using rule 83 (empty -> .) ]
+  ! FLOAT           [ reduce using rule 83 (empty -> .) ]
+  ! LONG            [ reduce using rule 83 (empty -> .) ]
+  ! SHORT           [ reduce using rule 83 (empty -> .) ]
+
+    program_component              shift and go to state 5
+    program_components             shift and go to state 24
+    empty                          shift and go to state 25
+    function_definition            shift and go to state 6
+    class_definition               shift and go to state 7
+    including                      shift and go to state 8
+    var_declaration                shift and go to state 9
+    array_declaration              shift and go to state 10
+    type_function_definition       shift and go to state 11
+    void_function_definition       shift and go to state 12
+    type                           shift and go to state 16
+
+state 6
+
+    (7) program_component -> function_definition .
+
+    CLASS           reduce using rule 7 (program_component -> function_definition .)
+    HASH            reduce using rule 7 (program_component -> function_definition .)
+    VOID            reduce using rule 7 (program_component -> function_definition .)
+    INT             reduce using rule 7 (program_component -> function_definition .)
+    CHAR            reduce using rule 7 (program_component -> function_definition .)
+    STRING          reduce using rule 7 (program_component -> function_definition .)
+    BOOL            reduce using rule 7 (program_component -> function_definition .)
+    FLOAT           reduce using rule 7 (program_component -> function_definition .)
+    LONG            reduce using rule 7 (program_component -> function_definition .)
+    SHORT           reduce using rule 7 (program_component -> function_definition .)
+    $end            reduce using rule 7 (program_component -> function_definition .)
+
+
+state 7
+
+    (8) program_component -> class_definition .
+
+    CLASS           reduce using rule 8 (program_component -> class_definition .)
+    HASH            reduce using rule 8 (program_component -> class_definition .)
+    VOID            reduce using rule 8 (program_component -> class_definition .)
+    INT             reduce using rule 8 (program_component -> class_definition .)
+    CHAR            reduce using rule 8 (program_component -> class_definition .)
+    STRING          reduce using rule 8 (program_component -> class_definition .)
+    BOOL            reduce using rule 8 (program_component -> class_definition .)
+    FLOAT           reduce using rule 8 (program_component -> class_definition .)
+    LONG            reduce using rule 8 (program_component -> class_definition .)
+    SHORT           reduce using rule 8 (program_component -> class_definition .)
+    $end            reduce using rule 8 (program_component -> class_definition .)
+
+
+state 8
+
+    (9) program_component -> including .
+
+    CLASS           reduce using rule 9 (program_component -> including .)
+    HASH            reduce using rule 9 (program_component -> including .)
+    VOID            reduce using rule 9 (program_component -> including .)
+    INT             reduce using rule 9 (program_component -> including .)
+    CHAR            reduce using rule 9 (program_component -> including .)
+    STRING          reduce using rule 9 (program_component -> including .)
+    BOOL            reduce using rule 9 (program_component -> including .)
+    FLOAT           reduce using rule 9 (program_component -> including .)
+    LONG            reduce using rule 9 (program_component -> including .)
+    SHORT           reduce using rule 9 (program_component -> including .)
+    $end            reduce using rule 9 (program_component -> including .)
+
+
+state 9
+
+    (10) program_component -> var_declaration .
+
+    CLASS           reduce using rule 10 (program_component -> var_declaration .)
+    HASH            reduce using rule 10 (program_component -> var_declaration .)
+    VOID            reduce using rule 10 (program_component -> var_declaration .)
+    INT             reduce using rule 10 (program_component -> var_declaration .)
+    CHAR            reduce using rule 10 (program_component -> var_declaration .)
+    STRING          reduce using rule 10 (program_component -> var_declaration .)
+    BOOL            reduce using rule 10 (program_component -> var_declaration .)
+    FLOAT           reduce using rule 10 (program_component -> var_declaration .)
+    LONG            reduce using rule 10 (program_component -> var_declaration .)
+    SHORT           reduce using rule 10 (program_component -> var_declaration .)
+    $end            reduce using rule 10 (program_component -> var_declaration .)
+
+
+state 10
+
+    (11) program_component -> array_declaration .
+    (79) var_declaration -> array_declaration .
+
+  ! reduce/reduce conflict for CLASS resolved using rule 11 (program_component -> array_declaration .)
+  ! reduce/reduce conflict for HASH resolved using rule 11 (program_component -> array_declaration .)
+  ! reduce/reduce conflict for VOID resolved using rule 11 (program_component -> array_declaration .)
+  ! reduce/reduce conflict for INT resolved using rule 11 (program_component -> array_declaration .)
+  ! reduce/reduce conflict for CHAR resolved using rule 11 (program_component -> array_declaration .)
+  ! reduce/reduce conflict for STRING resolved using rule 11 (program_component -> array_declaration .)
+  ! reduce/reduce conflict for BOOL resolved using rule 11 (program_component -> array_declaration .)
+  ! reduce/reduce conflict for FLOAT resolved using rule 11 (program_component -> array_declaration .)
+  ! reduce/reduce conflict for LONG resolved using rule 11 (program_component -> array_declaration .)
+  ! reduce/reduce conflict for SHORT resolved using rule 11 (program_component -> array_declaration .)
+  ! reduce/reduce conflict for $end resolved using rule 11 (program_component -> array_declaration .)
+    CLASS           reduce using rule 11 (program_component -> array_declaration .)
+    HASH            reduce using rule 11 (program_component -> array_declaration .)
+    VOID            reduce using rule 11 (program_component -> array_declaration .)
+    INT             reduce using rule 11 (program_component -> array_declaration .)
+    CHAR            reduce using rule 11 (program_component -> array_declaration .)
+    STRING          reduce using rule 11 (program_component -> array_declaration .)
+    BOOL            reduce using rule 11 (program_component -> array_declaration .)
+    FLOAT           reduce using rule 11 (program_component -> array_declaration .)
+    LONG            reduce using rule 11 (program_component -> array_declaration .)
+    SHORT           reduce using rule 11 (program_component -> array_declaration .)
+    $end            reduce using rule 11 (program_component -> array_declaration .)
+
+  ! CLASS           [ reduce using rule 79 (var_declaration -> array_declaration .) ]
+  ! HASH            [ reduce using rule 79 (var_declaration -> array_declaration .) ]
+  ! VOID            [ reduce using rule 79 (var_declaration -> array_declaration .) ]
+  ! INT             [ reduce using rule 79 (var_declaration -> array_declaration .) ]
+  ! CHAR            [ reduce using rule 79 (var_declaration -> array_declaration .) ]
+  ! STRING          [ reduce using rule 79 (var_declaration -> array_declaration .) ]
+  ! BOOL            [ reduce using rule 79 (var_declaration -> array_declaration .) ]
+  ! FLOAT           [ reduce using rule 79 (var_declaration -> array_declaration .) ]
+  ! LONG            [ reduce using rule 79 (var_declaration -> array_declaration .) ]
+  ! SHORT           [ reduce using rule 79 (var_declaration -> array_declaration .) ]
+  ! $end            [ reduce using rule 79 (var_declaration -> array_declaration .) ]
+
+
+state 11
+
+    (15) function_definition -> type_function_definition .
+
+    CLASS           reduce using rule 15 (function_definition -> type_function_definition .)
+    HASH            reduce using rule 15 (function_definition -> type_function_definition .)
+    VOID            reduce using rule 15 (function_definition -> type_function_definition .)
+    INT             reduce using rule 15 (function_definition -> type_function_definition .)
+    CHAR            reduce using rule 15 (function_definition -> type_function_definition .)
+    STRING          reduce using rule 15 (function_definition -> type_function_definition .)
+    BOOL            reduce using rule 15 (function_definition -> type_function_definition .)
+    FLOAT           reduce using rule 15 (function_definition -> type_function_definition .)
+    LONG            reduce using rule 15 (function_definition -> type_function_definition .)
+    SHORT           reduce using rule 15 (function_definition -> type_function_definition .)
+    $end            reduce using rule 15 (function_definition -> type_function_definition .)
+    RIGHT_BR_CURLY  reduce using rule 15 (function_definition -> type_function_definition .)
+
+
+state 12
+
+    (16) function_definition -> void_function_definition .
+
+    CLASS           reduce using rule 16 (function_definition -> void_function_definition .)
+    HASH            reduce using rule 16 (function_definition -> void_function_definition .)
+    VOID            reduce using rule 16 (function_definition -> void_function_definition .)
+    INT             reduce using rule 16 (function_definition -> void_function_definition .)
+    CHAR            reduce using rule 16 (function_definition -> void_function_definition .)
+    STRING          reduce using rule 16 (function_definition -> void_function_definition .)
+    BOOL            reduce using rule 16 (function_definition -> void_function_definition .)
+    FLOAT           reduce using rule 16 (function_definition -> void_function_definition .)
+    LONG            reduce using rule 16 (function_definition -> void_function_definition .)
+    SHORT           reduce using rule 16 (function_definition -> void_function_definition .)
+    $end            reduce using rule 16 (function_definition -> void_function_definition .)
+    RIGHT_BR_CURLY  reduce using rule 16 (function_definition -> void_function_definition .)
+
+
+state 13
+
+    (21) class_definition -> CLASS . STRING LEFT_BR_CURLY protection_level COLON class_declarations RIGHT_BR_CURLY SEMICOLON
+
+    STRING          shift and go to state 26
+
+
+state 14
+
+    (58) type -> STRING .
+
+    VAR             reduce using rule 58 (type -> STRING .)
+
+
+state 15
+
+    (14) including -> HASH . INCLUDE LIBRARY
+
+    INCLUDE         shift and go to state 27
+
+
+state 16
+
+    (78) var_declaration -> type . VAR SEMICOLON
+    (80) array_declaration -> type . get_array_element SEMICOLON
+    (17) type_function_definition -> type . VAR LEFT_BR function_var_declaration RIGHT_BR LEFT_BR_CURLY instructions returning RIGHT_BR_CURLY
+    (73) get_array_element -> . VAR LEFT_BR_SQUARED INT_NUMBER RIGHT_BR_SQUARED
+
+    VAR             shift and go to state 28
+
+    get_array_element              shift and go to state 29
+
+state 17
+
+    (18) void_function_definition -> VOID . VAR LEFT_BR function_var_declaration RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY
+
+    VAR             shift and go to state 30
+
+
+state 18
+
+    (56) type -> INT .
+
+    VAR             reduce using rule 56 (type -> INT .)
+
+
+state 19
+
+    (57) type -> CHAR .
+
+    VAR             reduce using rule 57 (type -> CHAR .)
+
+
+state 20
+
+    (59) type -> BOOL .
+
+    VAR             reduce using rule 59 (type -> BOOL .)
+
+
+state 21
+
+    (60) type -> FLOAT .
+
+    VAR             reduce using rule 60 (type -> FLOAT .)
+
+
+state 22
+
+    (61) type -> LONG .
+
+    VAR             reduce using rule 61 (type -> LONG .)
+
+
+state 23
+
+    (62) type -> SHORT .
+
+    VAR             reduce using rule 62 (type -> SHORT .)
+
+
+state 24
+
+    (5) program_components -> program_component program_components .
+
+    $end            reduce using rule 5 (program_components -> program_component program_components .)
+
+
+state 25
+
+    (6) program_components -> empty .
+    (12) program_component -> empty .
+
+  ! reduce/reduce conflict for $end resolved using rule 6 (program_components -> empty .)
+    $end            reduce using rule 6 (program_components -> empty .)
+    CLASS           reduce using rule 12 (program_component -> empty .)
+    HASH            reduce using rule 12 (program_component -> empty .)
+    VOID            reduce using rule 12 (program_component -> empty .)
+    INT             reduce using rule 12 (program_component -> empty .)
+    CHAR            reduce using rule 12 (program_component -> empty .)
+    STRING          reduce using rule 12 (program_component -> empty .)
+    BOOL            reduce using rule 12 (program_component -> empty .)
+    FLOAT           reduce using rule 12 (program_component -> empty .)
+    LONG            reduce using rule 12 (program_component -> empty .)
+    SHORT           reduce using rule 12 (program_component -> empty .)
+
+  ! $end            [ reduce using rule 12 (program_component -> empty .) ]
+
+
+state 26
+
+    (21) class_definition -> CLASS STRING . LEFT_BR_CURLY protection_level COLON class_declarations RIGHT_BR_CURLY SEMICOLON
+
+    LEFT_BR_CURLY   shift and go to state 31
+
+
+state 27
+
+    (14) including -> HASH INCLUDE . LIBRARY
+
+    LIBRARY         shift and go to state 32
+
+
+state 28
+
+    (78) var_declaration -> type VAR . SEMICOLON
+    (17) type_function_definition -> type VAR . LEFT_BR function_var_declaration RIGHT_BR LEFT_BR_CURLY instructions returning RIGHT_BR_CURLY
+    (73) get_array_element -> VAR . LEFT_BR_SQUARED INT_NUMBER RIGHT_BR_SQUARED
+
+    SEMICOLON       shift and go to state 33
+    LEFT_BR         shift and go to state 34
+    LEFT_BR_SQUARED shift and go to state 35
+
+
+state 29
+
+    (80) array_declaration -> type get_array_element . SEMICOLON
+
+    SEMICOLON       shift and go to state 36
+
+
+state 30
+
+    (18) void_function_definition -> VOID VAR . LEFT_BR function_var_declaration RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY
+
+    LEFT_BR         shift and go to state 37
+
+
+state 31
+
+    (21) class_definition -> CLASS STRING LEFT_BR_CURLY . protection_level COLON class_declarations RIGHT_BR_CURLY SEMICOLON
+    (22) protection_level -> . PUBLIC
+    (23) protection_level -> . PRIVATE
+    (24) protection_level -> . PROTECTED
+
+    PUBLIC          shift and go to state 39
+    PRIVATE         shift and go to state 40
+    PROTECTED       shift and go to state 41
+
+    protection_level               shift and go to state 38
+
+state 32
+
+    (14) including -> HASH INCLUDE LIBRARY .
+
+    CLASS           reduce using rule 14 (including -> HASH INCLUDE LIBRARY .)
+    HASH            reduce using rule 14 (including -> HASH INCLUDE LIBRARY .)
+    VOID            reduce using rule 14 (including -> HASH INCLUDE LIBRARY .)
+    INT             reduce using rule 14 (including -> HASH INCLUDE LIBRARY .)
+    CHAR            reduce using rule 14 (including -> HASH INCLUDE LIBRARY .)
+    STRING          reduce using rule 14 (including -> HASH INCLUDE LIBRARY .)
+    BOOL            reduce using rule 14 (including -> HASH INCLUDE LIBRARY .)
+    FLOAT           reduce using rule 14 (including -> HASH INCLUDE LIBRARY .)
+    LONG            reduce using rule 14 (including -> HASH INCLUDE LIBRARY .)
+    SHORT           reduce using rule 14 (including -> HASH INCLUDE LIBRARY .)
+    $end            reduce using rule 14 (including -> HASH INCLUDE LIBRARY .)
+
+
+state 33
+
+    (78) var_declaration -> type VAR SEMICOLON .
+
+    CLASS           reduce using rule 78 (var_declaration -> type VAR SEMICOLON .)
+    HASH            reduce using rule 78 (var_declaration -> type VAR SEMICOLON .)
+    VOID            reduce using rule 78 (var_declaration -> type VAR SEMICOLON .)
+    INT             reduce using rule 78 (var_declaration -> type VAR SEMICOLON .)
+    CHAR            reduce using rule 78 (var_declaration -> type VAR SEMICOLON .)
+    STRING          reduce using rule 78 (var_declaration -> type VAR SEMICOLON .)
+    BOOL            reduce using rule 78 (var_declaration -> type VAR SEMICOLON .)
+    FLOAT           reduce using rule 78 (var_declaration -> type VAR SEMICOLON .)
+    LONG            reduce using rule 78 (var_declaration -> type VAR SEMICOLON .)
+    SHORT           reduce using rule 78 (var_declaration -> type VAR SEMICOLON .)
+    $end            reduce using rule 78 (var_declaration -> type VAR SEMICOLON .)
+    RIGHT_BR_CURLY  reduce using rule 78 (var_declaration -> type VAR SEMICOLON .)
+
+
+state 34
+
+    (17) type_function_definition -> type VAR LEFT_BR . function_var_declaration RIGHT_BR LEFT_BR_CURLY instructions returning RIGHT_BR_CURLY
+    (19) function_var_declaration -> . type VAR
+    (20) function_var_declaration -> . empty
+    (56) type -> . INT
+    (57) type -> . CHAR
+    (58) type -> . STRING
+    (59) type -> . BOOL
+    (60) type -> . FLOAT
+    (61) type -> . LONG
+    (62) type -> . SHORT
+    (83) empty -> .
+
+    INT             shift and go to state 18
+    CHAR            shift and go to state 19
+    STRING          shift and go to state 14
+    BOOL            shift and go to state 20
+    FLOAT           shift and go to state 21
+    LONG            shift and go to state 22
+    SHORT           shift and go to state 23
+    RIGHT_BR        reduce using rule 83 (empty -> .)
+
+    type                           shift and go to state 42
+    function_var_declaration       shift and go to state 43
+    empty                          shift and go to state 44
+
+state 35
+
+    (73) get_array_element -> VAR LEFT_BR_SQUARED . INT_NUMBER RIGHT_BR_SQUARED
+
+    INT_NUMBER      shift and go to state 45
+
+
+state 36
+
+    (80) array_declaration -> type get_array_element SEMICOLON .
+
+    CLASS           reduce using rule 80 (array_declaration -> type get_array_element SEMICOLON .)
+    HASH            reduce using rule 80 (array_declaration -> type get_array_element SEMICOLON .)
+    VOID            reduce using rule 80 (array_declaration -> type get_array_element SEMICOLON .)
+    INT             reduce using rule 80 (array_declaration -> type get_array_element SEMICOLON .)
+    CHAR            reduce using rule 80 (array_declaration -> type get_array_element SEMICOLON .)
+    STRING          reduce using rule 80 (array_declaration -> type get_array_element SEMICOLON .)
+    BOOL            reduce using rule 80 (array_declaration -> type get_array_element SEMICOLON .)
+    FLOAT           reduce using rule 80 (array_declaration -> type get_array_element SEMICOLON .)
+    LONG            reduce using rule 80 (array_declaration -> type get_array_element SEMICOLON .)
+    SHORT           reduce using rule 80 (array_declaration -> type get_array_element SEMICOLON .)
+    $end            reduce using rule 80 (array_declaration -> type get_array_element SEMICOLON .)
+    RIGHT_BR_CURLY  reduce using rule 80 (array_declaration -> type get_array_element SEMICOLON .)
+
+
+state 37
+
+    (18) void_function_definition -> VOID VAR LEFT_BR . function_var_declaration RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY
+    (19) function_var_declaration -> . type VAR
+    (20) function_var_declaration -> . empty
+    (56) type -> . INT
+    (57) type -> . CHAR
+    (58) type -> . STRING
+    (59) type -> . BOOL
+    (60) type -> . FLOAT
+    (61) type -> . LONG
+    (62) type -> . SHORT
+    (83) empty -> .
+
+    INT             shift and go to state 18
+    CHAR            shift and go to state 19
+    STRING          shift and go to state 14
+    BOOL            shift and go to state 20
+    FLOAT           shift and go to state 21
+    LONG            shift and go to state 22
+    SHORT           shift and go to state 23
+    RIGHT_BR        reduce using rule 83 (empty -> .)
+
+    function_var_declaration       shift and go to state 46
+    type                           shift and go to state 42
+    empty                          shift and go to state 44
+
+state 38
+
+    (21) class_definition -> CLASS STRING LEFT_BR_CURLY protection_level . COLON class_declarations RIGHT_BR_CURLY SEMICOLON
+
+    COLON           shift and go to state 47
+
+
+state 39
+
+    (22) protection_level -> PUBLIC .
+
+    COLON           reduce using rule 22 (protection_level -> PUBLIC .)
+
+
+state 40
+
+    (23) protection_level -> PRIVATE .
+
+    COLON           reduce using rule 23 (protection_level -> PRIVATE .)
+
+
+state 41
+
+    (24) protection_level -> PROTECTED .
+
+    COLON           reduce using rule 24 (protection_level -> PROTECTED .)
+
+
+state 42
+
+    (19) function_var_declaration -> type . VAR
+
+    VAR             shift and go to state 48
+
+
+state 43
+
+    (17) type_function_definition -> type VAR LEFT_BR function_var_declaration . RIGHT_BR LEFT_BR_CURLY instructions returning RIGHT_BR_CURLY
+
+    RIGHT_BR        shift and go to state 49
+
+
+state 44
+
+    (20) function_var_declaration -> empty .
+
+    RIGHT_BR        reduce using rule 20 (function_var_declaration -> empty .)
+
+
+state 45
+
+    (73) get_array_element -> VAR LEFT_BR_SQUARED INT_NUMBER . RIGHT_BR_SQUARED
+
+    RIGHT_BR_SQUARED shift and go to state 50
+
+
+state 46
+
+    (18) void_function_definition -> VOID VAR LEFT_BR function_var_declaration . RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY
+
+    RIGHT_BR        shift and go to state 51
+
+
+state 47
+
+    (21) class_definition -> CLASS STRING LEFT_BR_CURLY protection_level COLON . class_declarations RIGHT_BR_CURLY SEMICOLON
+    (27) class_declarations -> . class_declaration
+    (28) class_declarations -> . class_declaration class_declarations
+    (25) class_declaration -> . var_declaration
+    (26) class_declaration -> . function_definition
+    (78) var_declaration -> . type VAR SEMICOLON
+    (79) var_declaration -> . array_declaration
+    (15) function_definition -> . type_function_definition
+    (16) function_definition -> . void_function_definition
+    (56) type -> . INT
+    (57) type -> . CHAR
+    (58) type -> . STRING
+    (59) type -> . BOOL
+    (60) type -> . FLOAT
+    (61) type -> . LONG
+    (62) type -> . SHORT
+    (80) array_declaration -> . type get_array_element SEMICOLON
+    (17) type_function_definition -> . type VAR LEFT_BR function_var_declaration RIGHT_BR LEFT_BR_CURLY instructions returning RIGHT_BR_CURLY
+    (18) void_function_definition -> . VOID VAR LEFT_BR function_var_declaration RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY
+
+    INT             shift and go to state 18
+    CHAR            shift and go to state 19
+    STRING          shift and go to state 14
+    BOOL            shift and go to state 20
+    FLOAT           shift and go to state 21
+    LONG            shift and go to state 22
+    SHORT           shift and go to state 23
+    VOID            shift and go to state 17
+
+    class_declarations             shift and go to state 52
+    class_declaration              shift and go to state 53
+    var_declaration                shift and go to state 54
+    function_definition            shift and go to state 55
+    type                           shift and go to state 16
+    array_declaration              shift and go to state 56
+    type_function_definition       shift and go to state 11
+    void_function_definition       shift and go to state 12
+
+state 48
+
+    (19) function_var_declaration -> type VAR .
+
+    RIGHT_BR        reduce using rule 19 (function_var_declaration -> type VAR .)
+
+
+state 49
+
+    (17) type_function_definition -> type VAR LEFT_BR function_var_declaration RIGHT_BR . LEFT_BR_CURLY instructions returning RIGHT_BR_CURLY
+
+    LEFT_BR_CURLY   shift and go to state 57
+
+
+state 50
+
+    (73) get_array_element -> VAR LEFT_BR_SQUARED INT_NUMBER RIGHT_BR_SQUARED .
+
+    SEMICOLON       reduce using rule 73 (get_array_element -> VAR LEFT_BR_SQUARED INT_NUMBER RIGHT_BR_SQUARED .)
+
+
+state 51
+
+    (18) void_function_definition -> VOID VAR LEFT_BR function_var_declaration RIGHT_BR . LEFT_BR_CURLY instructions RIGHT_BR_CURLY
+
+    LEFT_BR_CURLY   shift and go to state 58
+
+
+state 52
+
+    (21) class_definition -> CLASS STRING LEFT_BR_CURLY protection_level COLON class_declarations . RIGHT_BR_CURLY SEMICOLON
+
+    RIGHT_BR_CURLY  shift and go to state 59
+
+
+state 53
+
+    (27) class_declarations -> class_declaration .
+    (28) class_declarations -> class_declaration . class_declarations
+    (27) class_declarations -> . class_declaration
+    (28) class_declarations -> . class_declaration class_declarations
+    (25) class_declaration -> . var_declaration
+    (26) class_declaration -> . function_definition
+    (78) var_declaration -> . type VAR SEMICOLON
+    (79) var_declaration -> . array_declaration
+    (15) function_definition -> . type_function_definition
+    (16) function_definition -> . void_function_definition
+    (56) type -> . INT
+    (57) type -> . CHAR
+    (58) type -> . STRING
+    (59) type -> . BOOL
+    (60) type -> . FLOAT
+    (61) type -> . LONG
+    (62) type -> . SHORT
+    (80) array_declaration -> . type get_array_element SEMICOLON
+    (17) type_function_definition -> . type VAR LEFT_BR function_var_declaration RIGHT_BR LEFT_BR_CURLY instructions returning RIGHT_BR_CURLY
+    (18) void_function_definition -> . VOID VAR LEFT_BR function_var_declaration RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY
+
+    RIGHT_BR_CURLY  reduce using rule 27 (class_declarations -> class_declaration .)
+    INT             shift and go to state 18
+    CHAR            shift and go to state 19
+    STRING          shift and go to state 14
+    BOOL            shift and go to state 20
+    FLOAT           shift and go to state 21
+    LONG            shift and go to state 22
+    SHORT           shift and go to state 23
+    VOID            shift and go to state 17
+
+    class_declaration              shift and go to state 53
+    class_declarations             shift and go to state 60
+    var_declaration                shift and go to state 54
+    function_definition            shift and go to state 55
+    type                           shift and go to state 16
+    array_declaration              shift and go to state 56
+    type_function_definition       shift and go to state 11
+    void_function_definition       shift and go to state 12
+
+state 54
+
+    (25) class_declaration -> var_declaration .
+
+    INT             reduce using rule 25 (class_declaration -> var_declaration .)
+    CHAR            reduce using rule 25 (class_declaration -> var_declaration .)
+    STRING          reduce using rule 25 (class_declaration -> var_declaration .)
+    BOOL            reduce using rule 25 (class_declaration -> var_declaration .)
+    FLOAT           reduce using rule 25 (class_declaration -> var_declaration .)
+    LONG            reduce using rule 25 (class_declaration -> var_declaration .)
+    SHORT           reduce using rule 25 (class_declaration -> var_declaration .)
+    VOID            reduce using rule 25 (class_declaration -> var_declaration .)
+    RIGHT_BR_CURLY  reduce using rule 25 (class_declaration -> var_declaration .)
+
+
+state 55
+
+    (26) class_declaration -> function_definition .
+
+    INT             reduce using rule 26 (class_declaration -> function_definition .)
+    CHAR            reduce using rule 26 (class_declaration -> function_definition .)
+    STRING          reduce using rule 26 (class_declaration -> function_definition .)
+    BOOL            reduce using rule 26 (class_declaration -> function_definition .)
+    FLOAT           reduce using rule 26 (class_declaration -> function_definition .)
+    LONG            reduce using rule 26 (class_declaration -> function_definition .)
+    SHORT           reduce using rule 26 (class_declaration -> function_definition .)
+    VOID            reduce using rule 26 (class_declaration -> function_definition .)
+    RIGHT_BR_CURLY  reduce using rule 26 (class_declaration -> function_definition .)
+
+
+state 56
+
+    (79) var_declaration -> array_declaration .
+
+    INT             reduce using rule 79 (var_declaration -> array_declaration .)
+    CHAR            reduce using rule 79 (var_declaration -> array_declaration .)
+    STRING          reduce using rule 79 (var_declaration -> array_declaration .)
+    BOOL            reduce using rule 79 (var_declaration -> array_declaration .)
+    FLOAT           reduce using rule 79 (var_declaration -> array_declaration .)
+    LONG            reduce using rule 79 (var_declaration -> array_declaration .)
+    SHORT           reduce using rule 79 (var_declaration -> array_declaration .)
+    VOID            reduce using rule 79 (var_declaration -> array_declaration .)
+    RIGHT_BR_CURLY  reduce using rule 79 (var_declaration -> array_declaration .)
+
+
+state 57
+
+    (17) type_function_definition -> type VAR LEFT_BR function_var_declaration RIGHT_BR LEFT_BR_CURLY . instructions returning RIGHT_BR_CURLY
+    (29) instructions -> . instruction
+    (30) instructions -> . instruction instructions
+    (31) instruction -> . loop
+    (32) instruction -> . if_statement
+    (33) instruction -> . assignment
+    (34) instruction -> . operation
+    (41) loop -> . while_loop
+    (42) loop -> . for_loop
+    (43) if_statement -> . IF LEFT_BR comparisons RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY
+    (77) assignment -> . VAR EQUAL value SEMICOLON
+    (74) operation -> . increment
+    (75) operation -> . decrement
+    (76) operation -> . value operator value SEMICOLON
+    (35) while_loop -> . WHILE LEFT_BR comparisons RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY
+    (40) for_loop -> . for_loop_statement LEFT_BR_CURLY instructions RIGHT_BR_CURLY
+    (71) increment -> . VAR PLUS_PLUS SEMICOLON
+    (72) decrement -> . VAR MINUS_MINUS SEMICOLON
+    (69) value -> . number
+    (70) value -> . value
+    (36) for_loop_statement -> . FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS INT_NUMBER SEMICOLON increment RIGHT_BR
+    (37) for_loop_statement -> . FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS_EQUAL INT_NUMBER SEMICOLON increment RIGHT_BR
+    (38) for_loop_statement -> . FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER INT_NUMBER SEMICOLON decrement RIGHT_BR
+    (39) for_loop_statement -> . FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER_EQUAL INT_NUMBER SEMICOLON decrement RIGHT_BR
+    (67) number -> . INT_NUMBER
+    (68) number -> . FLOAT_NUMBER
+
+    IF              shift and go to state 70
+    VAR             shift and go to state 61
+    WHILE           shift and go to state 74
+    FOR             shift and go to state 77
+    INT_NUMBER      shift and go to state 78
+    FLOAT_NUMBER    shift and go to state 79
+
+    instructions                   shift and go to state 62
+    instruction                    shift and go to state 63
+    loop                           shift and go to state 64
+    if_statement                   shift and go to state 65
+    assignment                     shift and go to state 66
+    operation                      shift and go to state 67
+    while_loop                     shift and go to state 68
+    for_loop                       shift and go to state 69
+    value                          shift and go to state 71
+    increment                      shift and go to state 72
+    decrement                      shift and go to state 73
+    for_loop_statement             shift and go to state 75
+    number                         shift and go to state 76
+
+state 58
+
+    (18) void_function_definition -> VOID VAR LEFT_BR function_var_declaration RIGHT_BR LEFT_BR_CURLY . instructions RIGHT_BR_CURLY
+    (29) instructions -> . instruction
+    (30) instructions -> . instruction instructions
+    (31) instruction -> . loop
+    (32) instruction -> . if_statement
+    (33) instruction -> . assignment
+    (34) instruction -> . operation
+    (41) loop -> . while_loop
+    (42) loop -> . for_loop
+    (43) if_statement -> . IF LEFT_BR comparisons RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY
+    (77) assignment -> . VAR EQUAL value SEMICOLON
+    (74) operation -> . increment
+    (75) operation -> . decrement
+    (76) operation -> . value operator value SEMICOLON
+    (35) while_loop -> . WHILE LEFT_BR comparisons RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY
+    (40) for_loop -> . for_loop_statement LEFT_BR_CURLY instructions RIGHT_BR_CURLY
+    (71) increment -> . VAR PLUS_PLUS SEMICOLON
+    (72) decrement -> . VAR MINUS_MINUS SEMICOLON
+    (69) value -> . number
+    (70) value -> . value
+    (36) for_loop_statement -> . FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS INT_NUMBER SEMICOLON increment RIGHT_BR
+    (37) for_loop_statement -> . FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS_EQUAL INT_NUMBER SEMICOLON increment RIGHT_BR
+    (38) for_loop_statement -> . FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER INT_NUMBER SEMICOLON decrement RIGHT_BR
+    (39) for_loop_statement -> . FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER_EQUAL INT_NUMBER SEMICOLON decrement RIGHT_BR
+    (67) number -> . INT_NUMBER
+    (68) number -> . FLOAT_NUMBER
+
+    IF              shift and go to state 70
+    VAR             shift and go to state 61
+    WHILE           shift and go to state 74
+    FOR             shift and go to state 77
+    INT_NUMBER      shift and go to state 78
+    FLOAT_NUMBER    shift and go to state 79
+
+    instructions                   shift and go to state 80
+    instruction                    shift and go to state 63
+    loop                           shift and go to state 64
+    if_statement                   shift and go to state 65
+    assignment                     shift and go to state 66
+    operation                      shift and go to state 67
+    while_loop                     shift and go to state 68
+    for_loop                       shift and go to state 69
+    value                          shift and go to state 71
+    increment                      shift and go to state 72
+    decrement                      shift and go to state 73
+    for_loop_statement             shift and go to state 75
+    number                         shift and go to state 76
+
+state 59
+
+    (21) class_definition -> CLASS STRING LEFT_BR_CURLY protection_level COLON class_declarations RIGHT_BR_CURLY . SEMICOLON
+
+    SEMICOLON       shift and go to state 81
+
+
+state 60
+
+    (28) class_declarations -> class_declaration class_declarations .
+
+    RIGHT_BR_CURLY  reduce using rule 28 (class_declarations -> class_declaration class_declarations .)
+
+
+state 61
+
+    (77) assignment -> VAR . EQUAL value SEMICOLON
+    (71) increment -> VAR . PLUS_PLUS SEMICOLON
+    (72) decrement -> VAR . MINUS_MINUS SEMICOLON
+
+    EQUAL           shift and go to state 82
+    PLUS_PLUS       shift and go to state 83
+    MINUS_MINUS     shift and go to state 84
+
+
+state 62
+
+    (17) type_function_definition -> type VAR LEFT_BR function_var_declaration RIGHT_BR LEFT_BR_CURLY instructions . returning RIGHT_BR_CURLY
+    (82) returning -> . RETURN value SEMICOLON
+
+    RETURN          shift and go to state 86
+
+    returning                      shift and go to state 85
+
+state 63
+
+    (29) instructions -> instruction .
+    (30) instructions -> instruction . instructions
+    (29) instructions -> . instruction
+    (30) instructions -> . instruction instructions
+    (31) instruction -> . loop
+    (32) instruction -> . if_statement
+    (33) instruction -> . assignment
+    (34) instruction -> . operation
+    (41) loop -> . while_loop
+    (42) loop -> . for_loop
+    (43) if_statement -> . IF LEFT_BR comparisons RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY
+    (77) assignment -> . VAR EQUAL value SEMICOLON
+    (74) operation -> . increment
+    (75) operation -> . decrement
+    (76) operation -> . value operator value SEMICOLON
+    (35) while_loop -> . WHILE LEFT_BR comparisons RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY
+    (40) for_loop -> . for_loop_statement LEFT_BR_CURLY instructions RIGHT_BR_CURLY
+    (71) increment -> . VAR PLUS_PLUS SEMICOLON
+    (72) decrement -> . VAR MINUS_MINUS SEMICOLON
+    (69) value -> . number
+    (70) value -> . value
+    (36) for_loop_statement -> . FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS INT_NUMBER SEMICOLON increment RIGHT_BR
+    (37) for_loop_statement -> . FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS_EQUAL INT_NUMBER SEMICOLON increment RIGHT_BR
+    (38) for_loop_statement -> . FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER INT_NUMBER SEMICOLON decrement RIGHT_BR
+    (39) for_loop_statement -> . FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER_EQUAL INT_NUMBER SEMICOLON decrement RIGHT_BR
+    (67) number -> . INT_NUMBER
+    (68) number -> . FLOAT_NUMBER
+
+    RETURN          reduce using rule 29 (instructions -> instruction .)
+    RIGHT_BR_CURLY  reduce using rule 29 (instructions -> instruction .)
+    IF              shift and go to state 70
+    VAR             shift and go to state 61
+    WHILE           shift and go to state 74
+    FOR             shift and go to state 77
+    INT_NUMBER      shift and go to state 78
+    FLOAT_NUMBER    shift and go to state 79
+
+    instruction                    shift and go to state 63
+    instructions                   shift and go to state 87
+    loop                           shift and go to state 64
+    if_statement                   shift and go to state 65
+    assignment                     shift and go to state 66
+    operation                      shift and go to state 67
+    while_loop                     shift and go to state 68
+    for_loop                       shift and go to state 69
+    value                          shift and go to state 71
+    increment                      shift and go to state 72
+    decrement                      shift and go to state 73
+    for_loop_statement             shift and go to state 75
+    number                         shift and go to state 76
+
+state 64
+
+    (31) instruction -> loop .
+
+    IF              reduce using rule 31 (instruction -> loop .)
+    VAR             reduce using rule 31 (instruction -> loop .)
+    WHILE           reduce using rule 31 (instruction -> loop .)
+    FOR             reduce using rule 31 (instruction -> loop .)
+    INT_NUMBER      reduce using rule 31 (instruction -> loop .)
+    FLOAT_NUMBER    reduce using rule 31 (instruction -> loop .)
+    RETURN          reduce using rule 31 (instruction -> loop .)
+    RIGHT_BR_CURLY  reduce using rule 31 (instruction -> loop .)
+
+
+state 65
+
+    (32) instruction -> if_statement .
+
+    IF              reduce using rule 32 (instruction -> if_statement .)
+    VAR             reduce using rule 32 (instruction -> if_statement .)
+    WHILE           reduce using rule 32 (instruction -> if_statement .)
+    FOR             reduce using rule 32 (instruction -> if_statement .)
+    INT_NUMBER      reduce using rule 32 (instruction -> if_statement .)
+    FLOAT_NUMBER    reduce using rule 32 (instruction -> if_statement .)
+    RETURN          reduce using rule 32 (instruction -> if_statement .)
+    RIGHT_BR_CURLY  reduce using rule 32 (instruction -> if_statement .)
+
+
+state 66
+
+    (33) instruction -> assignment .
+
+    IF              reduce using rule 33 (instruction -> assignment .)
+    VAR             reduce using rule 33 (instruction -> assignment .)
+    WHILE           reduce using rule 33 (instruction -> assignment .)
+    FOR             reduce using rule 33 (instruction -> assignment .)
+    INT_NUMBER      reduce using rule 33 (instruction -> assignment .)
+    FLOAT_NUMBER    reduce using rule 33 (instruction -> assignment .)
+    RETURN          reduce using rule 33 (instruction -> assignment .)
+    RIGHT_BR_CURLY  reduce using rule 33 (instruction -> assignment .)
+
+
+state 67
+
+    (34) instruction -> operation .
+
+    IF              reduce using rule 34 (instruction -> operation .)
+    VAR             reduce using rule 34 (instruction -> operation .)
+    WHILE           reduce using rule 34 (instruction -> operation .)
+    FOR             reduce using rule 34 (instruction -> operation .)
+    INT_NUMBER      reduce using rule 34 (instruction -> operation .)
+    FLOAT_NUMBER    reduce using rule 34 (instruction -> operation .)
+    RETURN          reduce using rule 34 (instruction -> operation .)
+    RIGHT_BR_CURLY  reduce using rule 34 (instruction -> operation .)
+
+
+state 68
+
+    (41) loop -> while_loop .
+
+    IF              reduce using rule 41 (loop -> while_loop .)
+    VAR             reduce using rule 41 (loop -> while_loop .)
+    WHILE           reduce using rule 41 (loop -> while_loop .)
+    FOR             reduce using rule 41 (loop -> while_loop .)
+    INT_NUMBER      reduce using rule 41 (loop -> while_loop .)
+    FLOAT_NUMBER    reduce using rule 41 (loop -> while_loop .)
+    RETURN          reduce using rule 41 (loop -> while_loop .)
+    RIGHT_BR_CURLY  reduce using rule 41 (loop -> while_loop .)
+
+
+state 69
+
+    (42) loop -> for_loop .
+
+    IF              reduce using rule 42 (loop -> for_loop .)
+    VAR             reduce using rule 42 (loop -> for_loop .)
+    WHILE           reduce using rule 42 (loop -> for_loop .)
+    FOR             reduce using rule 42 (loop -> for_loop .)
+    INT_NUMBER      reduce using rule 42 (loop -> for_loop .)
+    FLOAT_NUMBER    reduce using rule 42 (loop -> for_loop .)
+    RETURN          reduce using rule 42 (loop -> for_loop .)
+    RIGHT_BR_CURLY  reduce using rule 42 (loop -> for_loop .)
+
+
+state 70
+
+    (43) if_statement -> IF . LEFT_BR comparisons RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY
+
+    LEFT_BR         shift and go to state 88
+
+
+state 71
+
+    (76) operation -> value . operator value SEMICOLON
+    (70) value -> value .
+    (52) operator -> . PLUS
+    (53) operator -> . MINUS
+    (54) operator -> . MULTIPLY
+    (55) operator -> . DIVIDE
+
+  ! shift/reduce conflict for PLUS resolved as shift
+  ! shift/reduce conflict for MINUS resolved as shift
+  ! shift/reduce conflict for MULTIPLY resolved as shift
+  ! shift/reduce conflict for DIVIDE resolved as shift
+    PLUS            shift and go to state 90
+    MINUS           shift and go to state 91
+    MULTIPLY        shift and go to state 92
+    DIVIDE          shift and go to state 93
+
+  ! PLUS            [ reduce using rule 70 (value -> value .) ]
+  ! MINUS           [ reduce using rule 70 (value -> value .) ]
+  ! MULTIPLY        [ reduce using rule 70 (value -> value .) ]
+  ! DIVIDE          [ reduce using rule 70 (value -> value .) ]
+
+    operator                       shift and go to state 89
+
+state 72
+
+    (74) operation -> increment .
+
+    IF              reduce using rule 74 (operation -> increment .)
+    VAR             reduce using rule 74 (operation -> increment .)
+    WHILE           reduce using rule 74 (operation -> increment .)
+    FOR             reduce using rule 74 (operation -> increment .)
+    INT_NUMBER      reduce using rule 74 (operation -> increment .)
+    FLOAT_NUMBER    reduce using rule 74 (operation -> increment .)
+    RETURN          reduce using rule 74 (operation -> increment .)
+    RIGHT_BR_CURLY  reduce using rule 74 (operation -> increment .)
+
+
+state 73
+
+    (75) operation -> decrement .
+
+    IF              reduce using rule 75 (operation -> decrement .)
+    VAR             reduce using rule 75 (operation -> decrement .)
+    WHILE           reduce using rule 75 (operation -> decrement .)
+    FOR             reduce using rule 75 (operation -> decrement .)
+    INT_NUMBER      reduce using rule 75 (operation -> decrement .)
+    FLOAT_NUMBER    reduce using rule 75 (operation -> decrement .)
+    RETURN          reduce using rule 75 (operation -> decrement .)
+    RIGHT_BR_CURLY  reduce using rule 75 (operation -> decrement .)
+
+
+state 74
+
+    (35) while_loop -> WHILE . LEFT_BR comparisons RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY
+
+    LEFT_BR         shift and go to state 94
+
+
+state 75
+
+    (40) for_loop -> for_loop_statement . LEFT_BR_CURLY instructions RIGHT_BR_CURLY
+
+    LEFT_BR_CURLY   shift and go to state 95
+
+
+state 76
+
+    (69) value -> number .
+
+    PLUS            reduce using rule 69 (value -> number .)
+    MINUS           reduce using rule 69 (value -> number .)
+    MULTIPLY        reduce using rule 69 (value -> number .)
+    DIVIDE          reduce using rule 69 (value -> number .)
+    SEMICOLON       reduce using rule 69 (value -> number .)
+    LESS            reduce using rule 69 (value -> number .)
+    LESS_EQUAL      reduce using rule 69 (value -> number .)
+    GREATER         reduce using rule 69 (value -> number .)
+    GREATER_EQUAL   reduce using rule 69 (value -> number .)
+    EQUAL_EQUAL     reduce using rule 69 (value -> number .)
+    NOT_EQUAL       reduce using rule 69 (value -> number .)
+    AND             reduce using rule 69 (value -> number .)
+    OR              reduce using rule 69 (value -> number .)
+    RIGHT_BR        reduce using rule 69 (value -> number .)
+
+
+state 77
+
+    (36) for_loop_statement -> FOR . LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS INT_NUMBER SEMICOLON increment RIGHT_BR
+    (37) for_loop_statement -> FOR . LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS_EQUAL INT_NUMBER SEMICOLON increment RIGHT_BR
+    (38) for_loop_statement -> FOR . LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER INT_NUMBER SEMICOLON decrement RIGHT_BR
+    (39) for_loop_statement -> FOR . LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER_EQUAL INT_NUMBER SEMICOLON decrement RIGHT_BR
+
+    LEFT_BR         shift and go to state 96
+
+
+state 78
+
+    (67) number -> INT_NUMBER .
+
+    PLUS            reduce using rule 67 (number -> INT_NUMBER .)
+    MINUS           reduce using rule 67 (number -> INT_NUMBER .)
+    MULTIPLY        reduce using rule 67 (number -> INT_NUMBER .)
+    DIVIDE          reduce using rule 67 (number -> INT_NUMBER .)
+    SEMICOLON       reduce using rule 67 (number -> INT_NUMBER .)
+    LESS            reduce using rule 67 (number -> INT_NUMBER .)
+    LESS_EQUAL      reduce using rule 67 (number -> INT_NUMBER .)
+    GREATER         reduce using rule 67 (number -> INT_NUMBER .)
+    GREATER_EQUAL   reduce using rule 67 (number -> INT_NUMBER .)
+    EQUAL_EQUAL     reduce using rule 67 (number -> INT_NUMBER .)
+    NOT_EQUAL       reduce using rule 67 (number -> INT_NUMBER .)
+    AND             reduce using rule 67 (number -> INT_NUMBER .)
+    OR              reduce using rule 67 (number -> INT_NUMBER .)
+    RIGHT_BR        reduce using rule 67 (number -> INT_NUMBER .)
+
+
+state 79
+
+    (68) number -> FLOAT_NUMBER .
+
+    PLUS            reduce using rule 68 (number -> FLOAT_NUMBER .)
+    MINUS           reduce using rule 68 (number -> FLOAT_NUMBER .)
+    MULTIPLY        reduce using rule 68 (number -> FLOAT_NUMBER .)
+    DIVIDE          reduce using rule 68 (number -> FLOAT_NUMBER .)
+    SEMICOLON       reduce using rule 68 (number -> FLOAT_NUMBER .)
+    LESS            reduce using rule 68 (number -> FLOAT_NUMBER .)
+    LESS_EQUAL      reduce using rule 68 (number -> FLOAT_NUMBER .)
+    GREATER         reduce using rule 68 (number -> FLOAT_NUMBER .)
+    GREATER_EQUAL   reduce using rule 68 (number -> FLOAT_NUMBER .)
+    EQUAL_EQUAL     reduce using rule 68 (number -> FLOAT_NUMBER .)
+    NOT_EQUAL       reduce using rule 68 (number -> FLOAT_NUMBER .)
+    AND             reduce using rule 68 (number -> FLOAT_NUMBER .)
+    OR              reduce using rule 68 (number -> FLOAT_NUMBER .)
+    RIGHT_BR        reduce using rule 68 (number -> FLOAT_NUMBER .)
+
+
+state 80
+
+    (18) void_function_definition -> VOID VAR LEFT_BR function_var_declaration RIGHT_BR LEFT_BR_CURLY instructions . RIGHT_BR_CURLY
+
+    RIGHT_BR_CURLY  shift and go to state 97
+
+
+state 81
+
+    (21) class_definition -> CLASS STRING LEFT_BR_CURLY protection_level COLON class_declarations RIGHT_BR_CURLY SEMICOLON .
+
+    CLASS           reduce using rule 21 (class_definition -> CLASS STRING LEFT_BR_CURLY protection_level COLON class_declarations RIGHT_BR_CURLY SEMICOLON .)
+    HASH            reduce using rule 21 (class_definition -> CLASS STRING LEFT_BR_CURLY protection_level COLON class_declarations RIGHT_BR_CURLY SEMICOLON .)
+    VOID            reduce using rule 21 (class_definition -> CLASS STRING LEFT_BR_CURLY protection_level COLON class_declarations RIGHT_BR_CURLY SEMICOLON .)
+    INT             reduce using rule 21 (class_definition -> CLASS STRING LEFT_BR_CURLY protection_level COLON class_declarations RIGHT_BR_CURLY SEMICOLON .)
+    CHAR            reduce using rule 21 (class_definition -> CLASS STRING LEFT_BR_CURLY protection_level COLON class_declarations RIGHT_BR_CURLY SEMICOLON .)
+    STRING          reduce using rule 21 (class_definition -> CLASS STRING LEFT_BR_CURLY protection_level COLON class_declarations RIGHT_BR_CURLY SEMICOLON .)
+    BOOL            reduce using rule 21 (class_definition -> CLASS STRING LEFT_BR_CURLY protection_level COLON class_declarations RIGHT_BR_CURLY SEMICOLON .)
+    FLOAT           reduce using rule 21 (class_definition -> CLASS STRING LEFT_BR_CURLY protection_level COLON class_declarations RIGHT_BR_CURLY SEMICOLON .)
+    LONG            reduce using rule 21 (class_definition -> CLASS STRING LEFT_BR_CURLY protection_level COLON class_declarations RIGHT_BR_CURLY SEMICOLON .)
+    SHORT           reduce using rule 21 (class_definition -> CLASS STRING LEFT_BR_CURLY protection_level COLON class_declarations RIGHT_BR_CURLY SEMICOLON .)
+    $end            reduce using rule 21 (class_definition -> CLASS STRING LEFT_BR_CURLY protection_level COLON class_declarations RIGHT_BR_CURLY SEMICOLON .)
+
+
+state 82
+
+    (77) assignment -> VAR EQUAL . value SEMICOLON
+    (69) value -> . number
+    (70) value -> . value
+    (67) number -> . INT_NUMBER
+    (68) number -> . FLOAT_NUMBER
+
+    INT_NUMBER      shift and go to state 78
+    FLOAT_NUMBER    shift and go to state 79
+
+    value                          shift and go to state 98
+    number                         shift and go to state 76
+
+state 83
+
+    (71) increment -> VAR PLUS_PLUS . SEMICOLON
+
+    SEMICOLON       shift and go to state 99
+
+
+state 84
+
+    (72) decrement -> VAR MINUS_MINUS . SEMICOLON
+
+    SEMICOLON       shift and go to state 100
+
+
+state 85
+
+    (17) type_function_definition -> type VAR LEFT_BR function_var_declaration RIGHT_BR LEFT_BR_CURLY instructions returning . RIGHT_BR_CURLY
+
+    RIGHT_BR_CURLY  shift and go to state 101
+
+
+state 86
+
+    (82) returning -> RETURN . value SEMICOLON
+    (69) value -> . number
+    (70) value -> . value
+    (67) number -> . INT_NUMBER
+    (68) number -> . FLOAT_NUMBER
+
+    INT_NUMBER      shift and go to state 78
+    FLOAT_NUMBER    shift and go to state 79
+
+    value                          shift and go to state 102
+    number                         shift and go to state 76
+
+state 87
+
+    (30) instructions -> instruction instructions .
+
+    RETURN          reduce using rule 30 (instructions -> instruction instructions .)
+    RIGHT_BR_CURLY  reduce using rule 30 (instructions -> instruction instructions .)
+
+
+state 88
+
+    (43) if_statement -> IF LEFT_BR . comparisons RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY
+    (44) comparisons -> . comparison
+    (45) comparisons -> . comparison conjunction comparisons
+    (81) comparison -> . value comparator value
+    (69) value -> . number
+    (70) value -> . value
+    (67) number -> . INT_NUMBER
+    (68) number -> . FLOAT_NUMBER
+
+    INT_NUMBER      shift and go to state 78
+    FLOAT_NUMBER    shift and go to state 79
+
+    comparisons                    shift and go to state 103
+    comparison                     shift and go to state 104
+    value                          shift and go to state 105
+    number                         shift and go to state 76
+
+state 89
+
+    (76) operation -> value operator . value SEMICOLON
+    (69) value -> . number
+    (70) value -> . value
+    (67) number -> . INT_NUMBER
+    (68) number -> . FLOAT_NUMBER
+
+    INT_NUMBER      shift and go to state 78
+    FLOAT_NUMBER    shift and go to state 79
+
+    value                          shift and go to state 106
+    number                         shift and go to state 76
+
+state 90
+
+    (52) operator -> PLUS .
+
+    INT_NUMBER      reduce using rule 52 (operator -> PLUS .)
+    FLOAT_NUMBER    reduce using rule 52 (operator -> PLUS .)
+
+
+state 91
+
+    (53) operator -> MINUS .
+
+    INT_NUMBER      reduce using rule 53 (operator -> MINUS .)
+    FLOAT_NUMBER    reduce using rule 53 (operator -> MINUS .)
+
+
+state 92
+
+    (54) operator -> MULTIPLY .
+
+    INT_NUMBER      reduce using rule 54 (operator -> MULTIPLY .)
+    FLOAT_NUMBER    reduce using rule 54 (operator -> MULTIPLY .)
+
+
+state 93
+
+    (55) operator -> DIVIDE .
+
+    INT_NUMBER      reduce using rule 55 (operator -> DIVIDE .)
+    FLOAT_NUMBER    reduce using rule 55 (operator -> DIVIDE .)
+
+
+state 94
+
+    (35) while_loop -> WHILE LEFT_BR . comparisons RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY
+    (44) comparisons -> . comparison
+    (45) comparisons -> . comparison conjunction comparisons
+    (81) comparison -> . value comparator value
+    (69) value -> . number
+    (70) value -> . value
+    (67) number -> . INT_NUMBER
+    (68) number -> . FLOAT_NUMBER
+
+    INT_NUMBER      shift and go to state 78
+    FLOAT_NUMBER    shift and go to state 79
+
+    comparisons                    shift and go to state 107
+    comparison                     shift and go to state 104
+    value                          shift and go to state 105
+    number                         shift and go to state 76
+
+state 95
+
+    (40) for_loop -> for_loop_statement LEFT_BR_CURLY . instructions RIGHT_BR_CURLY
+    (29) instructions -> . instruction
+    (30) instructions -> . instruction instructions
+    (31) instruction -> . loop
+    (32) instruction -> . if_statement
+    (33) instruction -> . assignment
+    (34) instruction -> . operation
+    (41) loop -> . while_loop
+    (42) loop -> . for_loop
+    (43) if_statement -> . IF LEFT_BR comparisons RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY
+    (77) assignment -> . VAR EQUAL value SEMICOLON
+    (74) operation -> . increment
+    (75) operation -> . decrement
+    (76) operation -> . value operator value SEMICOLON
+    (35) while_loop -> . WHILE LEFT_BR comparisons RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY
+    (40) for_loop -> . for_loop_statement LEFT_BR_CURLY instructions RIGHT_BR_CURLY
+    (71) increment -> . VAR PLUS_PLUS SEMICOLON
+    (72) decrement -> . VAR MINUS_MINUS SEMICOLON
+    (69) value -> . number
+    (70) value -> . value
+    (36) for_loop_statement -> . FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS INT_NUMBER SEMICOLON increment RIGHT_BR
+    (37) for_loop_statement -> . FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS_EQUAL INT_NUMBER SEMICOLON increment RIGHT_BR
+    (38) for_loop_statement -> . FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER INT_NUMBER SEMICOLON decrement RIGHT_BR
+    (39) for_loop_statement -> . FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER_EQUAL INT_NUMBER SEMICOLON decrement RIGHT_BR
+    (67) number -> . INT_NUMBER
+    (68) number -> . FLOAT_NUMBER
+
+    IF              shift and go to state 70
+    VAR             shift and go to state 61
+    WHILE           shift and go to state 74
+    FOR             shift and go to state 77
+    INT_NUMBER      shift and go to state 78
+    FLOAT_NUMBER    shift and go to state 79
+
+    for_loop_statement             shift and go to state 75
+    instructions                   shift and go to state 108
+    instruction                    shift and go to state 63
+    loop                           shift and go to state 64
+    if_statement                   shift and go to state 65
+    assignment                     shift and go to state 66
+    operation                      shift and go to state 67
+    while_loop                     shift and go to state 68
+    for_loop                       shift and go to state 69
+    value                          shift and go to state 71
+    increment                      shift and go to state 72
+    decrement                      shift and go to state 73
+    number                         shift and go to state 76
+
+state 96
+
+    (36) for_loop_statement -> FOR LEFT_BR . INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS INT_NUMBER SEMICOLON increment RIGHT_BR
+    (37) for_loop_statement -> FOR LEFT_BR . INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS_EQUAL INT_NUMBER SEMICOLON increment RIGHT_BR
+    (38) for_loop_statement -> FOR LEFT_BR . INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER INT_NUMBER SEMICOLON decrement RIGHT_BR
+    (39) for_loop_statement -> FOR LEFT_BR . INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER_EQUAL INT_NUMBER SEMICOLON decrement RIGHT_BR
+
+    INT             shift and go to state 109
+
+
+state 97
+
+    (18) void_function_definition -> VOID VAR LEFT_BR function_var_declaration RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY .
+
+    CLASS           reduce using rule 18 (void_function_definition -> VOID VAR LEFT_BR function_var_declaration RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY .)
+    HASH            reduce using rule 18 (void_function_definition -> VOID VAR LEFT_BR function_var_declaration RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY .)
+    VOID            reduce using rule 18 (void_function_definition -> VOID VAR LEFT_BR function_var_declaration RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY .)
+    INT             reduce using rule 18 (void_function_definition -> VOID VAR LEFT_BR function_var_declaration RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY .)
+    CHAR            reduce using rule 18 (void_function_definition -> VOID VAR LEFT_BR function_var_declaration RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY .)
+    STRING          reduce using rule 18 (void_function_definition -> VOID VAR LEFT_BR function_var_declaration RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY .)
+    BOOL            reduce using rule 18 (void_function_definition -> VOID VAR LEFT_BR function_var_declaration RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY .)
+    FLOAT           reduce using rule 18 (void_function_definition -> VOID VAR LEFT_BR function_var_declaration RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY .)
+    LONG            reduce using rule 18 (void_function_definition -> VOID VAR LEFT_BR function_var_declaration RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY .)
+    SHORT           reduce using rule 18 (void_function_definition -> VOID VAR LEFT_BR function_var_declaration RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY .)
+    $end            reduce using rule 18 (void_function_definition -> VOID VAR LEFT_BR function_var_declaration RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY .)
+    RIGHT_BR_CURLY  reduce using rule 18 (void_function_definition -> VOID VAR LEFT_BR function_var_declaration RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY .)
+
+
+state 98
+
+    (77) assignment -> VAR EQUAL value . SEMICOLON
+    (70) value -> value .
+
+  ! shift/reduce conflict for SEMICOLON resolved as shift
+    SEMICOLON       shift and go to state 110
+
+  ! SEMICOLON       [ reduce using rule 70 (value -> value .) ]
+
+
+state 99
+
+    (71) increment -> VAR PLUS_PLUS SEMICOLON .
+
+    IF              reduce using rule 71 (increment -> VAR PLUS_PLUS SEMICOLON .)
+    VAR             reduce using rule 71 (increment -> VAR PLUS_PLUS SEMICOLON .)
+    WHILE           reduce using rule 71 (increment -> VAR PLUS_PLUS SEMICOLON .)
+    FOR             reduce using rule 71 (increment -> VAR PLUS_PLUS SEMICOLON .)
+    INT_NUMBER      reduce using rule 71 (increment -> VAR PLUS_PLUS SEMICOLON .)
+    FLOAT_NUMBER    reduce using rule 71 (increment -> VAR PLUS_PLUS SEMICOLON .)
+    RETURN          reduce using rule 71 (increment -> VAR PLUS_PLUS SEMICOLON .)
+    RIGHT_BR_CURLY  reduce using rule 71 (increment -> VAR PLUS_PLUS SEMICOLON .)
+    RIGHT_BR        reduce using rule 71 (increment -> VAR PLUS_PLUS SEMICOLON .)
+
+
+state 100
+
+    (72) decrement -> VAR MINUS_MINUS SEMICOLON .
+
+    IF              reduce using rule 72 (decrement -> VAR MINUS_MINUS SEMICOLON .)
+    VAR             reduce using rule 72 (decrement -> VAR MINUS_MINUS SEMICOLON .)
+    WHILE           reduce using rule 72 (decrement -> VAR MINUS_MINUS SEMICOLON .)
+    FOR             reduce using rule 72 (decrement -> VAR MINUS_MINUS SEMICOLON .)
+    INT_NUMBER      reduce using rule 72 (decrement -> VAR MINUS_MINUS SEMICOLON .)
+    FLOAT_NUMBER    reduce using rule 72 (decrement -> VAR MINUS_MINUS SEMICOLON .)
+    RETURN          reduce using rule 72 (decrement -> VAR MINUS_MINUS SEMICOLON .)
+    RIGHT_BR_CURLY  reduce using rule 72 (decrement -> VAR MINUS_MINUS SEMICOLON .)
+    RIGHT_BR        reduce using rule 72 (decrement -> VAR MINUS_MINUS SEMICOLON .)
+
+
+state 101
+
+    (17) type_function_definition -> type VAR LEFT_BR function_var_declaration RIGHT_BR LEFT_BR_CURLY instructions returning RIGHT_BR_CURLY .
+
+    CLASS           reduce using rule 17 (type_function_definition -> type VAR LEFT_BR function_var_declaration RIGHT_BR LEFT_BR_CURLY instructions returning RIGHT_BR_CURLY .)
+    HASH            reduce using rule 17 (type_function_definition -> type VAR LEFT_BR function_var_declaration RIGHT_BR LEFT_BR_CURLY instructions returning RIGHT_BR_CURLY .)
+    VOID            reduce using rule 17 (type_function_definition -> type VAR LEFT_BR function_var_declaration RIGHT_BR LEFT_BR_CURLY instructions returning RIGHT_BR_CURLY .)
+    INT             reduce using rule 17 (type_function_definition -> type VAR LEFT_BR function_var_declaration RIGHT_BR LEFT_BR_CURLY instructions returning RIGHT_BR_CURLY .)
+    CHAR            reduce using rule 17 (type_function_definition -> type VAR LEFT_BR function_var_declaration RIGHT_BR LEFT_BR_CURLY instructions returning RIGHT_BR_CURLY .)
+    STRING          reduce using rule 17 (type_function_definition -> type VAR LEFT_BR function_var_declaration RIGHT_BR LEFT_BR_CURLY instructions returning RIGHT_BR_CURLY .)
+    BOOL            reduce using rule 17 (type_function_definition -> type VAR LEFT_BR function_var_declaration RIGHT_BR LEFT_BR_CURLY instructions returning RIGHT_BR_CURLY .)
+    FLOAT           reduce using rule 17 (type_function_definition -> type VAR LEFT_BR function_var_declaration RIGHT_BR LEFT_BR_CURLY instructions returning RIGHT_BR_CURLY .)
+    LONG            reduce using rule 17 (type_function_definition -> type VAR LEFT_BR function_var_declaration RIGHT_BR LEFT_BR_CURLY instructions returning RIGHT_BR_CURLY .)
+    SHORT           reduce using rule 17 (type_function_definition -> type VAR LEFT_BR function_var_declaration RIGHT_BR LEFT_BR_CURLY instructions returning RIGHT_BR_CURLY .)
+    $end            reduce using rule 17 (type_function_definition -> type VAR LEFT_BR function_var_declaration RIGHT_BR LEFT_BR_CURLY instructions returning RIGHT_BR_CURLY .)
+    RIGHT_BR_CURLY  reduce using rule 17 (type_function_definition -> type VAR LEFT_BR function_var_declaration RIGHT_BR LEFT_BR_CURLY instructions returning RIGHT_BR_CURLY .)
+
+
+state 102
+
+    (82) returning -> RETURN value . SEMICOLON
+    (70) value -> value .
+
+  ! shift/reduce conflict for SEMICOLON resolved as shift
+    SEMICOLON       shift and go to state 111
+
+  ! SEMICOLON       [ reduce using rule 70 (value -> value .) ]
+
+
+state 103
+
+    (43) if_statement -> IF LEFT_BR comparisons . RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY
+
+    RIGHT_BR        shift and go to state 112
+
+
+state 104
+
+    (44) comparisons -> comparison .
+    (45) comparisons -> comparison . conjunction comparisons
+    (63) conjunction -> . AND
+    (64) conjunction -> . OR
+
+    RIGHT_BR        reduce using rule 44 (comparisons -> comparison .)
+    AND             shift and go to state 114
+    OR              shift and go to state 115
+
+    conjunction                    shift and go to state 113
+
+state 105
+
+    (81) comparison -> value . comparator value
+    (70) value -> value .
+    (46) comparator -> . LESS
+    (47) comparator -> . LESS_EQUAL
+    (48) comparator -> . GREATER
+    (49) comparator -> . GREATER_EQUAL
+    (50) comparator -> . EQUAL_EQUAL
+    (51) comparator -> . NOT_EQUAL
+
+  ! shift/reduce conflict for LESS resolved as shift
+  ! shift/reduce conflict for LESS_EQUAL resolved as shift
+  ! shift/reduce conflict for GREATER resolved as shift
+  ! shift/reduce conflict for GREATER_EQUAL resolved as shift
+  ! shift/reduce conflict for EQUAL_EQUAL resolved as shift
+  ! shift/reduce conflict for NOT_EQUAL resolved as shift
+    LESS            shift and go to state 117
+    LESS_EQUAL      shift and go to state 118
+    GREATER         shift and go to state 119
+    GREATER_EQUAL   shift and go to state 120
+    EQUAL_EQUAL     shift and go to state 121
+    NOT_EQUAL       shift and go to state 122
+
+  ! LESS            [ reduce using rule 70 (value -> value .) ]
+  ! LESS_EQUAL      [ reduce using rule 70 (value -> value .) ]
+  ! GREATER         [ reduce using rule 70 (value -> value .) ]
+  ! GREATER_EQUAL   [ reduce using rule 70 (value -> value .) ]
+  ! EQUAL_EQUAL     [ reduce using rule 70 (value -> value .) ]
+  ! NOT_EQUAL       [ reduce using rule 70 (value -> value .) ]
+
+    comparator                     shift and go to state 116
+
+state 106
+
+    (76) operation -> value operator value . SEMICOLON
+    (70) value -> value .
+
+  ! shift/reduce conflict for SEMICOLON resolved as shift
+    SEMICOLON       shift and go to state 123
+
+  ! SEMICOLON       [ reduce using rule 70 (value -> value .) ]
+
+
+state 107
+
+    (35) while_loop -> WHILE LEFT_BR comparisons . RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY
+
+    RIGHT_BR        shift and go to state 124
+
+
+state 108
+
+    (40) for_loop -> for_loop_statement LEFT_BR_CURLY instructions . RIGHT_BR_CURLY
+
+    RIGHT_BR_CURLY  shift and go to state 125
+
+
+state 109
+
+    (36) for_loop_statement -> FOR LEFT_BR INT . VAR EQUAL INT_NUMBER SEMICOLON VAR LESS INT_NUMBER SEMICOLON increment RIGHT_BR
+    (37) for_loop_statement -> FOR LEFT_BR INT . VAR EQUAL INT_NUMBER SEMICOLON VAR LESS_EQUAL INT_NUMBER SEMICOLON increment RIGHT_BR
+    (38) for_loop_statement -> FOR LEFT_BR INT . VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER INT_NUMBER SEMICOLON decrement RIGHT_BR
+    (39) for_loop_statement -> FOR LEFT_BR INT . VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER_EQUAL INT_NUMBER SEMICOLON decrement RIGHT_BR
+
+    VAR             shift and go to state 126
+
+
+state 110
+
+    (77) assignment -> VAR EQUAL value SEMICOLON .
+
+    IF              reduce using rule 77 (assignment -> VAR EQUAL value SEMICOLON .)
+    VAR             reduce using rule 77 (assignment -> VAR EQUAL value SEMICOLON .)
+    WHILE           reduce using rule 77 (assignment -> VAR EQUAL value SEMICOLON .)
+    FOR             reduce using rule 77 (assignment -> VAR EQUAL value SEMICOLON .)
+    INT_NUMBER      reduce using rule 77 (assignment -> VAR EQUAL value SEMICOLON .)
+    FLOAT_NUMBER    reduce using rule 77 (assignment -> VAR EQUAL value SEMICOLON .)
+    RETURN          reduce using rule 77 (assignment -> VAR EQUAL value SEMICOLON .)
+    RIGHT_BR_CURLY  reduce using rule 77 (assignment -> VAR EQUAL value SEMICOLON .)
+
+
+state 111
+
+    (82) returning -> RETURN value SEMICOLON .
+
+    RIGHT_BR_CURLY  reduce using rule 82 (returning -> RETURN value SEMICOLON .)
+
+
+state 112
+
+    (43) if_statement -> IF LEFT_BR comparisons RIGHT_BR . LEFT_BR_CURLY instructions RIGHT_BR_CURLY
+
+    LEFT_BR_CURLY   shift and go to state 127
+
+
+state 113
+
+    (45) comparisons -> comparison conjunction . comparisons
+    (44) comparisons -> . comparison
+    (45) comparisons -> . comparison conjunction comparisons
+    (81) comparison -> . value comparator value
+    (69) value -> . number
+    (70) value -> . value
+    (67) number -> . INT_NUMBER
+    (68) number -> . FLOAT_NUMBER
+
+    INT_NUMBER      shift and go to state 78
+    FLOAT_NUMBER    shift and go to state 79
+
+    comparison                     shift and go to state 104
+    comparisons                    shift and go to state 128
+    value                          shift and go to state 105
+    number                         shift and go to state 76
+
+state 114
+
+    (63) conjunction -> AND .
+
+    INT_NUMBER      reduce using rule 63 (conjunction -> AND .)
+    FLOAT_NUMBER    reduce using rule 63 (conjunction -> AND .)
+
+
+state 115
+
+    (64) conjunction -> OR .
+
+    INT_NUMBER      reduce using rule 64 (conjunction -> OR .)
+    FLOAT_NUMBER    reduce using rule 64 (conjunction -> OR .)
+
+
+state 116
+
+    (81) comparison -> value comparator . value
+    (69) value -> . number
+    (70) value -> . value
+    (67) number -> . INT_NUMBER
+    (68) number -> . FLOAT_NUMBER
+
+    INT_NUMBER      shift and go to state 78
+    FLOAT_NUMBER    shift and go to state 79
+
+    value                          shift and go to state 129
+    number                         shift and go to state 76
+
+state 117
+
+    (46) comparator -> LESS .
+
+    INT_NUMBER      reduce using rule 46 (comparator -> LESS .)
+    FLOAT_NUMBER    reduce using rule 46 (comparator -> LESS .)
+
+
+state 118
+
+    (47) comparator -> LESS_EQUAL .
+
+    INT_NUMBER      reduce using rule 47 (comparator -> LESS_EQUAL .)
+    FLOAT_NUMBER    reduce using rule 47 (comparator -> LESS_EQUAL .)
+
+
+state 119
+
+    (48) comparator -> GREATER .
+
+    INT_NUMBER      reduce using rule 48 (comparator -> GREATER .)
+    FLOAT_NUMBER    reduce using rule 48 (comparator -> GREATER .)
+
+
+state 120
+
+    (49) comparator -> GREATER_EQUAL .
+
+    INT_NUMBER      reduce using rule 49 (comparator -> GREATER_EQUAL .)
+    FLOAT_NUMBER    reduce using rule 49 (comparator -> GREATER_EQUAL .)
+
+
+state 121
+
+    (50) comparator -> EQUAL_EQUAL .
+
+    INT_NUMBER      reduce using rule 50 (comparator -> EQUAL_EQUAL .)
+    FLOAT_NUMBER    reduce using rule 50 (comparator -> EQUAL_EQUAL .)
+
+
+state 122
+
+    (51) comparator -> NOT_EQUAL .
+
+    INT_NUMBER      reduce using rule 51 (comparator -> NOT_EQUAL .)
+    FLOAT_NUMBER    reduce using rule 51 (comparator -> NOT_EQUAL .)
+
+
+state 123
+
+    (76) operation -> value operator value SEMICOLON .
+
+    IF              reduce using rule 76 (operation -> value operator value SEMICOLON .)
+    VAR             reduce using rule 76 (operation -> value operator value SEMICOLON .)
+    WHILE           reduce using rule 76 (operation -> value operator value SEMICOLON .)
+    FOR             reduce using rule 76 (operation -> value operator value SEMICOLON .)
+    INT_NUMBER      reduce using rule 76 (operation -> value operator value SEMICOLON .)
+    FLOAT_NUMBER    reduce using rule 76 (operation -> value operator value SEMICOLON .)
+    RETURN          reduce using rule 76 (operation -> value operator value SEMICOLON .)
+    RIGHT_BR_CURLY  reduce using rule 76 (operation -> value operator value SEMICOLON .)
+
+
+state 124
+
+    (35) while_loop -> WHILE LEFT_BR comparisons RIGHT_BR . LEFT_BR_CURLY instructions RIGHT_BR_CURLY
+
+    LEFT_BR_CURLY   shift and go to state 130
+
+
+state 125
+
+    (40) for_loop -> for_loop_statement LEFT_BR_CURLY instructions RIGHT_BR_CURLY .
+
+    IF              reduce using rule 40 (for_loop -> for_loop_statement LEFT_BR_CURLY instructions RIGHT_BR_CURLY .)
+    VAR             reduce using rule 40 (for_loop -> for_loop_statement LEFT_BR_CURLY instructions RIGHT_BR_CURLY .)
+    WHILE           reduce using rule 40 (for_loop -> for_loop_statement LEFT_BR_CURLY instructions RIGHT_BR_CURLY .)
+    FOR             reduce using rule 40 (for_loop -> for_loop_statement LEFT_BR_CURLY instructions RIGHT_BR_CURLY .)
+    INT_NUMBER      reduce using rule 40 (for_loop -> for_loop_statement LEFT_BR_CURLY instructions RIGHT_BR_CURLY .)
+    FLOAT_NUMBER    reduce using rule 40 (for_loop -> for_loop_statement LEFT_BR_CURLY instructions RIGHT_BR_CURLY .)
+    RETURN          reduce using rule 40 (for_loop -> for_loop_statement LEFT_BR_CURLY instructions RIGHT_BR_CURLY .)
+    RIGHT_BR_CURLY  reduce using rule 40 (for_loop -> for_loop_statement LEFT_BR_CURLY instructions RIGHT_BR_CURLY .)
+
+
+state 126
+
+    (36) for_loop_statement -> FOR LEFT_BR INT VAR . EQUAL INT_NUMBER SEMICOLON VAR LESS INT_NUMBER SEMICOLON increment RIGHT_BR
+    (37) for_loop_statement -> FOR LEFT_BR INT VAR . EQUAL INT_NUMBER SEMICOLON VAR LESS_EQUAL INT_NUMBER SEMICOLON increment RIGHT_BR
+    (38) for_loop_statement -> FOR LEFT_BR INT VAR . EQUAL INT_NUMBER SEMICOLON VAR GREATER INT_NUMBER SEMICOLON decrement RIGHT_BR
+    (39) for_loop_statement -> FOR LEFT_BR INT VAR . EQUAL INT_NUMBER SEMICOLON VAR GREATER_EQUAL INT_NUMBER SEMICOLON decrement RIGHT_BR
+
+    EQUAL           shift and go to state 131
+
+
+state 127
+
+    (43) if_statement -> IF LEFT_BR comparisons RIGHT_BR LEFT_BR_CURLY . instructions RIGHT_BR_CURLY
+    (29) instructions -> . instruction
+    (30) instructions -> . instruction instructions
+    (31) instruction -> . loop
+    (32) instruction -> . if_statement
+    (33) instruction -> . assignment
+    (34) instruction -> . operation
+    (41) loop -> . while_loop
+    (42) loop -> . for_loop
+    (43) if_statement -> . IF LEFT_BR comparisons RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY
+    (77) assignment -> . VAR EQUAL value SEMICOLON
+    (74) operation -> . increment
+    (75) operation -> . decrement
+    (76) operation -> . value operator value SEMICOLON
+    (35) while_loop -> . WHILE LEFT_BR comparisons RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY
+    (40) for_loop -> . for_loop_statement LEFT_BR_CURLY instructions RIGHT_BR_CURLY
+    (71) increment -> . VAR PLUS_PLUS SEMICOLON
+    (72) decrement -> . VAR MINUS_MINUS SEMICOLON
+    (69) value -> . number
+    (70) value -> . value
+    (36) for_loop_statement -> . FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS INT_NUMBER SEMICOLON increment RIGHT_BR
+    (37) for_loop_statement -> . FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS_EQUAL INT_NUMBER SEMICOLON increment RIGHT_BR
+    (38) for_loop_statement -> . FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER INT_NUMBER SEMICOLON decrement RIGHT_BR
+    (39) for_loop_statement -> . FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER_EQUAL INT_NUMBER SEMICOLON decrement RIGHT_BR
+    (67) number -> . INT_NUMBER
+    (68) number -> . FLOAT_NUMBER
+
+    IF              shift and go to state 70
+    VAR             shift and go to state 61
+    WHILE           shift and go to state 74
+    FOR             shift and go to state 77
+    INT_NUMBER      shift and go to state 78
+    FLOAT_NUMBER    shift and go to state 79
+
+    instructions                   shift and go to state 132
+    instruction                    shift and go to state 63
+    loop                           shift and go to state 64
+    if_statement                   shift and go to state 65
+    assignment                     shift and go to state 66
+    operation                      shift and go to state 67
+    while_loop                     shift and go to state 68
+    for_loop                       shift and go to state 69
+    value                          shift and go to state 71
+    increment                      shift and go to state 72
+    decrement                      shift and go to state 73
+    for_loop_statement             shift and go to state 75
+    number                         shift and go to state 76
+
+state 128
+
+    (45) comparisons -> comparison conjunction comparisons .
+
+    RIGHT_BR        reduce using rule 45 (comparisons -> comparison conjunction comparisons .)
+
+
+state 129
+
+    (81) comparison -> value comparator value .
+    (70) value -> value .
+
+  ! reduce/reduce conflict for AND resolved using rule 70 (value -> value .)
+  ! reduce/reduce conflict for OR resolved using rule 70 (value -> value .)
+  ! reduce/reduce conflict for RIGHT_BR resolved using rule 70 (value -> value .)
+    AND             reduce using rule 70 (value -> value .)
+    OR              reduce using rule 70 (value -> value .)
+    RIGHT_BR        reduce using rule 70 (value -> value .)
+
+  ! AND             [ reduce using rule 81 (comparison -> value comparator value .) ]
+  ! OR              [ reduce using rule 81 (comparison -> value comparator value .) ]
+  ! RIGHT_BR        [ reduce using rule 81 (comparison -> value comparator value .) ]
+
+
+state 130
+
+    (35) while_loop -> WHILE LEFT_BR comparisons RIGHT_BR LEFT_BR_CURLY . instructions RIGHT_BR_CURLY
+    (29) instructions -> . instruction
+    (30) instructions -> . instruction instructions
+    (31) instruction -> . loop
+    (32) instruction -> . if_statement
+    (33) instruction -> . assignment
+    (34) instruction -> . operation
+    (41) loop -> . while_loop
+    (42) loop -> . for_loop
+    (43) if_statement -> . IF LEFT_BR comparisons RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY
+    (77) assignment -> . VAR EQUAL value SEMICOLON
+    (74) operation -> . increment
+    (75) operation -> . decrement
+    (76) operation -> . value operator value SEMICOLON
+    (35) while_loop -> . WHILE LEFT_BR comparisons RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY
+    (40) for_loop -> . for_loop_statement LEFT_BR_CURLY instructions RIGHT_BR_CURLY
+    (71) increment -> . VAR PLUS_PLUS SEMICOLON
+    (72) decrement -> . VAR MINUS_MINUS SEMICOLON
+    (69) value -> . number
+    (70) value -> . value
+    (36) for_loop_statement -> . FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS INT_NUMBER SEMICOLON increment RIGHT_BR
+    (37) for_loop_statement -> . FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS_EQUAL INT_NUMBER SEMICOLON increment RIGHT_BR
+    (38) for_loop_statement -> . FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER INT_NUMBER SEMICOLON decrement RIGHT_BR
+    (39) for_loop_statement -> . FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER_EQUAL INT_NUMBER SEMICOLON decrement RIGHT_BR
+    (67) number -> . INT_NUMBER
+    (68) number -> . FLOAT_NUMBER
+
+    IF              shift and go to state 70
+    VAR             shift and go to state 61
+    WHILE           shift and go to state 74
+    FOR             shift and go to state 77
+    INT_NUMBER      shift and go to state 78
+    FLOAT_NUMBER    shift and go to state 79
+
+    instructions                   shift and go to state 133
+    instruction                    shift and go to state 63
+    loop                           shift and go to state 64
+    if_statement                   shift and go to state 65
+    assignment                     shift and go to state 66
+    operation                      shift and go to state 67
+    while_loop                     shift and go to state 68
+    for_loop                       shift and go to state 69
+    value                          shift and go to state 71
+    increment                      shift and go to state 72
+    decrement                      shift and go to state 73
+    for_loop_statement             shift and go to state 75
+    number                         shift and go to state 76
+
+state 131
+
+    (36) for_loop_statement -> FOR LEFT_BR INT VAR EQUAL . INT_NUMBER SEMICOLON VAR LESS INT_NUMBER SEMICOLON increment RIGHT_BR
+    (37) for_loop_statement -> FOR LEFT_BR INT VAR EQUAL . INT_NUMBER SEMICOLON VAR LESS_EQUAL INT_NUMBER SEMICOLON increment RIGHT_BR
+    (38) for_loop_statement -> FOR LEFT_BR INT VAR EQUAL . INT_NUMBER SEMICOLON VAR GREATER INT_NUMBER SEMICOLON decrement RIGHT_BR
+    (39) for_loop_statement -> FOR LEFT_BR INT VAR EQUAL . INT_NUMBER SEMICOLON VAR GREATER_EQUAL INT_NUMBER SEMICOLON decrement RIGHT_BR
+
+    INT_NUMBER      shift and go to state 134
+
+
+state 132
+
+    (43) if_statement -> IF LEFT_BR comparisons RIGHT_BR LEFT_BR_CURLY instructions . RIGHT_BR_CURLY
+
+    RIGHT_BR_CURLY  shift and go to state 135
+
+
+state 133
+
+    (35) while_loop -> WHILE LEFT_BR comparisons RIGHT_BR LEFT_BR_CURLY instructions . RIGHT_BR_CURLY
+
+    RIGHT_BR_CURLY  shift and go to state 136
+
+
+state 134
+
+    (36) for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER . SEMICOLON VAR LESS INT_NUMBER SEMICOLON increment RIGHT_BR
+    (37) for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER . SEMICOLON VAR LESS_EQUAL INT_NUMBER SEMICOLON increment RIGHT_BR
+    (38) for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER . SEMICOLON VAR GREATER INT_NUMBER SEMICOLON decrement RIGHT_BR
+    (39) for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER . SEMICOLON VAR GREATER_EQUAL INT_NUMBER SEMICOLON decrement RIGHT_BR
+
+    SEMICOLON       shift and go to state 137
+
+
+state 135
+
+    (43) if_statement -> IF LEFT_BR comparisons RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY .
+
+    IF              reduce using rule 43 (if_statement -> IF LEFT_BR comparisons RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY .)
+    VAR             reduce using rule 43 (if_statement -> IF LEFT_BR comparisons RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY .)
+    WHILE           reduce using rule 43 (if_statement -> IF LEFT_BR comparisons RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY .)
+    FOR             reduce using rule 43 (if_statement -> IF LEFT_BR comparisons RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY .)
+    INT_NUMBER      reduce using rule 43 (if_statement -> IF LEFT_BR comparisons RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY .)
+    FLOAT_NUMBER    reduce using rule 43 (if_statement -> IF LEFT_BR comparisons RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY .)
+    RETURN          reduce using rule 43 (if_statement -> IF LEFT_BR comparisons RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY .)
+    RIGHT_BR_CURLY  reduce using rule 43 (if_statement -> IF LEFT_BR comparisons RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY .)
+
+
+state 136
+
+    (35) while_loop -> WHILE LEFT_BR comparisons RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY .
+
+    IF              reduce using rule 35 (while_loop -> WHILE LEFT_BR comparisons RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY .)
+    VAR             reduce using rule 35 (while_loop -> WHILE LEFT_BR comparisons RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY .)
+    WHILE           reduce using rule 35 (while_loop -> WHILE LEFT_BR comparisons RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY .)
+    FOR             reduce using rule 35 (while_loop -> WHILE LEFT_BR comparisons RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY .)
+    INT_NUMBER      reduce using rule 35 (while_loop -> WHILE LEFT_BR comparisons RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY .)
+    FLOAT_NUMBER    reduce using rule 35 (while_loop -> WHILE LEFT_BR comparisons RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY .)
+    RETURN          reduce using rule 35 (while_loop -> WHILE LEFT_BR comparisons RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY .)
+    RIGHT_BR_CURLY  reduce using rule 35 (while_loop -> WHILE LEFT_BR comparisons RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY .)
+
+
+state 137
+
+    (36) for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON . VAR LESS INT_NUMBER SEMICOLON increment RIGHT_BR
+    (37) for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON . VAR LESS_EQUAL INT_NUMBER SEMICOLON increment RIGHT_BR
+    (38) for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON . VAR GREATER INT_NUMBER SEMICOLON decrement RIGHT_BR
+    (39) for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON . VAR GREATER_EQUAL INT_NUMBER SEMICOLON decrement RIGHT_BR
+
+    VAR             shift and go to state 138
+
+
+state 138
+
+    (36) for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR . LESS INT_NUMBER SEMICOLON increment RIGHT_BR
+    (37) for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR . LESS_EQUAL INT_NUMBER SEMICOLON increment RIGHT_BR
+    (38) for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR . GREATER INT_NUMBER SEMICOLON decrement RIGHT_BR
+    (39) for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR . GREATER_EQUAL INT_NUMBER SEMICOLON decrement RIGHT_BR
+
+    LESS            shift and go to state 139
+    LESS_EQUAL      shift and go to state 140
+    GREATER         shift and go to state 141
+    GREATER_EQUAL   shift and go to state 142
+
+
+state 139
+
+    (36) for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS . INT_NUMBER SEMICOLON increment RIGHT_BR
+
+    INT_NUMBER      shift and go to state 143
+
+
+state 140
+
+    (37) for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS_EQUAL . INT_NUMBER SEMICOLON increment RIGHT_BR
+
+    INT_NUMBER      shift and go to state 144
+
+
+state 141
+
+    (38) for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER . INT_NUMBER SEMICOLON decrement RIGHT_BR
+
+    INT_NUMBER      shift and go to state 145
+
+
+state 142
+
+    (39) for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER_EQUAL . INT_NUMBER SEMICOLON decrement RIGHT_BR
+
+    INT_NUMBER      shift and go to state 146
+
+
+state 143
+
+    (36) for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS INT_NUMBER . SEMICOLON increment RIGHT_BR
+
+    SEMICOLON       shift and go to state 147
+
+
+state 144
+
+    (37) for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS_EQUAL INT_NUMBER . SEMICOLON increment RIGHT_BR
+
+    SEMICOLON       shift and go to state 148
+
+
+state 145
+
+    (38) for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER INT_NUMBER . SEMICOLON decrement RIGHT_BR
+
+    SEMICOLON       shift and go to state 149
+
+
+state 146
+
+    (39) for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER_EQUAL INT_NUMBER . SEMICOLON decrement RIGHT_BR
+
+    SEMICOLON       shift and go to state 150
+
+
+state 147
+
+    (36) for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS INT_NUMBER SEMICOLON . increment RIGHT_BR
+    (71) increment -> . VAR PLUS_PLUS SEMICOLON
+
+    VAR             shift and go to state 151
+
+    increment                      shift and go to state 152
+
+state 148
+
+    (37) for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS_EQUAL INT_NUMBER SEMICOLON . increment RIGHT_BR
+    (71) increment -> . VAR PLUS_PLUS SEMICOLON
+
+    VAR             shift and go to state 151
+
+    increment                      shift and go to state 153
+
+state 149
+
+    (38) for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER INT_NUMBER SEMICOLON . decrement RIGHT_BR
+    (72) decrement -> . VAR MINUS_MINUS SEMICOLON
+
+    VAR             shift and go to state 154
+
+    decrement                      shift and go to state 155
+
+state 150
+
+    (39) for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER_EQUAL INT_NUMBER SEMICOLON . decrement RIGHT_BR
+    (72) decrement -> . VAR MINUS_MINUS SEMICOLON
+
+    VAR             shift and go to state 154
+
+    decrement                      shift and go to state 156
+
+state 151
+
+    (71) increment -> VAR . PLUS_PLUS SEMICOLON
+
+    PLUS_PLUS       shift and go to state 83
+
+
+state 152
+
+    (36) for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS INT_NUMBER SEMICOLON increment . RIGHT_BR
+
+    RIGHT_BR        shift and go to state 157
+
+
+state 153
+
+    (37) for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS_EQUAL INT_NUMBER SEMICOLON increment . RIGHT_BR
+
+    RIGHT_BR        shift and go to state 158
+
+
+state 154
+
+    (72) decrement -> VAR . MINUS_MINUS SEMICOLON
+
+    MINUS_MINUS     shift and go to state 84
+
+
+state 155
+
+    (38) for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER INT_NUMBER SEMICOLON decrement . RIGHT_BR
+
+    RIGHT_BR        shift and go to state 159
+
+
+state 156
+
+    (39) for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER_EQUAL INT_NUMBER SEMICOLON decrement . RIGHT_BR
+
+    RIGHT_BR        shift and go to state 160
+
+
+state 157
+
+    (36) for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS INT_NUMBER SEMICOLON increment RIGHT_BR .
+
+    LEFT_BR_CURLY   reduce using rule 36 (for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS INT_NUMBER SEMICOLON increment RIGHT_BR .)
+
+
+state 158
+
+    (37) for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS_EQUAL INT_NUMBER SEMICOLON increment RIGHT_BR .
+
+    LEFT_BR_CURLY   reduce using rule 37 (for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS_EQUAL INT_NUMBER SEMICOLON increment RIGHT_BR .)
+
+
+state 159
+
+    (38) for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER INT_NUMBER SEMICOLON decrement RIGHT_BR .
+
+    LEFT_BR_CURLY   reduce using rule 38 (for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER INT_NUMBER SEMICOLON decrement RIGHT_BR .)
+
+
+state 160
+
+    (39) for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER_EQUAL INT_NUMBER SEMICOLON decrement RIGHT_BR .
+
+    LEFT_BR_CURLY   reduce using rule 39 (for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER_EQUAL INT_NUMBER SEMICOLON decrement RIGHT_BR .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for CLASS in state 0 resolved as shift
+WARNING: shift/reduce conflict for HASH in state 0 resolved as shift
+WARNING: shift/reduce conflict for VOID in state 0 resolved as shift
+WARNING: shift/reduce conflict for INT in state 0 resolved as shift
+WARNING: shift/reduce conflict for CHAR in state 0 resolved as shift
+WARNING: shift/reduce conflict for STRING in state 0 resolved as shift
+WARNING: shift/reduce conflict for BOOL in state 0 resolved as shift
+WARNING: shift/reduce conflict for FLOAT in state 0 resolved as shift
+WARNING: shift/reduce conflict for LONG in state 0 resolved as shift
+WARNING: shift/reduce conflict for SHORT in state 0 resolved as shift
+WARNING: shift/reduce conflict for CLASS in state 5 resolved as shift
+WARNING: shift/reduce conflict for HASH in state 5 resolved as shift
+WARNING: shift/reduce conflict for VOID in state 5 resolved as shift
+WARNING: shift/reduce conflict for INT in state 5 resolved as shift
+WARNING: shift/reduce conflict for CHAR in state 5 resolved as shift
+WARNING: shift/reduce conflict for STRING in state 5 resolved as shift
+WARNING: shift/reduce conflict for BOOL in state 5 resolved as shift
+WARNING: shift/reduce conflict for FLOAT in state 5 resolved as shift
+WARNING: shift/reduce conflict for LONG in state 5 resolved as shift
+WARNING: shift/reduce conflict for SHORT in state 5 resolved as shift
+WARNING: shift/reduce conflict for PLUS in state 71 resolved as shift
+WARNING: shift/reduce conflict for MINUS in state 71 resolved as shift
+WARNING: shift/reduce conflict for MULTIPLY in state 71 resolved as shift
+WARNING: shift/reduce conflict for DIVIDE in state 71 resolved as shift
+WARNING: shift/reduce conflict for SEMICOLON in state 98 resolved as shift
+WARNING: shift/reduce conflict for SEMICOLON in state 102 resolved as shift
+WARNING: shift/reduce conflict for LESS in state 105 resolved as shift
+WARNING: shift/reduce conflict for LESS_EQUAL in state 105 resolved as shift
+WARNING: shift/reduce conflict for GREATER in state 105 resolved as shift
+WARNING: shift/reduce conflict for GREATER_EQUAL in state 105 resolved as shift
+WARNING: shift/reduce conflict for EQUAL_EQUAL in state 105 resolved as shift
+WARNING: shift/reduce conflict for NOT_EQUAL in state 105 resolved as shift
+WARNING: shift/reduce conflict for SEMICOLON in state 106 resolved as shift
+WARNING: reduce/reduce conflict in state 4 resolved using rule (program -> empty)
+WARNING: rejected rule (program_components -> empty) in state 4
+WARNING: reduce/reduce conflict in state 4 resolved using rule (program -> empty)
+WARNING: rejected rule (program_component -> empty) in state 4
+WARNING: reduce/reduce conflict in state 5 resolved using rule (program_components -> program_component)
+WARNING: rejected rule (empty -> <empty>) in state 5
+WARNING: reduce/reduce conflict in state 10 resolved using rule (program_component -> array_declaration)
+WARNING: rejected rule (var_declaration -> array_declaration) in state 10
+WARNING: reduce/reduce conflict in state 25 resolved using rule (program_components -> empty)
+WARNING: rejected rule (program_component -> empty) in state 25
+WARNING: reduce/reduce conflict in state 129 resolved using rule (value -> value)
+WARNING: rejected rule (comparison -> value comparator value) in state 129
+WARNING: Rule (comparison -> value comparator value) is never reduced

@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'AND BOOL BREAK CHAR CIN CLASS COLON COMMENT COUT DIVIDE DOUBLE ELSE ENDL EQUAL EQUAL_EQUAL FALSE FLOAT FLOAT_NUMBER FOR GREATER GREATER_EQUAL HASH ID IF IN INCLUDE INT INT_NUMBER LEFT_BR LEFT_BR_CURLY LEFT_BR_SQUARED LESS LESS_EQUAL LIBRARY LONG MINUS MINUS_MINUS MULTIPLY NAMESPACE NOT_EQUAL OR OUT PLUS PLUS_PLUS PRIVATE PROTECTED PUBLIC RETURN RIGHT_BR RIGHT_BR_CURLY RIGHT_BR_SQUARED SEMICOLON SHORT SIGN STD STRING TEXT TRUE USING VAR VOID WHILEempty : '
+_lr_signature = 'AND BOOL BREAK CHAR CIN CLASS COLON COMMENT COUT DIVIDE DOUBLE ELSE ENDL EQUAL EQUAL_EQUAL FALSE FLOAT FLOAT_NUMBER FOR GREATER GREATER_EQUAL HASH ID IF IN INCLUDE INT INT_NUMBER LEFT_BR LEFT_BR_CURLY LEFT_BR_SQUARED LESS LESS_EQUAL LIBRARY LONG MINUS MINUS_MINUS MULTIPLY NAMESPACE NOT_EQUAL OR OUT PLUS PLUS_PLUS PRIVATE PROTECTED PUBLIC RETURN RIGHT_BR RIGHT_BR_CURLY RIGHT_BR_SQUARED SEMICOLON SHORT SIGN STD STRING TEXT TRUE USING VAR VOID WHILE\n    start_symbol : program\n    \n    program : program_components\n            | empty\n    \n    program_components : program_component\n        | program_component program_components\n        | empty\n    \n    program_component : function_definition\n        | class_definition\n        | including\n        | var_declaration\n        | array_declaration\n        | empty\n    \n    using_namespace_std : USING NAMESPACE STD SEMICOLON\n    \n    including : HASH INCLUDE LIBRARY\n    \n    function_definition : type_function_definition\n        | void_function_definition\n    \n    type_function_definition : type VAR LEFT_BR function_var_declaration RIGHT_BR LEFT_BR_CURLY instructions returning RIGHT_BR_CURLY\n    \n    void_function_definition : VOID VAR LEFT_BR function_var_declaration RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY\n    \n    function_var_declaration : type VAR\n        | empty\n    \n    class_definition : CLASS STRING LEFT_BR_CURLY protection_level COLON class_declarations RIGHT_BR_CURLY SEMICOLON\n    \n    protection_level : PUBLIC\n        | PRIVATE\n        | PROTECTED\n    \n    class_declaration : var_declaration\n        | function_definition\n    \n    class_declarations : class_declaration\n        | class_declaration class_declarations\n    \n    instructions : instruction\n        | instruction instructions\n    \n    instruction : loop\n        | if_statement\n        | assignment\n        | operation\n    \n    while_loop : WHILE LEFT_BR comparisons RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY\n    \n    for_loop_statement : FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS INT_NUMBER SEMICOLON increment RIGHT_BR\n        | FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS_EQUAL INT_NUMBER SEMICOLON increment RIGHT_BR\n        | FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER INT_NUMBER SEMICOLON decrement RIGHT_BR\n        | FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER_EQUAL INT_NUMBER SEMICOLON decrement RIGHT_BR\n    \n    for_loop : for_loop_statement LEFT_BR_CURLY instructions RIGHT_BR_CURLY\n    \n    loop : while_loop\n        | for_loop\n    \n    if_statement : IF LEFT_BR comparisons RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY\n    \n    comparisons : comparison\n        | comparison conjunction comparisons\n    \n    comparator : LESS\n        | LESS_EQUAL\n        | GREATER\n        | GREATER_EQUAL\n        | EQUAL_EQUAL\n        | NOT_EQUAL\n    \n    operator : PLUS\n        | MINUS\n        | MULTIPLY\n        | DIVIDE\n    \n    type : INT\n        | CHAR\n        | STRING\n        | BOOL\n        | FLOAT\n        | LONG\n        | SHORT\n    \n    conjunction : AND\n        | OR\n    \n    string_value : TEXT\n        | SIGN\n    \n    number : INT_NUMBER\n        | FLOAT_NUMBER\n    \n    value : number\n        | value\n    \n    increment : VAR PLUS_PLUS SEMICOLON\n    \n    decrement : VAR MINUS_MINUS SEMICOLON\n    \n    get_array_element : VAR LEFT_BR_SQUARED INT_NUMBER RIGHT_BR_SQUARED\n    \n    operation : increment\n        | decrement\n        | value operator value SEMICOLON\n    \n    assignment : VAR EQUAL value SEMICOLON\n    \n    var_declaration : type VAR SEMICOLON\n        | array_declaration\n    \n    array_declaration : type get_array_element SEMICOLON\n    \n    comparison : value comparator value\n    \n    returning : RETURN value SEMICOLON\n    empty : '
     
-_lr_action_items = {'$end':([0,1,],[-1,0,]),}
+_lr_action_items = {'$end':([0,1,2,3,4,5,6,7,8,9,10,11,12,24,25,32,33,36,81,97,101,],[-83,0,-1,-2,-3,-4,-7,-8,-9,-10,-11,-15,-16,-5,-6,-14,-78,-80,-21,-18,-17,]),'CLASS':([0,4,5,6,7,8,9,10,11,12,25,32,33,36,81,97,101,],[13,-12,13,-7,-8,-9,-10,-11,-15,-16,-12,-14,-78,-80,-21,-18,-17,]),'HASH':([0,4,5,6,7,8,9,10,11,12,25,32,33,36,81,97,101,],[15,-12,15,-7,-8,-9,-10,-11,-15,-16,-12,-14,-78,-80,-21,-18,-17,]),'VOID':([0,4,5,6,7,8,9,10,11,12,25,32,33,36,47,53,54,55,56,81,97,101,],[17,-12,17,-7,-8,-9,-10,-11,-15,-16,-12,-14,-78,-80,17,17,-25,-26,-79,-21,-18,-17,]),'INT':([0,4,5,6,7,8,9,10,11,12,25,32,33,34,36,37,47,53,54,55,56,81,96,97,101,],[18,-12,18,-7,-8,-9,-10,-11,-15,-16,-12,-14,-78,18,-80,18,18,18,-25,-26,-79,-21,109,-18,-17,]),'CHAR':([0,4,5,6,7,8,9,10,11,12,25,32,33,34,36,37,47,53,54,55,56,81,97,101,],[19,-12,19,-7,-8,-9,-10,-11,-15,-16,-12,-14,-78,19,-80,19,19,19,-25,-26,-79,-21,-18,-17,]),'STRING':([0,4,5,6,7,8,9,10,11,12,13,25,32,33,34,36,37,47,53,54,55,56,81,97,101,],[14,-12,14,-7,-8,-9,-10,-11,-15,-16,26,-12,-14,-78,14,-80,14,14,14,-25,-26,-79,-21,-18,-17,]),'BOOL':([0,4,5,6,7,8,9,10,11,12,25,32,33,34,36,37,47,53,54,55,56,81,97,101,],[20,-12,20,-7,-8,-9,-10,-11,-15,-16,-12,-14,-78,20,-80,20,20,20,-25,-26,-79,-21,-18,-17,]),'FLOAT':([0,4,5,6,7,8,9,10,11,12,25,32,33,34,36,37,47,53,54,55,56,81,97,101,],[21,-12,21,-7,-8,-9,-10,-11,-15,-16,-12,-14,-78,21,-80,21,21,21,-25,-26,-79,-21,-18,-17,]),'LONG':([0,4,5,6,7,8,9,10,11,12,25,32,33,34,36,37,47,53,54,55,56,81,97,101,],[22,-12,22,-7,-8,-9,-10,-11,-15,-16,-12,-14,-78,22,-80,22,22,22,-25,-26,-79,-21,-18,-17,]),'SHORT':([0,4,5,6,7,8,9,10,11,12,25,32,33,34,36,37,47,53,54,55,56,81,97,101,],[23,-12,23,-7,-8,-9,-10,-11,-15,-16,-12,-14,-78,23,-80,23,23,23,-25,-26,-79,-21,-18,-17,]),'RIGHT_BR_CURLY':([11,12,33,36,52,53,54,55,56,60,63,64,65,66,67,68,69,72,73,80,85,87,97,99,100,101,108,110,111,123,125,132,133,135,136,],[-15,-16,-78,-80,59,-27,-25,-26,-79,-28,-29,-31,-32,-33,-34,-41,-42,-74,-75,97,101,-30,-18,-71,-72,-17,125,-77,-82,-76,-40,135,136,-43,-35,]),'VAR':([14,16,17,18,19,20,21,22,23,42,57,58,63,64,65,66,67,68,69,72,73,95,99,100,109,110,123,125,127,130,135,136,137,147,148,149,150,],[-58,28,30,-56,-57,-59,-60,-61,-62,48,61,61,61,-31,-32,-33,-34,-41,-42,-74,-75,61,-71,-72,126,-77,-76,-40,61,61,-43,-35,138,151,151,154,154,]),'INCLUDE':([15,],[27,]),'LEFT_BR_CURLY':([26,49,51,75,112,124,157,158,159,160,],[31,57,58,95,127,130,-36,-37,-38,-39,]),'LIBRARY':([27,],[32,]),'SEMICOLON':([28,29,50,59,76,78,79,83,84,98,102,106,134,143,144,145,146,],[33,36,-73,81,-69,-67,-68,99,100,110,111,123,137,147,148,149,150,]),'LEFT_BR':([28,30,70,74,77,],[34,37,88,94,96,]),'LEFT_BR_SQUARED':([28,],[35,]),'PUBLIC':([31,],[39,]),'PRIVATE':([31,],[40,]),'PROTECTED':([31,],[41,]),'RIGHT_BR':([34,37,43,44,46,48,76,78,79,99,100,103,104,107,128,129,152,153,155,156,],[-83,-83,49,-20,51,-19,-69,-67,-68,-71,-72,112,-44,124,-45,-70,157,158,159,160,]),'INT_NUMBER':([35,57,58,63,64,65,66,67,68,69,72,73,82,86,88,89,90,91,92,93,94,95,99,100,110,113,114,115,116,117,118,119,120,121,122,123,125,127,130,131,135,136,139,140,141,142,],[45,78,78,78,-31,-32,-33,-34,-41,-42,-74,-75,78,78,78,78,-52,-53,-54,-55,78,78,-71,-72,-77,78,-63,-64,78,-46,-47,-48,-49,-50,-51,-76,-40,78,78,134,-43,-35,143,144,145,146,]),'COLON':([38,39,40,41,],[47,-22,-23,-24,]),'RIGHT_BR_SQUARED':([45,],[50,]),'IF':([57,58,63,64,65,66,67,68,69,72,73,95,99,100,110,123,125,127,130,135,136,],[70,70,70,-31,-32,-33,-34,-41,-42,-74,-75,70,-71,-72,-77,-76,-40,70,70,-43,-35,]),'WHILE':([57,58,63,64,65,66,67,68,69,72,73,95,99,100,110,123,125,127,130,135,136,],[74,74,74,-31,-32,-33,-34,-41,-42,-74,-75,74,-71,-72,-77,-76,-40,74,74,-43,-35,]),'FOR':([57,58,63,64,65,66,67,68,69,72,73,95,99,100,110,123,125,127,130,135,136,],[77,77,77,-31,-32,-33,-34,-41,-42,-74,-75,77,-71,-72,-77,-76,-40,77,77,-43,-35,]),'FLOAT_NUMBER':([57,58,63,64,65,66,67,68,69,72,73,82,86,88,89,90,91,92,93,94,95,99,100,110,113,114,115,116,117,118,119,120,121,122,123,125,127,130,135,136,],[79,79,79,-31,-32,-33,-34,-41,-42,-74,-75,79,79,79,79,-52,-53,-54,-55,79,79,-71,-72,-77,79,-63,-64,79,-46,-47,-48,-49,-50,-51,-76,-40,79,79,-43,-35,]),'EQUAL':([61,126,],[82,131,]),'PLUS_PLUS':([61,151,],[83,83,]),'MINUS_MINUS':([61,154,],[84,84,]),'RETURN':([62,63,64,65,66,67,68,69,72,73,87,99,100,110,123,125,135,136,],[86,-29,-31,-32,-33,-34,-41,-42,-74,-75,-30,-71,-72,-77,-76,-40,-43,-35,]),'PLUS':([71,76,78,79,],[90,-69,-67,-68,]),'MINUS':([71,76,78,79,],[91,-69,-67,-68,]),'MULTIPLY':([71,76,78,79,],[92,-69,-67,-68,]),'DIVIDE':([71,76,78,79,],[93,-69,-67,-68,]),'LESS':([76,78,79,105,138,],[-69,-67,-68,117,139,]),'LESS_EQUAL':([76,78,79,105,138,],[-69,-67,-68,118,140,]),'GREATER':([76,78,79,105,138,],[-69,-67,-68,119,141,]),'GREATER_EQUAL':([76,78,79,105,138,],[-69,-67,-68,120,142,]),'EQUAL_EQUAL':([76,78,79,105,],[-69,-67,-68,121,]),'NOT_EQUAL':([76,78,79,105,],[-69,-67,-68,122,]),'AND':([76,78,79,104,129,],[-69,-67,-68,114,-70,]),'OR':([76,78,79,104,129,],[-69,-67,-68,115,-70,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'empty':([0,],[1,]),}
+_lr_goto_items = {'start_symbol':([0,],[1,]),'program':([0,],[2,]),'program_components':([0,5,],[3,24,]),'empty':([0,5,34,37,],[4,25,44,44,]),'program_component':([0,5,],[5,5,]),'function_definition':([0,5,47,53,],[6,6,55,55,]),'class_definition':([0,5,],[7,7,]),'including':([0,5,],[8,8,]),'var_declaration':([0,5,47,53,],[9,9,54,54,]),'array_declaration':([0,5,47,53,],[10,10,56,56,]),'type_function_definition':([0,5,47,53,],[11,11,11,11,]),'void_function_definition':([0,5,47,53,],[12,12,12,12,]),'type':([0,5,34,37,47,53,],[16,16,42,42,16,16,]),'get_array_element':([16,],[29,]),'protection_level':([31,],[38,]),'function_var_declaration':([34,37,],[43,46,]),'class_declarations':([47,53,],[52,60,]),'class_declaration':([47,53,],[53,53,]),'instructions':([57,58,63,95,127,130,],[62,80,87,108,132,133,]),'instruction':([57,58,63,95,127,130,],[63,63,63,63,63,63,]),'loop':([57,58,63,95,127,130,],[64,64,64,64,64,64,]),'if_statement':([57,58,63,95,127,130,],[65,65,65,65,65,65,]),'assignment':([57,58,63,95,127,130,],[66,66,66,66,66,66,]),'operation':([57,58,63,95,127,130,],[67,67,67,67,67,67,]),'while_loop':([57,58,63,95,127,130,],[68,68,68,68,68,68,]),'for_loop':([57,58,63,95,127,130,],[69,69,69,69,69,69,]),'value':([57,58,63,82,86,88,89,94,95,113,116,127,130,],[71,71,71,98,102,105,106,105,71,105,129,71,71,]),'increment':([57,58,63,95,127,130,147,148,],[72,72,72,72,72,72,152,153,]),'decrement':([57,58,63,95,127,130,149,150,],[73,73,73,73,73,73,155,156,]),'for_loop_statement':([57,58,63,95,127,130,],[75,75,75,75,75,75,]),'number':([57,58,63,82,86,88,89,94,95,113,116,127,130,],[76,76,76,76,76,76,76,76,76,76,76,76,76,]),'returning':([62,],[85,]),'operator':([71,],[89,]),'comparisons':([88,94,113,],[103,107,128,]),'comparison':([88,94,113,],[104,104,104,]),'conjunction':([104,],[113,]),'comparator':([105,],[116,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -26,6 +26,88 @@ for _k, _v in _lr_goto_items.items():
        _lr_goto[_x][_k] = _y
 del _lr_goto_items
 _lr_productions = [
-  ("S' -> empty","S'",1,None,None,None),
-  ('empty -> <empty>','empty',0,'p_empty','Parser.py',102),
+  ("S' -> start_symbol","S'",1,None,None,None),
+  ('start_symbol -> program','start_symbol',1,'p_start_symbol','Parser.py',158),
+  ('program -> program_components','program',1,'p_program','Parser.py',165),
+  ('program -> empty','program',1,'p_program','Parser.py',166),
+  ('program_components -> program_component','program_components',1,'p_program_components','Parser.py',173),
+  ('program_components -> program_component program_components','program_components',2,'p_program_components','Parser.py',174),
+  ('program_components -> empty','program_components',1,'p_program_components','Parser.py',175),
+  ('program_component -> function_definition','program_component',1,'p_program_component','Parser.py',185),
+  ('program_component -> class_definition','program_component',1,'p_program_component','Parser.py',186),
+  ('program_component -> including','program_component',1,'p_program_component','Parser.py',187),
+  ('program_component -> var_declaration','program_component',1,'p_program_component','Parser.py',188),
+  ('program_component -> array_declaration','program_component',1,'p_program_component','Parser.py',189),
+  ('program_component -> empty','program_component',1,'p_program_component','Parser.py',190),
+  ('using_namespace_std -> USING NAMESPACE STD SEMICOLON','using_namespace_std',4,'p_using_namespace_std','Parser.py',198),
+  ('including -> HASH INCLUDE LIBRARY','including',3,'p_including','Parser.py',204),
+  ('function_definition -> type_function_definition','function_definition',1,'p_function_definition','Parser.py',211),
+  ('function_definition -> void_function_definition','function_definition',1,'p_function_definition','Parser.py',212),
+  ('type_function_definition -> type VAR LEFT_BR function_var_declaration RIGHT_BR LEFT_BR_CURLY instructions returning RIGHT_BR_CURLY','type_function_definition',9,'p_type_function_definition','Parser.py',218),
+  ('void_function_definition -> VOID VAR LEFT_BR function_var_declaration RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY','void_function_definition',8,'p_void_function_definition','Parser.py',224),
+  ('function_var_declaration -> type VAR','function_var_declaration',2,'p_function_var_declaration','Parser.py',230),
+  ('function_var_declaration -> empty','function_var_declaration',1,'p_function_var_declaration','Parser.py',231),
+  ('class_definition -> CLASS STRING LEFT_BR_CURLY protection_level COLON class_declarations RIGHT_BR_CURLY SEMICOLON','class_definition',8,'p_class_definition','Parser.py',238),
+  ('protection_level -> PUBLIC','protection_level',1,'p_protection_level','Parser.py',244),
+  ('protection_level -> PRIVATE','protection_level',1,'p_protection_level','Parser.py',245),
+  ('protection_level -> PROTECTED','protection_level',1,'p_protection_level','Parser.py',246),
+  ('class_declaration -> var_declaration','class_declaration',1,'p_class_declaration','Parser.py',252),
+  ('class_declaration -> function_definition','class_declaration',1,'p_class_declaration','Parser.py',253),
+  ('class_declarations -> class_declaration','class_declarations',1,'p_class_declarations','Parser.py',259),
+  ('class_declarations -> class_declaration class_declarations','class_declarations',2,'p_class_declarations','Parser.py',260),
+  ('instructions -> instruction','instructions',1,'p_instructions','Parser.py',271),
+  ('instructions -> instruction instructions','instructions',2,'p_instructions','Parser.py',272),
+  ('instruction -> loop','instruction',1,'p_instruction','Parser.py',282),
+  ('instruction -> if_statement','instruction',1,'p_instruction','Parser.py',283),
+  ('instruction -> assignment','instruction',1,'p_instruction','Parser.py',284),
+  ('instruction -> operation','instruction',1,'p_instruction','Parser.py',285),
+  ('while_loop -> WHILE LEFT_BR comparisons RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY','while_loop',7,'p_while_loop','Parser.py',291),
+  ('for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS INT_NUMBER SEMICOLON increment RIGHT_BR','for_loop_statement',13,'p_for_loop_statement','Parser.py',297),
+  ('for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS_EQUAL INT_NUMBER SEMICOLON increment RIGHT_BR','for_loop_statement',13,'p_for_loop_statement','Parser.py',298),
+  ('for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER INT_NUMBER SEMICOLON decrement RIGHT_BR','for_loop_statement',13,'p_for_loop_statement','Parser.py',299),
+  ('for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER_EQUAL INT_NUMBER SEMICOLON decrement RIGHT_BR','for_loop_statement',13,'p_for_loop_statement','Parser.py',300),
+  ('for_loop -> for_loop_statement LEFT_BR_CURLY instructions RIGHT_BR_CURLY','for_loop',4,'p_for_loop','Parser.py',306),
+  ('loop -> while_loop','loop',1,'p_loop','Parser.py',312),
+  ('loop -> for_loop','loop',1,'p_loop','Parser.py',313),
+  ('if_statement -> IF LEFT_BR comparisons RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY','if_statement',7,'p_if_statement','Parser.py',325),
+  ('comparisons -> comparison','comparisons',1,'p_comparisons','Parser.py',331),
+  ('comparisons -> comparison conjunction comparisons','comparisons',3,'p_comparisons','Parser.py',332),
+  ('comparator -> LESS','comparator',1,'p_comparator','Parser.py',343),
+  ('comparator -> LESS_EQUAL','comparator',1,'p_comparator','Parser.py',344),
+  ('comparator -> GREATER','comparator',1,'p_comparator','Parser.py',345),
+  ('comparator -> GREATER_EQUAL','comparator',1,'p_comparator','Parser.py',346),
+  ('comparator -> EQUAL_EQUAL','comparator',1,'p_comparator','Parser.py',347),
+  ('comparator -> NOT_EQUAL','comparator',1,'p_comparator','Parser.py',348),
+  ('operator -> PLUS','operator',1,'p_operator','Parser.py',354),
+  ('operator -> MINUS','operator',1,'p_operator','Parser.py',355),
+  ('operator -> MULTIPLY','operator',1,'p_operator','Parser.py',356),
+  ('operator -> DIVIDE','operator',1,'p_operator','Parser.py',357),
+  ('type -> INT','type',1,'p_type','Parser.py',363),
+  ('type -> CHAR','type',1,'p_type','Parser.py',364),
+  ('type -> STRING','type',1,'p_type','Parser.py',365),
+  ('type -> BOOL','type',1,'p_type','Parser.py',366),
+  ('type -> FLOAT','type',1,'p_type','Parser.py',367),
+  ('type -> LONG','type',1,'p_type','Parser.py',368),
+  ('type -> SHORT','type',1,'p_type','Parser.py',369),
+  ('conjunction -> AND','conjunction',1,'p_conjunction','Parser.py',375),
+  ('conjunction -> OR','conjunction',1,'p_conjunction','Parser.py',376),
+  ('string_value -> TEXT','string_value',1,'p_string_value','Parser.py',382),
+  ('string_value -> SIGN','string_value',1,'p_string_value','Parser.py',383),
+  ('number -> INT_NUMBER','number',1,'p_number','Parser.py',389),
+  ('number -> FLOAT_NUMBER','number',1,'p_number','Parser.py',390),
+  ('value -> number','value',1,'p_value','Parser.py',403),
+  ('value -> value','value',1,'p_value','Parser.py',404),
+  ('increment -> VAR PLUS_PLUS SEMICOLON','increment',3,'p_increment','Parser.py',410),
+  ('decrement -> VAR MINUS_MINUS SEMICOLON','decrement',3,'p_decrement','Parser.py',416),
+  ('get_array_element -> VAR LEFT_BR_SQUARED INT_NUMBER RIGHT_BR_SQUARED','get_array_element',4,'p_get_array_element','Parser.py',422),
+  ('operation -> increment','operation',1,'p_operation','Parser.py',428),
+  ('operation -> decrement','operation',1,'p_operation','Parser.py',429),
+  ('operation -> value operator value SEMICOLON','operation',4,'p_operation','Parser.py',430),
+  ('assignment -> VAR EQUAL value SEMICOLON','assignment',4,'p_assignment','Parser.py',436),
+  ('var_declaration -> type VAR SEMICOLON','var_declaration',3,'p_var_declaration','Parser.py',442),
+  ('var_declaration -> array_declaration','var_declaration',1,'p_var_declaration','Parser.py',443),
+  ('array_declaration -> type get_array_element SEMICOLON','array_declaration',3,'p_array_declaration','Parser.py',449),
+  ('comparison -> value comparator value','comparison',3,'p_comparison','Parser.py',455),
+  ('returning -> RETURN value SEMICOLON','returning',3,'p_returning','Parser.py',461),
+  ('empty -> <empty>','empty',0,'p_empty','Parser.py',466),
 ]

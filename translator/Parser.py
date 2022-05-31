@@ -198,10 +198,12 @@ def p_using_namespace_std(p):
     using_namespace_std : USING NAMESPACE STD SEMICOLON
     '''
 
+
 def p_including(p):
     '''
     including : HASH INCLUDE LIBRARY
     '''
+
 
 # -----------------FUNCTION-------------------------------------------
 def p_function_definition(p):
@@ -210,15 +212,18 @@ def p_function_definition(p):
         | void_function_definition
     '''
 
+
 def p_type_function_definition(p):
     '''
     type_function_definition : type VAR LEFT_BR function_var_declaration RIGHT_BR LEFT_BR_CURLY instructions returning RIGHT_BR_CURLY
     '''
 
+
 def p_void_function_definition(p):
     '''
     void_function_definition : VOID VAR LEFT_BR function_var_declaration RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY
     '''
+
 
 def p_function_var_declaration(p):
     '''
@@ -226,18 +231,21 @@ def p_function_var_declaration(p):
         | empty
     '''
 
+
 # -----------------CLASS-------------------------------------------
 def p_class_definition(p):
     '''
     class_definition : CLASS STRING LEFT_BR_CURLY protection_level COLON class_declarations RIGHT_BR_CURLY SEMICOLON
     '''
 
+
 def p_protection_level(p):
     '''
-    protection_level " PUBLIC
+    protection_level : PUBLIC
         | PRIVATE
         | PROTECTED
     '''
+
 
 def p_class_declaration(p):
     '''
@@ -268,6 +276,7 @@ def p_instructions(p):
     elif len(p) == 3:
         p[0] = p[1] + p[2]
 
+
 def p_instruction(p):
     '''
     instruction : loop
@@ -276,27 +285,27 @@ def p_instruction(p):
         | operation
     '''
 
+
 def p_while_loop(p):
     '''
     while_loop : WHILE LEFT_BR comparisons RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY
     '''
 
+
 def p_for_loop_statement(p):
     '''
-    for_loop_statement : FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS INT_NUMBER
-        SEMICOLON increment RIGHT_BR
-        | FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS_EQUAL INT_NUMBER
-        SEMICOLON increment RIGHT_BR
-        | FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER INT_NUMBER
-        SEMICOLON decrement RIGHT_BR
-        | FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER_EQUAL INT_NUMBER
-        SEMICOLON decrement RIGHT_BR
+    for_loop_statement : FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS INT_NUMBER SEMICOLON increment RIGHT_BR
+        | FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS_EQUAL INT_NUMBER SEMICOLON increment RIGHT_BR
+        | FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER INT_NUMBER SEMICOLON decrement RIGHT_BR
+        | FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER_EQUAL INT_NUMBER SEMICOLON decrement RIGHT_BR
     '''
+
 
 def p_for_loop(p):
     '''
     for_loop : for_loop_statement LEFT_BR_CURLY instructions RIGHT_BR_CURLY
     '''
+
 
 def p_loop(p):
     '''
@@ -304,15 +313,17 @@ def p_loop(p):
         | for_loop
     '''
 
+
 def else_statement(p):
     '''
     else_statement : ELSE LEFT_BR_CURLY instructions RIGHT_BR_CURLY
     '''
 
-def if_statement(p):
-'''
-if_statement : IF LEFT_BR comparisons RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY
-'''
+
+def p_if_statement(p):
+    '''
+    if_statement : IF LEFT_BR comparisons RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY
+    '''
 
 
 def p_comparisons(p):
@@ -327,95 +338,128 @@ def p_comparisons(p):
 
 
 # -----------------EXPRESSIONS-------------------------------------------
-'''
-comparator : LESS
-    | LESS_EQUAL
-    | GREATER
-    | GREATER_EQUAL
-    | EQUAL_EQUAL
-    | NOT_EQUAL
-'''
+def p_comparator(p):
+    '''
+    comparator : LESS
+        | LESS_EQUAL
+        | GREATER
+        | GREATER_EQUAL
+        | EQUAL_EQUAL
+        | NOT_EQUAL
+    '''
 
-'''
-operator : PLUS
-    | MINUS
-    | MULTIPLY
-    | DIVIDDE
-'''
 
-'''
-type : INT
-    | CHAR
-    | STRING
-    | BOOL
-    | FLOAT
-    | LONG
-    | SHORT
-'''
+def p_operator(p):
+    '''
+    operator : PLUS
+        | MINUS
+        | MULTIPLY
+        | DIVIDE
+    '''
 
-'''
-conjunction : AND
-    | OR
-'''
 
-'''
-string_value : TEXT
-    | SIGN
-'''
+def p_type(p):
+    '''
+    type : INT
+        | CHAR
+        | STRING
+        | BOOL
+        | FLOAT
+        | LONG
+        | SHORT
+    '''
 
-'''
-number : INT_NUMBER
-    | FLOAT_NUMBER
-'''
 
-'''
-bool_value : TRUE
-    | FALSE
-'''
+def p_conjunction(p):
+    '''
+    conjunction : AND
+        | OR
+    '''
 
-'''
-value : number
-    | value
-'''
 
-'''
-increment : VAR PLUS_PLUS SEMICOLON
-'''
+def p_string_value(p):
+    '''
+    string_value : TEXT
+        | SIGN
+    '''
 
-'''
-decrement : VAR MINUS_MINUS SEMICOLON 
-'''
 
-'''
-get_array_element : VAR LEFT_BR_SQUARED INT_NUMBER RIGHT_BR_SQUARED
-'''
+def p_number(p):
+    '''
+    number : INT_NUMBER
+        | FLOAT_NUMBER
+    '''
 
-'''
-operation : increment 
-    | decrement 
-    | value operator value SEMICOLON
-'''
 
-'''
-assignment : VAR EQUAL value SEMICOLON
-'''
+def bool_value(p):
+    '''
+    bool_value : TRUE
+        | FALSE
+    '''
 
-'''
-var_declaration : type VAR SEMICOLON
-    | array_declaration 
-'''
 
-'''
-array_declaration : type get_array_element SEMICOLON 
-'''
+def p_value(p):
+    '''
+    value : number
+        | value
+    '''
 
-'''
-comparison : value comparator value 
-'''
 
-'''
-returning : RETURN value SEMICOLON 
-'''
+def p_increment(p):
+    '''
+    increment : VAR PLUS_PLUS SEMICOLON
+    '''
+
+
+def p_decrement(p):
+    '''
+    decrement : VAR MINUS_MINUS SEMICOLON
+    '''
+
+
+def p_get_array_element(p):
+    '''
+    get_array_element : VAR LEFT_BR_SQUARED INT_NUMBER RIGHT_BR_SQUARED
+    '''
+
+
+def p_operation(p):
+    '''
+    operation : increment
+        | decrement
+        | value operator value SEMICOLON
+    '''
+
+
+def p_assignment(p):
+    '''
+    assignment : VAR EQUAL value SEMICOLON
+    '''
+
+
+def p_var_declaration(p):
+    '''
+    var_declaration : type VAR SEMICOLON
+        | array_declaration
+    '''
+
+
+def p_array_declaration(p):
+    '''
+    array_declaration : type get_array_element SEMICOLON
+    '''
+
+
+def p_comparison(p):
+    '''
+    comparison : value comparator value
+    '''
+
+
+def p_returning(p):
+    '''
+    returning : RETURN value SEMICOLON
+    '''
 
 
 def p_empty(p):
