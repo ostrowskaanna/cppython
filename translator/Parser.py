@@ -123,7 +123,7 @@ t_VAR = r'[a-zA-Z_][a-zA-Z0-9_]*'
 
 t_LIBRARY = r'\<.*\>'
 
-t_TEXT = r'\".*\"'
+t_TEXT = r'"(.*?[^\\])"'
 
 t_SIGN = r'\'.\''
 
@@ -232,7 +232,7 @@ def p_function_var_declaration(p):
 # -----------------CLASS-------------------------------------------
 def p_class_definition(p):
     '''
-    class_definition : CLASS TEXT LEFT_BR_CURLY protection_level class_declarations RIGHT_BR_CURLY SEMICOLON
+    class_definition : CLASS VAR LEFT_BR_CURLY protection_level class_declarations RIGHT_BR_CURLY SEMICOLON
     '''
 
 
@@ -276,6 +276,8 @@ def p_instruction(p):
         | operation
         | empty
         | var_declaration
+        | print
+        | input
     '''
 
 
@@ -360,6 +362,7 @@ def p_type(p):
         | FLOAT
         | LONG
         | SHORT
+        | DOUBLE
     '''
 
 
@@ -450,6 +453,36 @@ def p_array_declaration(p):
     '''
 
 
+def p_out(p):
+    '''
+    out : OUT VAR
+        | OUT VAR out
+        | OUT TEXT
+        | OUT TEXT out
+        | OUT ENDL
+        | OUT ENDL out
+    '''
+
+
+def p_in(p):
+    '''
+    in : IN VAR
+       | IN VAR in
+    '''
+
+
+def p_print(p):
+    '''
+    print : COUT out SEMICOLON
+    '''
+
+
+def p_input(p):
+    '''
+    input : CIN in SEMICOLON
+    '''
+
+
 def p_comparison(p):
     '''
     comparison : value comparator value
@@ -473,3 +506,16 @@ def p_error(p):
 
 parser = yacc.yacc()
 parser.parse(code)
+
+lexer = lex.lex()
+
+lexer.input(code)
+
+'''
+while True:
+    tok = lexer.token()
+    if not tok:
+        break
+    else:
+        print(tok)
+'''

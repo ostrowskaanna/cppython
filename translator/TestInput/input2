@@ -3,10 +3,24 @@ using namespace std;
 
 
 void foo(int a, int b){
+    string imie;
     int tab[5];
     for(int i=0; i<5; i++){
         if(i==2){
             tab[2] = 1;
+            cout<<"podaj imie"<<endl<<"Podaj wiek";
+            cin>>imie;
         }
     }
 }
+
+int foo2(int a){
+    int b;
+    return b;
+}
+
+class czlowiek{
+    int wiek;
+    int wzrost;
+    string plec;
+};
