@@ -172,6 +172,7 @@ def p_program_components(p):
     '''
     program_components : program_component
         | program_component program_components
+        | using_namespace_std program_components
         | empty
     '''
 
@@ -218,8 +219,6 @@ def p_void_function_definition(p):
     '''
     void_function_definition : VOID VAR LEFT_BR function_var_declaration RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY
     '''
-    for x in p:
-        print(x)
 
 
 def p_function_var_declaration(p):
@@ -233,15 +232,16 @@ def p_function_var_declaration(p):
 # -----------------CLASS-------------------------------------------
 def p_class_definition(p):
     '''
-    class_definition : CLASS STRING LEFT_BR_CURLY protection_level COLON class_declarations RIGHT_BR_CURLY SEMICOLON
+    class_definition : CLASS STRING LEFT_BR_CURLY protection_level class_declarations RIGHT_BR_CURLY SEMICOLON
     '''
 
 
 def p_protection_level(p):
     '''
-    protection_level : PUBLIC
-        | PRIVATE
-        | PROTECTED
+    protection_level : PUBLIC COLON
+        | PRIVATE COLON
+        | PROTECTED COLON
+        | empty
     '''
 
 
@@ -286,10 +286,10 @@ def p_while_loop(p):
 
 def p_for_loop_statement(p):
     '''
-    for_loop_statement : FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS INT_NUMBER SEMICOLON PLUS_PLUS RIGHT_BR
-        | FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS_EQUAL INT_NUMBER SEMICOLON PLUS_PLUS RIGHT_BR
-        | FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER INT_NUMBER SEMICOLON MINUS_MINUS RIGHT_BR
-        | FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER_EQUAL INT_NUMBER SEMICOLON MINUS_MINUS RIGHT_BR
+    for_loop_statement : FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS INT_NUMBER SEMICOLON VAR PLUS_PLUS RIGHT_BR
+        | FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS_EQUAL INT_NUMBER SEMICOLON VAR PLUS_PLUS RIGHT_BR
+        | FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER INT_NUMBER SEMICOLON VAR MINUS_MINUS RIGHT_BR
+        | FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER_EQUAL INT_NUMBER SEMICOLON VAR MINUS_MINUS RIGHT_BR
     '''
 
 
@@ -393,7 +393,9 @@ def bool_value(p):
 def p_value(p):
     '''
     value : number
-        | value
+        | VAR
+        | get_array_element
+        | string_value
     '''
 
 
@@ -427,6 +429,8 @@ def p_assignment(p):
     '''
     assignment : VAR EQUAL value SEMICOLON
                | VAR EQUAL VAR SEMICOLON
+               | get_array_element EQUAL value SEMICOLON
+               | get_array_element EQUAL VAR SEMICOLON
     '''
 
 
@@ -466,6 +470,5 @@ def p_error(p):
     print("Syntax error at '%s'\n" % p.value)
 
 
-data = "void foo(){}"
 parser = yacc.yacc()
 parser.parse(code)
