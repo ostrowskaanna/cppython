@@ -232,7 +232,7 @@ def p_function_var_declaration(p):
 # -----------------CLASS-------------------------------------------
 def p_class_definition(p):
     '''
-    class_definition : CLASS STRING LEFT_BR_CURLY protection_level class_declarations RIGHT_BR_CURLY SEMICOLON
+    class_definition : CLASS TEXT LEFT_BR_CURLY protection_level class_declarations RIGHT_BR_CURLY SEMICOLON
     '''
 
 
@@ -256,6 +256,7 @@ def p_class_declarations(p):
     '''
     class_declarations : class_declaration
         | class_declaration class_declarations
+        | empty
     '''
 
 
