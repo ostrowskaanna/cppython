@@ -10,6 +10,9 @@ void foo(int a, int b){
             tab[2] = 1;
             cout<<"podaj imie"<<endl<<"Podaj wiek";
             cin>>imie;
+        } else {
+            tab[2] = 3;
+            cout<<"ELSE BLOCK";
         }
     }
 }

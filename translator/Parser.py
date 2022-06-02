@@ -159,6 +159,8 @@ def p_start_symbol(p):
     '''
     start_symbol : program
     '''
+    for x in p:
+        print(x)
 
 
 def p_program(p):
@@ -166,6 +168,8 @@ def p_program(p):
     program : program_components
             | empty
     '''
+    for x in p:
+        print(x)
 
 
 def p_program_components(p):
@@ -175,6 +179,8 @@ def p_program_components(p):
         | using_namespace_std program_components
         | empty
     '''
+    for x in p:
+        print(x)
 
 
 def p_program_component(p):
@@ -186,6 +192,8 @@ def p_program_component(p):
         | array_declaration
         | empty
     '''
+    for x in p:
+        print(x)
 
 
 # -----------------HEADERS------------------------------------------
@@ -193,12 +201,16 @@ def p_using_namespace_std(p):
     '''
     using_namespace_std : USING NAMESPACE STD SEMICOLON
     '''
+    for x in p:
+        print(x)
 
 
 def p_including(p):
     '''
     including : HASH INCLUDE LIBRARY
     '''
+    for x in p:
+        print(x)
 
 
 # -----------------FUNCTION-------------------------------------------
@@ -207,18 +219,24 @@ def p_function_definition(p):
     function_definition : type_function_definition
         | void_function_definition
     '''
+    for x in p:
+        print(x)
 
 
 def p_type_function_definition(p):
     '''
     type_function_definition : type VAR LEFT_BR function_var_declaration RIGHT_BR LEFT_BR_CURLY instructions returning RIGHT_BR_CURLY
     '''
+    for x in p:
+        print(x)
 
 
 def p_void_function_definition(p):
     '''
     void_function_definition : VOID VAR LEFT_BR function_var_declaration RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY
     '''
+    for x in p:
+        print(x)
 
 
 def p_function_var_declaration(p):
@@ -227,6 +245,8 @@ def p_function_var_declaration(p):
         | type VAR COMMA function_var_declaration
         | empty
     '''
+    for x in p:
+        print(x)
 
 
 # -----------------CLASS-------------------------------------------
@@ -234,6 +254,8 @@ def p_class_definition(p):
     '''
     class_definition : CLASS VAR LEFT_BR_CURLY protection_level class_declarations RIGHT_BR_CURLY SEMICOLON
     '''
+    for x in p:
+        print(x)
 
 
 def p_protection_level(p):
@@ -243,6 +265,8 @@ def p_protection_level(p):
         | PROTECTED COLON
         | empty
     '''
+    for x in p:
+        print(x)
 
 
 def p_class_declaration(p):
@@ -250,6 +274,8 @@ def p_class_declaration(p):
     class_declaration : var_declaration
         | function_definition
     '''
+    for x in p:
+        print(x)
 
 
 def p_class_declarations(p):
@@ -258,6 +284,8 @@ def p_class_declarations(p):
         | class_declaration class_declarations
         | empty
     '''
+    for x in p:
+        print(x)
 
 
 # -----------------INSTRUCTIONS-------------------------------------------
@@ -266,6 +294,8 @@ def p_instructions(p):
     instructions : instruction
         | instruction instructions
     '''
+    for x in p:
+        print(x)
 
 
 def p_instruction(p):
@@ -279,12 +309,16 @@ def p_instruction(p):
         | print
         | input
     '''
+    for x in p:
+        print(x)
 
 
 def p_while_loop(p):
     '''
     while_loop : WHILE LEFT_BR comparisons RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY
     '''
+    for x in p:
+        print(x)
 
 
 def p_for_loop_statement(p):
@@ -294,12 +328,16 @@ def p_for_loop_statement(p):
         | FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER INT_NUMBER SEMICOLON VAR MINUS_MINUS RIGHT_BR
         | FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER_EQUAL INT_NUMBER SEMICOLON VAR MINUS_MINUS RIGHT_BR
     '''
+    for x in p:
+        print(x)
 
 
 def p_for_loop(p):
     '''
     for_loop : for_loop_statement LEFT_BR_CURLY instructions RIGHT_BR_CURLY
     '''
+    for x in p:
+        print(x)
 
 
 def p_loop(p):
@@ -307,18 +345,25 @@ def p_loop(p):
     loop : while_loop
         | for_loop
     '''
+    for x in p:
+        print(x)
 
 
-def else_statement(p):
+def p_else_statement(p):
     '''
     else_statement : ELSE LEFT_BR_CURLY instructions RIGHT_BR_CURLY
     '''
+    for x in p:
+        print(x)
 
 
 def p_if_statement(p):
     '''
     if_statement : IF LEFT_BR comparisons RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY
+                 | IF LEFT_BR comparisons RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY else_statement
     '''
+    for x in p:
+        print(x)
 
 
 def p_comparisons(p):
@@ -326,10 +371,8 @@ def p_comparisons(p):
     comparisons : comparison
         | comparison conjunction comparisons
     '''
-    if len(p) == 2:
-        p[0] = p[1]
-    elif len(p) == 4:
-        p[0] = p[1] + p[2] + p[3]
+    for x in p:
+        print(x)
 
 
 # -----------------EXPRESSIONS-------------------------------------------
@@ -342,6 +385,8 @@ def p_comparator(p):
         | EQUAL_EQUAL
         | NOT_EQUAL
     '''
+    for x in p:
+        print(x)
 
 
 def p_operator(p):
@@ -351,6 +396,8 @@ def p_operator(p):
         | MULTIPLY
         | DIVIDE
     '''
+    for x in p:
+        print(x)
 
 
 def p_type(p):
@@ -364,6 +411,8 @@ def p_type(p):
         | SHORT
         | DOUBLE
     '''
+    for x in p:
+        print(x)
 
 
 def p_conjunction(p):
@@ -371,6 +420,8 @@ def p_conjunction(p):
     conjunction : AND
         | OR
     '''
+    for x in p:
+        print(x)
 
 
 def p_string_value(p):
@@ -378,6 +429,8 @@ def p_string_value(p):
     string_value : TEXT
         | SIGN
     '''
+    for x in p:
+        print(x)
 
 
 def p_number(p):
@@ -385,6 +438,8 @@ def p_number(p):
     number : INT_NUMBER
         | FLOAT_NUMBER
     '''
+    for x in p:
+        print(x)
 
 
 def bool_value(p):
@@ -392,6 +447,8 @@ def bool_value(p):
     bool_value : TRUE
         | FALSE
     '''
+    for x in p:
+        print(x)
 
 
 def p_value(p):
@@ -401,24 +458,32 @@ def p_value(p):
         | get_array_element
         | string_value
     '''
+    for x in p:
+        print(x)
 
 
 def p_increment(p):
     '''
     increment : VAR PLUS_PLUS SEMICOLON
     '''
+    for x in p:
+        print(x)
 
 
 def p_decrement(p):
     '''
     decrement : VAR MINUS_MINUS SEMICOLON
     '''
+    for x in p:
+        print(x)
 
 
 def p_get_array_element(p):
     '''
     get_array_element : VAR LEFT_BR_SQUARED INT_NUMBER RIGHT_BR_SQUARED
     '''
+    for x in p:
+        print(x)
 
 
 def p_operation(p):
@@ -427,6 +492,8 @@ def p_operation(p):
         | decrement
         | value operator value SEMICOLON
     '''
+    for x in p:
+        print(x)
 
 
 def p_assignment(p):
@@ -436,6 +503,8 @@ def p_assignment(p):
                | get_array_element EQUAL value SEMICOLON
                | get_array_element EQUAL VAR SEMICOLON
     '''
+    for x in p:
+        print(x)
 
 
 def p_var_declaration(p):
@@ -445,12 +514,16 @@ def p_var_declaration(p):
         | type VAR EQUAL value SEMICOLON
         | type VAR EQUAL VAR SEMICOLON
     '''
+    for x in p:
+        print(x)
 
 
 def p_array_declaration(p):
     '''
     array_declaration : type get_array_element SEMICOLON
     '''
+    for x in p:
+        print(x)
 
 
 def p_out(p):
@@ -462,6 +535,8 @@ def p_out(p):
         | OUT ENDL
         | OUT ENDL out
     '''
+    for x in p:
+        print(x)
 
 
 def p_in(p):
@@ -469,30 +544,40 @@ def p_in(p):
     in : IN VAR
        | IN VAR in
     '''
+    for x in p:
+        print(x)
 
 
 def p_print(p):
     '''
     print : COUT out SEMICOLON
     '''
+    for x in p:
+        print(x)
 
 
 def p_input(p):
     '''
     input : CIN in SEMICOLON
     '''
+    for x in p:
+        print(x)
 
 
 def p_comparison(p):
     '''
     comparison : value comparator value
     '''
+    for x in p:
+        print(x)
 
 
 def p_returning(p):
     '''
     returning : RETURN value SEMICOLON
     '''
+    for x in p:
+        print(x)
 
 
 def p_empty(p):
