@@ -155,12 +155,14 @@ lexer.input(code)
 
 # -----------------------------------------------CREATING .PY FILE CONTENT----------------------------------------------
 pythonCode = ""
+elements = {}
 # -----------------------------------------------GRAMMAR----------------------------------------------------------------
 
 def p_start_symbol(p):
     '''
     start_symbol : program
     '''
+    p[0] = p[1]
 
 
 def p_program(p):
@@ -168,6 +170,7 @@ def p_program(p):
     program : program_components
             | empty
     '''
+    p[0] = p[1]
 
 
 def p_program_components(p):
@@ -175,6 +178,10 @@ def p_program_components(p):
     program_components : program_component
         | program_component program_components
     '''
+    if(len(p) == 2):
+        p[0] = p[1]
+    elif(len(p) == 3):
+        p[0] = p[1] + p[2]
 
 
 def p_program_component(p):
@@ -188,20 +195,24 @@ def p_program_component(p):
         | comment
         | empty
     '''
-
+    p[0] = p[1]
 
 # -----------------HEADERS------------------------------------------
 def p_using_namespace_std(p):
     '''
     using_namespace_std : USING NAMESPACE STD SEMICOLON
     '''
-
+    p[0] = p[1] + " " + p[2] + " " + p[3] + p[4]
+    print(p[0])
+    elements["using_namespace_std"] = p[0]
 
 def p_including(p):
     '''
     including : HASH INCLUDE LIBRARY
     '''
-
+    p[0] = p[1] + p[2] + " " + p[3]
+    print(p[0])
+    elements["including"] = p[0]
 
 # -----------------FUNCTION-------------------------------------------
 def p_function_definition(p):
@@ -209,29 +220,43 @@ def p_function_definition(p):
     function_definition : type_function_definition
         | void_function_definition
     '''
-
+    p[0] = p[1]
+    print("\n", p[0], "\n")
 
 def p_type_function_definition(p):
     '''
     type_function_definition : type VAR LEFT_BR function_var_declaration RIGHT_BR LEFT_BR_CURLY instructions returning RIGHT_BR_CURLY
     '''
+    p[0] = p[1]
 
 
 # 0 - None, 1 - 'void', 2 - Name, 3 - '(', 4 - None (arguments list), 5 - ')', 6 - '{', 7 - None (instructions), 8 - '}'
 def p_void_function_definition(p):
     '''
-    void_function_definition : VOID VAR seen_value LEFT_BR function_var_declaration seen_value RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY
+    void_function_definition : VOID VAR LEFT_BR function_var_declaration RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY
     '''
-    print(p[3])
+    p[0] = p[1] + " " + p[2] + p[3] + str(p[4]) + p[5] + p[6] + str(p[7]) + p[8]
+    print("function type: ", p[1])
+    print("function name: ", p[2])
 
 
 def p_function_var_declaration(p):
     '''
-    function_var_declaration : type VAR
-        | type VAR COMMA function_var_declaration
+    function_var_declaration : var_declaration_no_semicolon
+        | var_declaration_no_semicolon COMMA function_var_declaration
         | empty
     '''
+    if(len(p) == 2):
+        p[0] = p[1]
+    elif(len(p) == 3):
+         p[0] = p[1] + p[2]
 
+def p_var_declaration_no_semicolon(p):
+    '''
+    var_declaration_no_semicolon : type VAR
+    '''
+    p[0] = p[1] + " " + p[2]
+    print("var passed to function: ", p[0])
 
 # -----------------CLASS-------------------------------------------
 def p_class_definition(p):
@@ -247,6 +272,10 @@ def p_protection_level(p):
         | PROTECTED COLON
         | empty
     '''
+    if(len(p) == 2):
+        p[0] = p[1]
+    elif(len(p) == 3):
+        p[0] = p[1] + p[2]
 
 
 def p_class_declaration(p):
@@ -254,7 +283,7 @@ def p_class_declaration(p):
     class_declaration : var_declaration
         | function_definition
     '''
-
+    p[0] = p[1]
 
 def p_class_declarations(p):
     '''
@@ -262,7 +291,10 @@ def p_class_declarations(p):
         | class_declaration class_declarations
         | empty
     '''
-
+    if(len(p) == 2):
+        p[0] = p[1]
+    elif(len(p) == 3):
+        p[0] = p[1] + p[2]
 
 # -----------------INSTRUCTIONS-------------------------------------------
 def p_instructions(p):
@@ -270,7 +302,10 @@ def p_instructions(p):
     instructions : instruction
         | instruction instructions
     '''
-
+    if(len(p) == 2):
+        p[0] = p[1]
+    elif(len(p) == 3):
+        p[0] = p[1] + p[2]
 
 def p_instruction(p):
     '''
@@ -282,15 +317,17 @@ def p_instruction(p):
         | var_declaration
         | print
         | input
+        | comment
     '''
-
+    p[0] = p[1]
 
 def p_while_loop(p):
     '''
     while_loop : WHILE LEFT_BR comparisons RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY
         | WHILE LEFT_BR bool_value RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY
     '''
-
+    p[0] = p[1] + p[2] + p[3] + p[4] + p[5] + p[6] + p[7]
+    print("while loop: ", p[0])
 
 def p_for_loop_statement(p):
     '''
@@ -299,12 +336,15 @@ def p_for_loop_statement(p):
         | FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER INT_NUMBER SEMICOLON VAR MINUS_MINUS RIGHT_BR
         | FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER_EQUAL INT_NUMBER SEMICOLON VAR MINUS_MINUS RIGHT_BR
     '''
+    p[0] = p[1] + p[2] + p[3] + " " + p[4] + p[5] + str(p[6]) + p[7] + p[8] + p[9] + str(p[10]) + p[11] + p[12] + p[13] + p[14]
 
 
 def p_for_loop(p):
     '''
     for_loop : for_loop_statement LEFT_BR_CURLY instructions RIGHT_BR_CURLY
     '''
+    p[0] = p[1] + p[2] + p[3] + p[4]
+    print("for loop: ", p[0])
 
 
 def p_loop(p):
@@ -312,6 +352,7 @@ def p_loop(p):
     loop : while_loop
         | for_loop
     '''
+    p[0] = p[1]
 
 
 def p_else_statement(p):
@@ -325,6 +366,11 @@ def p_if_statement(p):
     if_statement : IF LEFT_BR comparisons RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY
                  | IF LEFT_BR comparisons RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY else_statement
     '''
+    if(len(p) == 8):
+        p[0] = p[1] + p[2] + p[3] + p[4] + p[5] + str(p[6]) + p[7]
+    elif(len(p) == 9):
+        p[0] = p[1] + p[2] + p[3] + p[4] + p[5] + str(p[6]) + p[7] + p[8]
+    print("if: ", p[0])
 
 
 def p_comparisons(p):
@@ -332,7 +378,16 @@ def p_comparisons(p):
     comparisons : comparison
         | comparison conjunction comparisons
     '''
+    if(len(p) == 2):
+        p[0] = p[1]
+    elif(len(p) == 4):
+        p[0] = p[1] + p[2] + p[3]
 
+def p_comparison(p):
+    '''
+    comparison : value comparator value
+    '''
+    p[0] = str(p[1]) + p[2] + str(p[3])
 
 # -----------------EXPRESSIONS-------------------------------------------
 def p_comparator(p):
@@ -344,7 +399,7 @@ def p_comparator(p):
         | EQUAL_EQUAL
         | NOT_EQUAL
     '''
-
+    p[0] = p[1]
 
 def p_operator(p):
     '''
@@ -353,7 +408,7 @@ def p_operator(p):
         | MULTIPLY
         | DIVIDE
     '''
-
+    p[0] = p[1]
 
 def p_type(p):
     '''
@@ -366,6 +421,7 @@ def p_type(p):
         | SHORT
         | DOUBLE
     '''
+    p[0] = p[1]
 
 
 def p_conjunction(p):
@@ -373,28 +429,28 @@ def p_conjunction(p):
     conjunction : AND
         | OR
     '''
-
+    p[0] = p[1]
 
 def p_string_value(p):
     '''
     string_value : TEXT
         | SIGN
     '''
-
+    p[0] = p[1]
 
 def p_number(p):
     '''
     number : INT_NUMBER
         | FLOAT_NUMBER
     '''
-
+    p[0] = p[1]
 
 def p_bool_value(p):
     '''
     bool_value : TRUE
         | FALSE
     '''
-
+    p[0] = p[1]
 
 def p_value(p):
     '''
@@ -404,24 +460,27 @@ def p_value(p):
         | string_value
         | bool_value
     '''
-
+    p[0] = p[1]
 
 def p_increment(p):
     '''
     increment : VAR PLUS_PLUS SEMICOLON
     '''
-
+    p[0] = p[1] + p[2] + p[3]
+    print("incrementation: ", p[0])
 
 def p_decrement(p):
     '''
     decrement : VAR MINUS_MINUS SEMICOLON
     '''
-
+    p[0] = p[1] + p[2] + p[3]
+    print("decrementation: ", p[0])
 
 def p_get_array_element(p):
     '''
     get_array_element : VAR LEFT_BR_SQUARED INT_NUMBER RIGHT_BR_SQUARED
     '''
+    p[0] = p[1] + p[2] + str(p[3]) + p[4]
 
 
 def p_operation(p):
@@ -430,6 +489,10 @@ def p_operation(p):
         | decrement
         | value operator value SEMICOLON
     '''
+    if(len(p) == 2):
+        p[0] = p[1]
+    elif(len(p) == 5):
+        p[0] = p[1] + p[2] + p[3] + p[4]
 
 
 def p_assignment(p):
@@ -439,7 +502,8 @@ def p_assignment(p):
                | get_array_element EQUAL value SEMICOLON
                | get_array_element EQUAL VAR SEMICOLON
     '''
-
+    p[0] = p[1] + p[2] +str(p[3]) + p[4]
+    print("assignment: ", p[0])
 
 def p_var_declaration(p):
     '''
@@ -448,12 +512,20 @@ def p_var_declaration(p):
         | type VAR EQUAL value SEMICOLON
         | type VAR EQUAL VAR SEMICOLON
     '''
+    if(len(p) == 2):
+        p[0] = p[1]
+    elif(len(p) == 4):
+        p[0] = p[1] + " " + p[2] + p[3]
+    elif(len(p) == 6):
+        p[0] = p[1] + " " + p[2] + p[3] + str(p[4] + p[5])
 
 
 def p_array_declaration(p):
     '''
     array_declaration : type get_array_element SEMICOLON
     '''
+    p[0] = p[1] + " " + p[2] + p[3]
+    print("array declaration: ", p[0])
 
 
 def p_out(p):
@@ -465,42 +537,48 @@ def p_out(p):
         | OUT ENDL
         | OUT ENDL out
     '''
-
+    if(len(p) == 3):
+        p[0] = p[1] + p[2]
+    elif(len(p) == 4):
+        p[0] = p[1] + p[2] + p[3]
 
 def p_in(p):
     '''
     in : IN VAR
        | IN VAR in
     '''
+    if(len(p) == 3):
+        p[0] = p[1] + p[2]
+    elif(len(p) == 4):
+        p[0] = p[1] + p[2] + p[3]
 
 
 def p_print(p):
     '''
     print : COUT out SEMICOLON
     '''
+    p[0] = p[1] + str(p[2]) + p[3]
+    print("printing: ", p[0])
 
 
 def p_input(p):
     '''
     input : CIN in SEMICOLON
     '''
-
-
-def p_comparison(p):
-    '''
-    comparison : value comparator value
-    '''
+    p[0] = p[1] + p[2] + p[3]
 
 
 def p_returning(p):
     '''
     returning : RETURN value SEMICOLON
     '''
+    p[0] = p[1] + " " + p[2] + p[3]
 
 def p_comment(p):
     '''
     comment : COMMENT
     '''
+    p[0] = p[1]
 
 def p_empty(p):
     '''empty : '''
@@ -519,6 +597,8 @@ def p_seen_value(p):
 
 parser = yacc.yacc()
 parser.parse(code)
+print(elements)
+
 
 lexer = lex.lex()
 

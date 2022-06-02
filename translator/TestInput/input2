@@ -1,3 +1,24 @@
-void foo2(int a){
+using namespace std;
+#include <iostream>
 
+void foo1(int x){
+    x=5;
+    while(x<10){
+        cout<<x;
+        x++;
+    }
+}
+
+void foo2(int a){
+    a++;
+    b--;
+    a=2;
+    int b;
+    int tab[10];
+    cout<<a;
+    for(int i=0; i<10; i++){
+        if(i==a){
+            cout<<i<<endl;
+    }
+    }
 }
