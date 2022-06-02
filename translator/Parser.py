@@ -174,8 +174,6 @@ def p_program_components(p):
     '''
     program_components : program_component
         | program_component program_components
-        | using_namespace_std program_components
-        | empty
     '''
 
 
@@ -184,8 +182,10 @@ def p_program_component(p):
     program_component : function_definition
         | class_definition
         | including
+        | using_namespace_std
         | var_declaration
         | array_declaration
+        | comment
         | empty
     '''
 
@@ -222,7 +222,7 @@ def p_void_function_definition(p):
     '''
     void_function_definition : VOID VAR seen_value LEFT_BR function_var_declaration seen_value RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY
     '''
-    print(p[3], p[6])
+    print(p[3])
 
 
 def p_function_var_declaration(p):
@@ -288,6 +288,7 @@ def p_instruction(p):
 def p_while_loop(p):
     '''
     while_loop : WHILE LEFT_BR comparisons RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY
+        | WHILE LEFT_BR bool_value RIGHT_BR LEFT_BR_CURLY instructions RIGHT_BR_CURLY
     '''
 
 
@@ -388,7 +389,7 @@ def p_number(p):
     '''
 
 
-def bool_value(p):
+def p_bool_value(p):
     '''
     bool_value : TRUE
         | FALSE
@@ -401,6 +402,7 @@ def p_value(p):
         | VAR
         | get_array_element
         | string_value
+        | bool_value
     '''
 
 
@@ -495,6 +497,10 @@ def p_returning(p):
     returning : RETURN value SEMICOLON
     '''
 
+def p_comment(p):
+    '''
+    comment : COMMENT
+    '''
 
 def p_empty(p):
     '''empty : '''
