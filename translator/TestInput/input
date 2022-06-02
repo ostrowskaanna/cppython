@@ -1,91 +1,47 @@
-// C++ program to demonstrate the working of protected inheritance
-
-#include <iostream>
 using namespace std;
+#include <iostream>
 
-class Base {
-   private:
-    int pvt = 1;
-    float f = 1.99;
-    bool x = true;
-
-   protected:
-    int prot = 2;
-    bool y = false;
-    string c = "str";
-
-   public:
-    int pub = 3;
-    double d = 1.23;
-    long l = 4294967;
-    char c = 'x';
-
-    // function to access private member
-    int getPVT() {
-        return pvt;
+string foo1(int x, int b)
+{
+    x=5;
+    while(x<10)
+    {
+        cout<<x;
     }
-};
+    x++;
+    return c;
+}
 
-class ProtectedDerived : protected Base {
-   public:
-    // function to access protected member from Base
-    int getProt() {
-        return prot;
-    }
+int foo3(int z){
+    return z;
+}
 
-    // function to access public member from Base
-    int getPub() {
-        return pub;
-    }
-
-    void foo(){
-        for(int i = 0; i<10; i++ ){
-            cout << i;
-        }
-
-        int index = 0;
-
-        while( index < 10 && (index != 2 || index == 3){
-            if( index == 5 ){
-                break;
+void foo2(int a){
+    a++;
+    b--;
+    a=2;
+    int b;
+    int tab[10];
+    cout<<a;
+    for(int i=0; i<10; i++)
+    {
+        a = 3;
+        i++;
+        if(i==a)
+        {
+            cout<<i<<a<<endl;
+        } else
+        {
+            if(a==5){
+                cout<<"piec";
             } else {
-                cout << index;
-                index++;
+                cout<<"Nie piec";
             }
         }
-
-        int day = 4;
-        switch (day) {
-          case 1:
-            cout << "Monday";
-            break;
-          case 2:
-            cout << "Tuesday";
-            break;
-          case 3:
-            cout << "Wednesday";
-            break;
-          case 4:
-            cout << "Thursday";
-            break;
-          case 5:
-            cout << "Friday";
-            break;
-          case 6:
-            cout << "Saturday";
-            break;
-          case 7:
-            cout << "Sunday";
-            break;
+        for(int i=0; i<10; i++)
+        {
+            cout<<"Test";
+            cout<<"test2";
         }
     }
-
-};
-
-int main() {
-    ProtectedDerived object1;
-    cout << "Private cannot be accessed." << endl;
-    cout << "Protected = " << object1.getProt() << endl;
-    cout << "Public = " << object1.getPub() << endl;
-    return 0;
 }

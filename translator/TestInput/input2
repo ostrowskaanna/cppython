@@ -10,11 +10,12 @@ class Uczen{
         return wiek;
     }
 
-    int getNationality(){
+    int getNationality()
+    {
+        wiek--;
         return narodowsc;
     }
 
     char znak;
     double wzrost;
 };
-

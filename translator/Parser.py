@@ -138,7 +138,7 @@ def t_newline(t):
     t.lexer.lineno += t.value.count("\n")
 
 
-with open('TestInput\input2') as f:
+with open('TestInput\input1') as f:
     lines = f.readlines()
 
 code = "".join(lines)
@@ -260,9 +260,11 @@ def p_var_declaration_no_semicolon(p):
 # -----------------CLASS-------------------------------------------
 def p_class_definition(p):
     '''
-    class_definition : CLASS VAR LEFT_BR_CURLY class_declarations RIGHT_BR_CURLY SEMICOLON
+    class_definition : CLASS VAR LEFT_BR_CURLY change_tab_number class_declarations RIGHT_BR_CURLY SEMICOLON
     '''
-    p[0] = p[1] + " " + p[2] + ":\n" + p[4]
+    p[0] = p[1] + " " + p[2] + ":\n" + p[5]
+    global num_of_tabs
+    num_of_tabs -= 1
 
 
 def p_class_declaration(p):
@@ -270,7 +272,11 @@ def p_class_declaration(p):
     class_declaration : var_declaration
         | function_definition
     '''
-    p[0] = "    " + p[1]
+    global num_of_tabs
+    tabs = ""
+    for i in range(num_of_tabs):
+        tabs += "    "
+    p[0] = tabs + p[1]
 
 
 def p_class_declarations(p):
@@ -311,7 +317,10 @@ def p_instruction(p):
     tabs = ""
     for i in range(num_of_tabs):
         tabs += "    "
-    p[0] = tabs + p[1]
+    if p[1] != "":
+        p[0] = tabs + p[1]
+    else:
+        p[0] = p[1]
 
 def p_while_loop(p):
     '''
@@ -548,7 +557,7 @@ def p_var_declaration(p):
     elif len(p) == 4:
         p[0] = p[1] + p[2] + " = None\n"
     elif len(p) == 6:
-        p[0] = p[1] + " " + p[2] + p[3] + str(p[4] + p[5])
+        p[0] = p[2] + " " + p[3] + " " + str(p[4]) + "\n"
 
 
 def p_array_declaration(p):
@@ -613,7 +622,7 @@ def p_returning(p):
     tabs = ""
     for i in range(num_of_tabs):
         tabs += "    "
-    p[0] = tabs + p[1] + " " + p[2] + "\n"
+    p[0] = tabs + p[1] + " " + str(p[2]) + "\n"
 
 def p_comment(p):
     '''
