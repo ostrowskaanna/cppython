@@ -1,43 +1,20 @@
-using namespace std;
-#include <iostream>
+class Uczen{
+    int wiek;
+    string narodowosc;
 
-string foo1(int x, int b)
-{
-    x=5;
-    while(x<10)
-    {
-        cout<<x;
+    int getAge(){
+        for(int j=2; j<10; j++)
+        {
+            wiek++;
+        }
+        return wiek;
     }
-    x++;
-    return c;
-}
 
-void foo2(int a){
-    a++;
-    b--;
-    a=2;
-    int b;
-    int tab[10];
-    cout<<a;
-    for(int i=0; i<10; i++)
-    {
-        a = 3;
-        i++;
-        if(i==a)
-        {
-            cout<<i<<a<<endl;
-        } else
-        {
-            if(a==5){
-                cout<<"piec";
-            } else {
-                cout<<"Nie piec";
-            }
-        }
-        for(int i=0; i<10; i++)
-        {
-            cout<<"Test";
-            cout<<"test2";
-        }
+    int getNationality(){
+        return narodowsc;
     }
-}
+
+    char znak;
+    double wzrost;
+};
+
