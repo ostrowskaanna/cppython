@@ -229,7 +229,7 @@ def p_type_function_definition(p):
     '''
     type_function_definition : type VAR LEFT_BR function_var_declaration RIGHT_BR LEFT_BR_CURLY change_tab_number instructions returning RIGHT_BR_CURLY
     '''
-    p[0] = "def " + p[2] + p[3] + str(p[4]) + p[5] + ":\n" + str(p[8]) + "\n"
+    p[0] = "def " + p[2] + p[3] + str(p[4]) + p[5] + ":\n" + str(p[8]) + p[9] + "\n"
     global num_of_tabs
     num_of_tabs -= 1
 
@@ -391,22 +391,28 @@ def p_loop(p):
 
 def p_else_statement(p):
     '''
-    else_statement : ELSE LEFT_BR_CURLY change_tab_number instructions RIGHT_BR_CURLY
+    else_statement : ELSE LEFT_BR_CURLY instructions RIGHT_BR_CURLY
     '''
-    p[0] = p[1] + ":\n" + p[4] + "\n"
     global num_of_tabs
-    num_of_tabs -= 1
+    tabs = ""
+    for i in range(num_of_tabs):
+        if i != num_of_tabs - 1:
+            tabs += "    "
+    p[0] = tabs + p[1] + ":\n" + p[3] + "\n"
+
 
 
 def p_if_statement(p):
     '''
     if_statement : IF LEFT_BR comparisons RIGHT_BR LEFT_BR_CURLY change_tab_number instructions RIGHT_BR_CURLY
-                 | IF LEFT_BR comparisons RIGHT_BR LEFT_BR_CURLY change_tab_number instructions RIGHT_BR_CURLY else_statement
+                 | IF LEFT_BR comparisons RIGHT_BR LEFT_BR_CURLY change_tab_number instructions RIGHT_BR_CURLY  else_statement
     '''
     if(len(p) == 9):
         p[0] = p[1] + " " + p[3] + ":\n" + str(p[7]) + "\n"
     elif(len(p) == 10):
         p[0] = p[1] + " " + p[3] + ":\n" + str(p[7]) + "\n" + p[9]
+    global num_of_tabs
+    num_of_tabs -= 1
 
 
 def p_comparisons(p):
@@ -612,7 +618,6 @@ def p_print(p):
     print : COUT out SEMICOLON
     '''
     p[0] = "print(" + str(p[2]) + ")\n"
-    #print("printing: ", p[0])
 
 
 def p_input(p):
@@ -626,7 +631,11 @@ def p_returning(p):
     '''
     returning : RETURN value SEMICOLON
     '''
-    p[0] = p[1] + " " + p[2] + "\n"
+    global num_of_tabs
+    tabs = ""
+    for i in range(num_of_tabs):
+        tabs += "    "
+    p[0] = tabs + p[1] + " " + p[2] + "\n"
 
 def p_comment(p):
     '''
@@ -649,6 +658,11 @@ def p_change_tab_number(p):
     global num_of_tabs
     num_of_tabs += 1
 
+
+def p_decrement_tab_number(p):
+    "decrement_tab_number : "
+    global num_of_tabs
+    num_of_tabs -= 1
 
 parser = yacc.yacc()
 parser.parse(code)

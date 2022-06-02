@@ -1,7 +1,7 @@
 using namespace std;
 #include <iostream>
 
-void foo1(int x, int b)
+string foo1(int x, int b)
 {
     x=5;
     while(x<10)
@@ -9,6 +9,7 @@ void foo1(int x, int b)
         cout<<x;
     }
     x++;
+    return c;
 }
 
 void foo2(int a){
@@ -25,10 +26,18 @@ void foo2(int a){
         if(i==a)
         {
             cout<<i<<a<<endl;
+        } else
+        {
+            if(a==5){
+                cout<<"piec";
+            } else {
+                cout<<"Nie piec";
+            }
         }
         for(int i=0; i<10; i++)
         {
             cout<<"Test";
+            cout<<"test2";
         }
     }
 }

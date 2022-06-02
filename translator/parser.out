@@ -61,7 +61,7 @@ Rule 50    for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON 
 Rule 51    for_loop -> for_loop_statement LEFT_BR_CURLY change_tab_number instructions RIGHT_BR_CURLY
 Rule 52    loop -> while_loop
 Rule 53    loop -> for_loop
-Rule 54    else_statement -> ELSE LEFT_BR_CURLY change_tab_number instructions RIGHT_BR_CURLY
+Rule 54    else_statement -> ELSE LEFT_BR_CURLY instructions RIGHT_BR_CURLY
 Rule 55    if_statement -> IF LEFT_BR comparisons RIGHT_BR LEFT_BR_CURLY change_tab_number instructions RIGHT_BR_CURLY
 Rule 56    if_statement -> IF LEFT_BR comparisons RIGHT_BR LEFT_BR_CURLY change_tab_number instructions RIGHT_BR_CURLY else_statement
 Rule 57    comparisons -> comparison
@@ -127,6 +127,7 @@ Rule 116   returning -> RETURN value SEMICOLON
 Rule 117   comment -> COMMENT
 Rule 118   empty -> <empty>
 Rule 119   change_tab_number -> <empty>
+Rule 120   decrement_tab_number -> <empty>
 
 Terminals, with rules where they appear
 
@@ -200,7 +201,7 @@ Nonterminals, with rules where they appear
 array_declaration    : 11 102
 assignment           : 38
 bool_value           : 46 90
-change_tab_number    : 18 19 45 46 51 54 55 56
+change_tab_number    : 18 19 45 46 51 55 56
 class_declaration    : 31 32
 class_declarations   : 24 32
 class_definition     : 7
@@ -210,6 +211,7 @@ comparison           : 57 58
 comparisons          : 45 55 56 58
 conjunction          : 58
 decrement            : 95
+decrement_tab_number : 
 else_statement       : 56
 empty                : 3 13 22 28 33 40
 for_loop             : 53
@@ -4809,7 +4811,7 @@ state 205
 
     (55) if_statement -> IF LEFT_BR comparisons RIGHT_BR LEFT_BR_CURLY change_tab_number instructions RIGHT_BR_CURLY .
     (56) if_statement -> IF LEFT_BR comparisons RIGHT_BR LEFT_BR_CURLY change_tab_number instructions RIGHT_BR_CURLY . else_statement
-    (54) else_statement -> . ELSE LEFT_BR_CURLY change_tab_number instructions RIGHT_BR_CURLY
+    (54) else_statement -> . ELSE LEFT_BR_CURLY instructions RIGHT_BR_CURLY
 
     IF              reduce using rule 55 (if_statement -> IF LEFT_BR comparisons RIGHT_BR LEFT_BR_CURLY change_tab_number instructions RIGHT_BR_CURLY .)
     VAR             reduce using rule 55 (if_statement -> IF LEFT_BR comparisons RIGHT_BR LEFT_BR_CURLY change_tab_number instructions RIGHT_BR_CURLY .)
@@ -4940,7 +4942,7 @@ state 209
 
 state 210
 
-    (54) else_statement -> ELSE . LEFT_BR_CURLY change_tab_number instructions RIGHT_BR_CURLY
+    (54) else_statement -> ELSE . LEFT_BR_CURLY instructions RIGHT_BR_CURLY
 
     LEFT_BR_CURLY   shift and go to state 215
 
@@ -4975,65 +4977,7 @@ state 214
 
 state 215
 
-    (54) else_statement -> ELSE LEFT_BR_CURLY . change_tab_number instructions RIGHT_BR_CURLY
-    (119) change_tab_number -> .
-
-    IF              reduce using rule 119 (change_tab_number -> .)
-    VAR             reduce using rule 119 (change_tab_number -> .)
-    COUT            reduce using rule 119 (change_tab_number -> .)
-    CIN             reduce using rule 119 (change_tab_number -> .)
-    COMMENT         reduce using rule 119 (change_tab_number -> .)
-    WHILE           reduce using rule 119 (change_tab_number -> .)
-    INT             reduce using rule 119 (change_tab_number -> .)
-    CHAR            reduce using rule 119 (change_tab_number -> .)
-    STRING          reduce using rule 119 (change_tab_number -> .)
-    BOOL            reduce using rule 119 (change_tab_number -> .)
-    FLOAT           reduce using rule 119 (change_tab_number -> .)
-    LONG            reduce using rule 119 (change_tab_number -> .)
-    SHORT           reduce using rule 119 (change_tab_number -> .)
-    DOUBLE          reduce using rule 119 (change_tab_number -> .)
-    FOR             reduce using rule 119 (change_tab_number -> .)
-    INT_NUMBER      reduce using rule 119 (change_tab_number -> .)
-    FLOAT_NUMBER    reduce using rule 119 (change_tab_number -> .)
-    TEXT            reduce using rule 119 (change_tab_number -> .)
-    SIGN            reduce using rule 119 (change_tab_number -> .)
-    TRUE            reduce using rule 119 (change_tab_number -> .)
-    FALSE           reduce using rule 119 (change_tab_number -> .)
-    RIGHT_BR_CURLY  reduce using rule 119 (change_tab_number -> .)
-
-    change_tab_number              shift and go to state 220
-
-state 216
-
-    (47) for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS INT_NUMBER . SEMICOLON VAR PLUS_PLUS RIGHT_BR
-
-    SEMICOLON       shift and go to state 221
-
-
-state 217
-
-    (48) for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS_EQUAL INT_NUMBER . SEMICOLON VAR PLUS_PLUS RIGHT_BR
-
-    SEMICOLON       shift and go to state 222
-
-
-state 218
-
-    (49) for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER INT_NUMBER . SEMICOLON VAR MINUS_MINUS RIGHT_BR
-
-    SEMICOLON       shift and go to state 223
-
-
-state 219
-
-    (50) for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER_EQUAL INT_NUMBER . SEMICOLON VAR MINUS_MINUS RIGHT_BR
-
-    SEMICOLON       shift and go to state 224
-
-
-state 220
-
-    (54) else_statement -> ELSE LEFT_BR_CURLY change_tab_number . instructions RIGHT_BR_CURLY
+    (54) else_statement -> ELSE LEFT_BR_CURLY . instructions RIGHT_BR_CURLY
     (34) instructions -> . instruction
     (35) instructions -> . instruction instructions
     (36) instruction -> . loop
@@ -5161,7 +5105,7 @@ state 220
   ! TRUE            [ reduce using rule 118 (empty -> .) ]
   ! FALSE           [ reduce using rule 118 (empty -> .) ]
 
-    instructions                   shift and go to state 225
+    instructions                   shift and go to state 220
     instruction                    shift and go to state 97
     loop                           shift and go to state 98
     if_statement                   shift and go to state 99
@@ -5184,6 +5128,41 @@ state 220
     for_loop_statement             shift and go to state 117
     number                         shift and go to state 54
     string_value                   shift and go to state 56
+
+state 216
+
+    (47) for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS INT_NUMBER . SEMICOLON VAR PLUS_PLUS RIGHT_BR
+
+    SEMICOLON       shift and go to state 221
+
+
+state 217
+
+    (48) for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS_EQUAL INT_NUMBER . SEMICOLON VAR PLUS_PLUS RIGHT_BR
+
+    SEMICOLON       shift and go to state 222
+
+
+state 218
+
+    (49) for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER INT_NUMBER . SEMICOLON VAR MINUS_MINUS RIGHT_BR
+
+    SEMICOLON       shift and go to state 223
+
+
+state 219
+
+    (50) for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER_EQUAL INT_NUMBER . SEMICOLON VAR MINUS_MINUS RIGHT_BR
+
+    SEMICOLON       shift and go to state 224
+
+
+state 220
+
+    (54) else_statement -> ELSE LEFT_BR_CURLY instructions . RIGHT_BR_CURLY
+
+    RIGHT_BR_CURLY  shift and go to state 225
+
 
 state 221
 
@@ -5215,118 +5194,111 @@ state 224
 
 state 225
 
-    (54) else_statement -> ELSE LEFT_BR_CURLY change_tab_number instructions . RIGHT_BR_CURLY
+    (54) else_statement -> ELSE LEFT_BR_CURLY instructions RIGHT_BR_CURLY .
 
-    RIGHT_BR_CURLY  shift and go to state 230
+    IF              reduce using rule 54 (else_statement -> ELSE LEFT_BR_CURLY instructions RIGHT_BR_CURLY .)
+    VAR             reduce using rule 54 (else_statement -> ELSE LEFT_BR_CURLY instructions RIGHT_BR_CURLY .)
+    COUT            reduce using rule 54 (else_statement -> ELSE LEFT_BR_CURLY instructions RIGHT_BR_CURLY .)
+    CIN             reduce using rule 54 (else_statement -> ELSE LEFT_BR_CURLY instructions RIGHT_BR_CURLY .)
+    COMMENT         reduce using rule 54 (else_statement -> ELSE LEFT_BR_CURLY instructions RIGHT_BR_CURLY .)
+    WHILE           reduce using rule 54 (else_statement -> ELSE LEFT_BR_CURLY instructions RIGHT_BR_CURLY .)
+    INT             reduce using rule 54 (else_statement -> ELSE LEFT_BR_CURLY instructions RIGHT_BR_CURLY .)
+    CHAR            reduce using rule 54 (else_statement -> ELSE LEFT_BR_CURLY instructions RIGHT_BR_CURLY .)
+    STRING          reduce using rule 54 (else_statement -> ELSE LEFT_BR_CURLY instructions RIGHT_BR_CURLY .)
+    BOOL            reduce using rule 54 (else_statement -> ELSE LEFT_BR_CURLY instructions RIGHT_BR_CURLY .)
+    FLOAT           reduce using rule 54 (else_statement -> ELSE LEFT_BR_CURLY instructions RIGHT_BR_CURLY .)
+    LONG            reduce using rule 54 (else_statement -> ELSE LEFT_BR_CURLY instructions RIGHT_BR_CURLY .)
+    SHORT           reduce using rule 54 (else_statement -> ELSE LEFT_BR_CURLY instructions RIGHT_BR_CURLY .)
+    DOUBLE          reduce using rule 54 (else_statement -> ELSE LEFT_BR_CURLY instructions RIGHT_BR_CURLY .)
+    FOR             reduce using rule 54 (else_statement -> ELSE LEFT_BR_CURLY instructions RIGHT_BR_CURLY .)
+    INT_NUMBER      reduce using rule 54 (else_statement -> ELSE LEFT_BR_CURLY instructions RIGHT_BR_CURLY .)
+    FLOAT_NUMBER    reduce using rule 54 (else_statement -> ELSE LEFT_BR_CURLY instructions RIGHT_BR_CURLY .)
+    TEXT            reduce using rule 54 (else_statement -> ELSE LEFT_BR_CURLY instructions RIGHT_BR_CURLY .)
+    SIGN            reduce using rule 54 (else_statement -> ELSE LEFT_BR_CURLY instructions RIGHT_BR_CURLY .)
+    TRUE            reduce using rule 54 (else_statement -> ELSE LEFT_BR_CURLY instructions RIGHT_BR_CURLY .)
+    FALSE           reduce using rule 54 (else_statement -> ELSE LEFT_BR_CURLY instructions RIGHT_BR_CURLY .)
+    RETURN          reduce using rule 54 (else_statement -> ELSE LEFT_BR_CURLY instructions RIGHT_BR_CURLY .)
+    RIGHT_BR_CURLY  reduce using rule 54 (else_statement -> ELSE LEFT_BR_CURLY instructions RIGHT_BR_CURLY .)
 
 
 state 226
 
     (47) for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS INT_NUMBER SEMICOLON VAR . PLUS_PLUS RIGHT_BR
 
-    PLUS_PLUS       shift and go to state 231
+    PLUS_PLUS       shift and go to state 230
 
 
 state 227
 
     (48) for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS_EQUAL INT_NUMBER SEMICOLON VAR . PLUS_PLUS RIGHT_BR
 
-    PLUS_PLUS       shift and go to state 232
+    PLUS_PLUS       shift and go to state 231
 
 
 state 228
 
     (49) for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER INT_NUMBER SEMICOLON VAR . MINUS_MINUS RIGHT_BR
 
-    MINUS_MINUS     shift and go to state 233
+    MINUS_MINUS     shift and go to state 232
 
 
 state 229
 
     (50) for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER_EQUAL INT_NUMBER SEMICOLON VAR . MINUS_MINUS RIGHT_BR
 
-    MINUS_MINUS     shift and go to state 234
+    MINUS_MINUS     shift and go to state 233
 
 
 state 230
 
-    (54) else_statement -> ELSE LEFT_BR_CURLY change_tab_number instructions RIGHT_BR_CURLY .
+    (47) for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS INT_NUMBER SEMICOLON VAR PLUS_PLUS . RIGHT_BR
 
-    IF              reduce using rule 54 (else_statement -> ELSE LEFT_BR_CURLY change_tab_number instructions RIGHT_BR_CURLY .)
-    VAR             reduce using rule 54 (else_statement -> ELSE LEFT_BR_CURLY change_tab_number instructions RIGHT_BR_CURLY .)
-    COUT            reduce using rule 54 (else_statement -> ELSE LEFT_BR_CURLY change_tab_number instructions RIGHT_BR_CURLY .)
-    CIN             reduce using rule 54 (else_statement -> ELSE LEFT_BR_CURLY change_tab_number instructions RIGHT_BR_CURLY .)
-    COMMENT         reduce using rule 54 (else_statement -> ELSE LEFT_BR_CURLY change_tab_number instructions RIGHT_BR_CURLY .)
-    WHILE           reduce using rule 54 (else_statement -> ELSE LEFT_BR_CURLY change_tab_number instructions RIGHT_BR_CURLY .)
-    INT             reduce using rule 54 (else_statement -> ELSE LEFT_BR_CURLY change_tab_number instructions RIGHT_BR_CURLY .)
-    CHAR            reduce using rule 54 (else_statement -> ELSE LEFT_BR_CURLY change_tab_number instructions RIGHT_BR_CURLY .)
-    STRING          reduce using rule 54 (else_statement -> ELSE LEFT_BR_CURLY change_tab_number instructions RIGHT_BR_CURLY .)
-    BOOL            reduce using rule 54 (else_statement -> ELSE LEFT_BR_CURLY change_tab_number instructions RIGHT_BR_CURLY .)
-    FLOAT           reduce using rule 54 (else_statement -> ELSE LEFT_BR_CURLY change_tab_number instructions RIGHT_BR_CURLY .)
-    LONG            reduce using rule 54 (else_statement -> ELSE LEFT_BR_CURLY change_tab_number instructions RIGHT_BR_CURLY .)
-    SHORT           reduce using rule 54 (else_statement -> ELSE LEFT_BR_CURLY change_tab_number instructions RIGHT_BR_CURLY .)
-    DOUBLE          reduce using rule 54 (else_statement -> ELSE LEFT_BR_CURLY change_tab_number instructions RIGHT_BR_CURLY .)
-    FOR             reduce using rule 54 (else_statement -> ELSE LEFT_BR_CURLY change_tab_number instructions RIGHT_BR_CURLY .)
-    INT_NUMBER      reduce using rule 54 (else_statement -> ELSE LEFT_BR_CURLY change_tab_number instructions RIGHT_BR_CURLY .)
-    FLOAT_NUMBER    reduce using rule 54 (else_statement -> ELSE LEFT_BR_CURLY change_tab_number instructions RIGHT_BR_CURLY .)
-    TEXT            reduce using rule 54 (else_statement -> ELSE LEFT_BR_CURLY change_tab_number instructions RIGHT_BR_CURLY .)
-    SIGN            reduce using rule 54 (else_statement -> ELSE LEFT_BR_CURLY change_tab_number instructions RIGHT_BR_CURLY .)
-    TRUE            reduce using rule 54 (else_statement -> ELSE LEFT_BR_CURLY change_tab_number instructions RIGHT_BR_CURLY .)
-    FALSE           reduce using rule 54 (else_statement -> ELSE LEFT_BR_CURLY change_tab_number instructions RIGHT_BR_CURLY .)
-    RETURN          reduce using rule 54 (else_statement -> ELSE LEFT_BR_CURLY change_tab_number instructions RIGHT_BR_CURLY .)
-    RIGHT_BR_CURLY  reduce using rule 54 (else_statement -> ELSE LEFT_BR_CURLY change_tab_number instructions RIGHT_BR_CURLY .)
+    RIGHT_BR        shift and go to state 234
 
 
 state 231
 
-    (47) for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS INT_NUMBER SEMICOLON VAR PLUS_PLUS . RIGHT_BR
+    (48) for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS_EQUAL INT_NUMBER SEMICOLON VAR PLUS_PLUS . RIGHT_BR
 
     RIGHT_BR        shift and go to state 235
 
 
 state 232
 
-    (48) for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS_EQUAL INT_NUMBER SEMICOLON VAR PLUS_PLUS . RIGHT_BR
+    (49) for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER INT_NUMBER SEMICOLON VAR MINUS_MINUS . RIGHT_BR
 
     RIGHT_BR        shift and go to state 236
 
 
 state 233
 
-    (49) for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER INT_NUMBER SEMICOLON VAR MINUS_MINUS . RIGHT_BR
+    (50) for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER_EQUAL INT_NUMBER SEMICOLON VAR MINUS_MINUS . RIGHT_BR
 
     RIGHT_BR        shift and go to state 237
 
 
 state 234
 
-    (50) for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER_EQUAL INT_NUMBER SEMICOLON VAR MINUS_MINUS . RIGHT_BR
-
-    RIGHT_BR        shift and go to state 238
-
-
-state 235
-
     (47) for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS INT_NUMBER SEMICOLON VAR PLUS_PLUS RIGHT_BR .
 
     LEFT_BR_CURLY   reduce using rule 47 (for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS INT_NUMBER SEMICOLON VAR PLUS_PLUS RIGHT_BR .)
 
 
-state 236
+state 235
 
     (48) for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS_EQUAL INT_NUMBER SEMICOLON VAR PLUS_PLUS RIGHT_BR .
 
     LEFT_BR_CURLY   reduce using rule 48 (for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS_EQUAL INT_NUMBER SEMICOLON VAR PLUS_PLUS RIGHT_BR .)
 
 
-state 237
+state 236
 
     (49) for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER INT_NUMBER SEMICOLON VAR MINUS_MINUS RIGHT_BR .
 
     LEFT_BR_CURLY   reduce using rule 49 (for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER INT_NUMBER SEMICOLON VAR MINUS_MINUS RIGHT_BR .)
 
 
-state 238
+state 237
 
     (50) for_loop_statement -> FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER_EQUAL INT_NUMBER SEMICOLON VAR MINUS_MINUS RIGHT_BR .
 
@@ -5511,27 +5483,27 @@ WARNING: shift/reduce conflict for TEXT in state 199 resolved as shift
 WARNING: shift/reduce conflict for SIGN in state 199 resolved as shift
 WARNING: shift/reduce conflict for TRUE in state 199 resolved as shift
 WARNING: shift/reduce conflict for FALSE in state 199 resolved as shift
-WARNING: shift/reduce conflict for IF in state 220 resolved as shift
-WARNING: shift/reduce conflict for VAR in state 220 resolved as shift
-WARNING: shift/reduce conflict for COUT in state 220 resolved as shift
-WARNING: shift/reduce conflict for CIN in state 220 resolved as shift
-WARNING: shift/reduce conflict for COMMENT in state 220 resolved as shift
-WARNING: shift/reduce conflict for WHILE in state 220 resolved as shift
-WARNING: shift/reduce conflict for INT in state 220 resolved as shift
-WARNING: shift/reduce conflict for CHAR in state 220 resolved as shift
-WARNING: shift/reduce conflict for STRING in state 220 resolved as shift
-WARNING: shift/reduce conflict for BOOL in state 220 resolved as shift
-WARNING: shift/reduce conflict for FLOAT in state 220 resolved as shift
-WARNING: shift/reduce conflict for LONG in state 220 resolved as shift
-WARNING: shift/reduce conflict for SHORT in state 220 resolved as shift
-WARNING: shift/reduce conflict for DOUBLE in state 220 resolved as shift
-WARNING: shift/reduce conflict for FOR in state 220 resolved as shift
-WARNING: shift/reduce conflict for INT_NUMBER in state 220 resolved as shift
-WARNING: shift/reduce conflict for FLOAT_NUMBER in state 220 resolved as shift
-WARNING: shift/reduce conflict for TEXT in state 220 resolved as shift
-WARNING: shift/reduce conflict for SIGN in state 220 resolved as shift
-WARNING: shift/reduce conflict for TRUE in state 220 resolved as shift
-WARNING: shift/reduce conflict for FALSE in state 220 resolved as shift
+WARNING: shift/reduce conflict for IF in state 215 resolved as shift
+WARNING: shift/reduce conflict for VAR in state 215 resolved as shift
+WARNING: shift/reduce conflict for COUT in state 215 resolved as shift
+WARNING: shift/reduce conflict for CIN in state 215 resolved as shift
+WARNING: shift/reduce conflict for COMMENT in state 215 resolved as shift
+WARNING: shift/reduce conflict for WHILE in state 215 resolved as shift
+WARNING: shift/reduce conflict for INT in state 215 resolved as shift
+WARNING: shift/reduce conflict for CHAR in state 215 resolved as shift
+WARNING: shift/reduce conflict for STRING in state 215 resolved as shift
+WARNING: shift/reduce conflict for BOOL in state 215 resolved as shift
+WARNING: shift/reduce conflict for FLOAT in state 215 resolved as shift
+WARNING: shift/reduce conflict for LONG in state 215 resolved as shift
+WARNING: shift/reduce conflict for SHORT in state 215 resolved as shift
+WARNING: shift/reduce conflict for DOUBLE in state 215 resolved as shift
+WARNING: shift/reduce conflict for FOR in state 215 resolved as shift
+WARNING: shift/reduce conflict for INT_NUMBER in state 215 resolved as shift
+WARNING: shift/reduce conflict for FLOAT_NUMBER in state 215 resolved as shift
+WARNING: shift/reduce conflict for TEXT in state 215 resolved as shift
+WARNING: shift/reduce conflict for SIGN in state 215 resolved as shift
+WARNING: shift/reduce conflict for TRUE in state 215 resolved as shift
+WARNING: shift/reduce conflict for FALSE in state 215 resolved as shift
 WARNING: reduce/reduce conflict in state 4 resolved using rule (program -> empty)
 WARNING: rejected rule (program_component -> empty) in state 4
 WARNING: reduce/reduce conflict in state 5 resolved using rule (program_components -> program_component)
