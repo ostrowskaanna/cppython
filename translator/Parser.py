@@ -60,8 +60,10 @@ tokens = [
              'VAR',
              'LIBRARY',
              'TEXT',
+             'EMPTY_TEXT',
              'SIGN',
              'COMMA',
+             'DOT',
              'ID'
          ] + list(reserved.values())
 
@@ -98,6 +100,7 @@ t_AND = r'\&&'
 t_OR = r'\|\|'
 t_HASH = r'\#'
 t_COMMA = r'\,'
+t_DOT = r'\.'
 t_ignore = ' '
 
 
@@ -118,6 +121,8 @@ t_VAR = r'[a-zA-Z_][a-zA-Z0-9_]*'
 t_LIBRARY = r'\<.*\>'
 
 t_TEXT = r'"(.*?[^\\])"'
+
+t_EMPTY_TEXT = r'""'
 
 t_SIGN = r'\'.\''
 
@@ -256,6 +261,15 @@ def p_var_declaration_no_semicolon(p):
     '''
     p[0] = p[1] + p[2]
 
+def p_function_call(p):
+    '''
+    function_call : VAR LEFT_BR RIGHT_BR SEMICOLON
+        | VAR LEFT_BR VAR RIGHT_BR SEMICOLON
+    '''
+    if len(p) == 5:
+        p[0] = p[1] + p[2] + p[3] + "\n"
+    elif len(p) == 6:
+        p[0] = p[1] + p[2] + p[3] + p[4] + "\n"
 
 # -----------------CLASS-------------------------------------------
 def p_class_definition(p):
@@ -312,6 +326,7 @@ def p_instruction(p):
         | print
         | input
         | comment
+        | function_call
     '''
     global num_of_tabs
     tabs = ""
@@ -422,6 +437,7 @@ def p_comparisons(p):
 def p_comparison(p):
     '''
     comparison : value comparator value
+        | value EQUAL_EQUAL EMPTY_TEXT
     '''
     p[0] = str(p[1]) + " " + p[2] + " " + str(p[3])
 
