@@ -1,21 +1,68 @@
-class Uczen{
-    int wiek;
-    string narodowosc;
+#include <iostream>
+using namespace std;
 
-    int getAge(){
-        for(int j=2; j<10; j++)
-        {
-            wiek++;
+
+int main()
+{
+    string studentName;
+    int spots=100;
+    string names[spots];
+
+    for(int i=0; i<spots; i++){
+        names[i] = "free";
+    }
+
+    cout<<"Enter your name: "<<endl;
+    cin>>studentName;
+
+    for(int i=0; i<spots; i++){
+        if(names[i] == "free"){
+            names[i] = studentName;
+            i=spots;
         }
-        return wiek;
     }
 
-    int getNationality()
-    {
-        wiek--;
-        return narodowsc;
+    return 0;
+}
+
+
+
+class Student{
+
+    string name;
+    int nr;
+    int year=1;
+    string faculty;
+
+    void setName(string name_){
+        name = name_;
     }
 
-    char znak;
-    double wzrost;
+    string getName(){
+        return name;
+    }
+
+    void setNr(int nr_){
+        nr = nr_;
+    }
+
+    int getNr(){
+        return nr;
+    }
+
+    void setYear(){
+        year++;
+    }
+
+    int getYear(){
+        return year;
+    }
+
+    void setFaculty(string faculty_){
+        faculty = faculty_;
+    }
+
+    string getFaculty(){
+        return faculty;
+    }
 };

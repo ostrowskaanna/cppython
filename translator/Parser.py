@@ -72,9 +72,9 @@ def t_comment(t):
     # No return value. Token discarded
 
 
-t_PLUS_PLUS = r'\++'
-t_MINUS_MINUS = r'--'
-t_EQUAL_EQUAL = r'=='
+t_PLUS_PLUS = r'\+\+'
+t_MINUS_MINUS = r'\--'
+t_EQUAL_EQUAL = r'\=='
 t_PLUS = r'\+'
 t_MINUS = r'\-'
 t_MULTIPLY = r'\*'
@@ -88,7 +88,7 @@ t_LEFT_BR_CURLY = r'\{'
 t_RIGHT_BR_CURLY = r'\}'
 t_SEMICOLON = r'\;'
 t_OUT = r'\<<'
-t_IN = r'>>'
+t_IN = r'\>>'
 t_LESS = r'\<'
 t_LESS_EQUAL = r'\<='
 t_GREATER = r'\>'
@@ -138,7 +138,7 @@ def t_newline(t):
     t.lexer.lineno += t.value.count("\n")
 
 
-with open('TestInput\input1') as f:
+with open('TestInput\input2') as f:
     lines = f.readlines()
 
 code = "".join(lines)
@@ -335,9 +335,13 @@ def p_while_loop(p):
 def p_for_loop_statement(p):
     '''
     for_loop_statement : FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS INT_NUMBER SEMICOLON VAR PLUS_PLUS RIGHT_BR
+        | FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS VAR SEMICOLON VAR PLUS_PLUS RIGHT_BR
         | FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS_EQUAL INT_NUMBER SEMICOLON VAR PLUS_PLUS RIGHT_BR
+        | FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR LESS_EQUAL VAR SEMICOLON VAR PLUS_PLUS RIGHT_BR
         | FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER INT_NUMBER SEMICOLON VAR MINUS_MINUS RIGHT_BR
+        | FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER VAR SEMICOLON VAR MINUS_MINUS RIGHT_BR
         | FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER_EQUAL INT_NUMBER SEMICOLON VAR MINUS_MINUS RIGHT_BR
+        | FOR LEFT_BR INT VAR EQUAL INT_NUMBER SEMICOLON VAR GREATER_EQUAL VAR SEMICOLON VAR MINUS_MINUS RIGHT_BR
     '''
     start_range = None
     end_range = None
@@ -434,7 +438,6 @@ def p_comparator(p):
     '''
     p[0] = p[1]
 
-
 def p_operator(p):
     '''
     operator : PLUS
@@ -443,7 +446,6 @@ def p_operator(p):
         | DIVIDE
     '''
     p[0] = p[1]
-
 
 def p_type(p):
     '''
@@ -498,6 +500,7 @@ def p_value(p):
         | get_array_element
         | string_value
         | bool_value
+        | math_operation
     '''
     p[0] = p[1]
 
@@ -515,24 +518,29 @@ def p_decrement(p):
     '''
     p[0] = p[1] + " -= 1\n"
 
-
-def p_get_array_element(p):
+def p_math_operation(p):
     '''
-    get_array_element : VAR LEFT_BR_SQUARED INT_NUMBER RIGHT_BR_SQUARED
+    math_operation : VAR operator VAR
+        | VAR operator number
+        | number operator number
     '''
-    p[0] = p[1] + p[2] + str(p[3]) + p[4]
+    p[0] = str(p[1]) + p[2] + str(p[3])
 
 
 def p_operation(p):
     '''
     operation : increment
         | decrement
-        | value operator value SEMICOLON
     '''
-    if len(p) == 2:
-        p[0] = p[1]
-    elif len(p) == 5:
-        p[0] = p[1] + p[2] + p[3] + "\n"
+    p[0] = p[1]
+
+def p_get_array_element(p):
+    '''
+    get_array_element : VAR LEFT_BR_SQUARED INT_NUMBER RIGHT_BR_SQUARED
+        | VAR LEFT_BR_SQUARED VAR RIGHT_BR_SQUARED
+    '''
+    p[0] = p[1] + p[2] + str(p[3]) + p[4]
+
 
 
 def p_assignment(p):
@@ -594,10 +602,13 @@ def p_in(p):
     in : IN VAR
        | IN VAR in
     '''
+    tabs = ""
+    for i in range(num_of_tabs):
+        tabs += "    "
     if len(p) == 3:
-        p[0] = p[1] + p[2]
+        p[0] = p[2] + " = input()\n"
     elif len(p) == 4:
-        p[0] = p[1] + p[2] + p[3]
+        p[0] = p[2] + " = input()\n" + tabs + p[3]
 
 
 def p_print(p):
@@ -611,7 +622,7 @@ def p_input(p):
     '''
     input : CIN in SEMICOLON
     '''
-    p[0] = p[1] + p[2] + p[3]
+    p[0] = p[2]
 
 
 def p_returning(p):
