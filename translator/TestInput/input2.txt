@@ -12,7 +12,7 @@ int main()
     return 0;
 }
 
-void NameEnter(){
+void NameEnter(int spots){
     cout<<"Enter your name: "<<endl;
     cin>>studentName;
 

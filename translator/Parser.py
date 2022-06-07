@@ -1,5 +1,15 @@
 from ply import lex
 from ply import yacc
+import PySimpleGUI as sg
+
+sg.theme("DarkTeal2")
+layout = [[sg.T("")], [sg.Text("Choose the file to translate: "), sg.Input(),
+                       sg.FileBrowse(key="-IN-", file_types=(("Text files", "*.txt"),))],
+                      [sg.Button("Submit")]]
+
+###Building Window
+window = sg.Window('C++ to Python translator', layout, size=(600, 150))
+
 
 reserved = {
     'for': 'FOR',
@@ -143,14 +153,9 @@ def t_newline(t):
     t.lexer.lineno += t.value.count("\n")
 
 
-with open('TestInput\input2') as f:
-    lines = f.readlines()
-
-code = "".join(lines)
-
 lexer = lex.lex()
 
-lexer.input(code)
+# lexer.input(code)
 
 # -----------------------------------------------CREATING .PY FILE CONTENT----------------------------------------------
 pythonCode = ""
@@ -163,7 +168,8 @@ def p_start_symbol(p):
     start_symbol : program
     '''
     p[0] = p[1]
-    print(p[0])
+    global pythonCode
+    pythonCode = p[0]
 
 
 def p_program(p):
@@ -673,17 +679,16 @@ def p_change_tab_number(p):
     num_of_tabs += 1
 
 
-parser = yacc.yacc()
-parser.parse(code)
-lexer = lex.lex()
-
-lexer.input(code)
-
-'''
 while True:
-    tok = lexer.token()
-    if not tok:
+    event, values = window.read()
+    if event == sg.WIN_CLOSED or event == "Exit":
         break
-    else:
-        print(tok)
-'''
+    elif event == "Submit":
+        with open(values["-IN-"]) as f:
+            lines = f.readlines()
+        file_name = values["-IN-"].split("/")[-1].split('.')[0] + '.py'
+        code = "".join(lines)
+        parser = yacc.yacc()
+        parser.parse(code)
+        with open(r"C:\Users\Piotr\PycharmProjects\cppython\translator\Output" + "\\" + file_name, 'w') as file:
+            file.write(pythonCode)

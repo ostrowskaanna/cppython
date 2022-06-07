@@ -4,9 +4,10 @@ using namespace std;
 int main()
 {
     int tab[10];
-    int a;
+    int a = 1;
     int b;
-    int c;
+    b = 0
+    int c = 1;
     c++;
     c--;
     c = a*2;
