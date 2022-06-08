@@ -692,6 +692,5 @@ while True:
         code = "".join(lines)
         parser = yacc.yacc()
         parser.parse(code)
-        #with open(r"C:\Users\Piotr\PycharmProjects\cppython\translator\Output" + "\\" + file_name, 'w') as file:
-        with open(r"C:\Users\anaos\cppython\translator\Output" + "\\" + file_name, 'w') as file:
+        with open(r"C:\Users\Piotr\PycharmProjects\cppython\translator\Output" + "\\" + file_name, 'w') as file:
             file.write(pythonCode)

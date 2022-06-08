@@ -2,64 +2,13 @@
 using namespace std;
 
 
-int main()
+class Student
 {
-    string studentName;
-    int spots=100;
-    string names[spots];
-    nameEnter();
+    string Name;
+    int Age;
 
-    return 0;
-}
-
-void NameEnter(int spots){
-    cout<<"Enter your name: "<<endl;
-    cin>>studentName;
-
-    for(int i=0; i<spots; i++){
-        if(names[i] == ""){
-            names[i] = studentName;
-            i=spots;
-        }
-    }
-}
-
-class Student{
-
-    string name;
-    int nr;
-    int year=1;
-    string faculty;
-
-    void setName(string name_){
-        name = name_;
-    }
-
-    string getName(){
-        return name;
-    }
-
-    void setNr(int nr_){
-        nr = nr_;
-    }
-
-    int getNr(){
-        return nr;
-    }
-
-    void setYear(){
-        year++;
-    }
-
-    int getYear(){
-        return year;
-    }
-
-    void setFaculty(string faculty_){
-        faculty = faculty_;
-    }
-
-    string getFaculty(){
-        return faculty;
+    void printNameAndAge()
+    {
+        cout<<"Name: "<<Name<<"Age: "<<Age;
     }
 };

@@ -3,31 +3,13 @@ using namespace std;
 
 int main()
 {
-    int tab[10];
-    int a = 1;
-    int b;
-    b = 0
-    int c = 1;
-    c++;
-    c--;
-    c = a*2;
-    tab[c] = 2+2;
-    int d = a-b;
-    a = 0;
-    b = 0;
-
+    int a = 3;
+    int b = 4;
+    int c;
+    c = a*b;
     for(int i=0; i<10; i++)
     {
-        cout<<a<<b<<" "<<endl;
-        a++;
-        b--;
-    }
-
-    if(c == 0)
-    {
-        cout<<"Matematyka dziala";
-        cin>>d>>e;
-        cin>>f;
+        cout<<i;
     }
     return 0;
 }
