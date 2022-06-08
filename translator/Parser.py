@@ -256,7 +256,7 @@ def p_function_var_declaration(p):
         | empty
     '''
     if len(p) == 2:
-        p[0] = p[1]
+        p[0] = "self, " + p[1]
     elif len(p) == 4:
          p[0] = p[1] + p[2] + p[3]
 
@@ -273,9 +273,9 @@ def p_function_call(p):
         | VAR LEFT_BR VAR RIGHT_BR SEMICOLON
     '''
     if len(p) == 5:
-        p[0] = p[1] + p[2] + p[3] + "\n"
+        p[0] = "self." + p[1] + p[2] + p[3] + "\n"
     elif len(p) == 6:
-        p[0] = p[1] + p[2] + p[3] + p[4] + "\n"
+        p[0] = "self." + p[1] + p[2] + p[3] + p[4] + "\n"
 
 # -----------------CLASS-------------------------------------------
 def p_class_definition(p):
@@ -655,8 +655,10 @@ def p_returning(p):
     tabs = ""
     for i in range(num_of_tabs):
         tabs += "    "
-    p[0] = tabs + p[1] + " " + str(p[2]) + "\n"
-
+    if type(p[2]) is int:
+        p[0] = tabs + p[1] + " " + str(p[2]) + "\n"
+    else:
+        p[0] = tabs + p[1] + " self." + str(p[2]) + "\n"
 def p_comment(p):
     '''
     comment : COMMENT
@@ -690,5 +692,6 @@ while True:
         code = "".join(lines)
         parser = yacc.yacc()
         parser.parse(code)
-        with open(r"C:\Users\Piotr\PycharmProjects\cppython\translator\Output" + "\\" + file_name, 'w') as file:
+        #with open(r"C:\Users\Piotr\PycharmProjects\cppython\translator\Output" + "\\" + file_name, 'w') as file:
+        with open(r"C:\Users\anaos\cppython\translator\Output" + "\\" + file_name, 'w') as file:
             file.write(pythonCode)
