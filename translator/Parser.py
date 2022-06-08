@@ -445,7 +445,10 @@ def p_comparison(p):
     comparison : value comparator value
         | value EQUAL_EQUAL EMPTY_TEXT
     '''
-    p[0] = str(p[1]) + " " + p[2] + " " + str(p[3])
+    if len(p) == 2:
+        p[0] = p[1]
+    else:
+        p[0] = str(p[1]) + " " + p[2] + " " + str(p[3])
 
 
 # -----------------EXPRESSIONS-------------------------------------------
@@ -524,6 +527,10 @@ def p_value(p):
         | bool_value
         | math_operation
     '''
+    if p[1] == 'true':
+        p[1] = 'True'
+    elif p[1] == 'false':
+        p[1] = 'False'
     p[0] = p[1]
 
 
@@ -614,9 +621,9 @@ def p_out(p):
             p[0] = p[2]
     elif len(p) == 4:
         if p[2] == 'endl':
-            p[0] = '"\\n"' + "," + p[3]
+            p[0] = '"\\n"' + " + " + p[3]
         else:
-            p[0] = p[2] + "," + p[3]
+            p[0] = p[2] + " + " + p[3]
 
 
 def p_in(p):
@@ -692,5 +699,6 @@ while True:
         code = "".join(lines)
         parser = yacc.yacc()
         parser.parse(code)
-        with open(r"C:\Users\Piotr\PycharmProjects\cppython\translator\Output" + "\\" + file_name, 'w') as file:
+        #with open(r"C:\Users\Piotr\PycharmProjects\cppython\translator\Output" + "\\" + file_name, 'w') as file:
+        with open(r"C:\Users\anaos\cppython\translator\Output" + "\\" + file_name, 'w') as file:
             file.write(pythonCode)
