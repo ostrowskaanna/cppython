@@ -2,10 +2,11 @@ from ply import lex
 from ply import yacc
 import PySimpleGUI as sg
 
+wasError = False
 sg.theme("DarkTeal2")
 layout = [[sg.T("")], [sg.Text("Choose the file to translate: "), sg.Input(),
                        sg.FileBrowse(key="-IN-", file_types=(("Text files", "*.txt"),))],
-                      [sg.Button("Submit")]]
+                      [sg.Button("Translate")]]
 
 ###Building Window
 window = sg.Window('C++ to Python translator', layout, size=(600, 150))
@@ -146,6 +147,8 @@ def t_ID(t):
 def t_error(t):
     print("Illegal character '%s'" % t.value[0])
     t.lexer.skip(1)
+    global wasError
+    wasError = True
 
 
 def t_newline(t):
@@ -161,6 +164,7 @@ lexer = lex.lex()
 pythonCode = ""
 elements = {}
 num_of_tabs = 0
+inClass = False
 # -----------------------------------------------GRAMMAR----------------------------------------------------------------
 
 def p_start_symbol(p):
@@ -235,7 +239,7 @@ def p_type_function_definition(p):
     '''
     type_function_definition : type VAR LEFT_BR function_var_declaration RIGHT_BR LEFT_BR_CURLY change_tab_number instructions returning RIGHT_BR_CURLY
     '''
-    p[0] = "def " + p[2] + p[3] + str(p[4]) + p[5] + ":\n" + str(p[8]) + p[9] + "\n"
+    p[0] = "def " + p[2] + p[3] + str(p[4]) + p[5] + ":\n" + str(p[8]) + p[9] + "\n\n"
     global num_of_tabs
     num_of_tabs -= 1
 
@@ -244,7 +248,7 @@ def p_void_function_definition(p):
     '''
     void_function_definition : VOID VAR LEFT_BR function_var_declaration RIGHT_BR LEFT_BR_CURLY change_tab_number instructions RIGHT_BR_CURLY
     '''
-    p[0] = "def " + p[2] + p[3] + str(p[4]) + p[5] + ":\n" + str(p[8]) + "\n"
+    p[0] = "def " + p[2] + p[3] + str(p[4]) + p[5] + ":\n" + str(p[8]) + "\n\n"
     global num_of_tabs
     num_of_tabs -= 1
 
@@ -256,9 +260,15 @@ def p_function_var_declaration(p):
         | empty
     '''
     if len(p) == 2:
-        p[0] = "self, " + p[1]
+        if inClass:
+            p[0] = "self, " + p[1]
+        else:
+            p[0] = p[1]
     elif len(p) == 4:
-         p[0] = p[1] + p[2] + p[3]
+        if inClass:
+            p[0] = "self, " + p[1] + p[2] + " " + p[3]
+        else:
+            p[0] = p[1] + p[2] + " " + p[3]
 
 
 def p_var_declaration_no_semicolon(p):
@@ -267,24 +277,39 @@ def p_var_declaration_no_semicolon(p):
     '''
     p[0] = p[1] + p[2]
 
+
 def p_function_call(p):
     '''
     function_call : VAR LEFT_BR RIGHT_BR SEMICOLON
-        | VAR LEFT_BR VAR RIGHT_BR SEMICOLON
+        | VAR LEFT_BR var_list RIGHT_BR SEMICOLON
     '''
     if len(p) == 5:
-        p[0] = "self." + p[1] + p[2] + p[3] + "\n"
+        p[0] = p[1] + p[2] + p[3] + "\n"
     elif len(p) == 6:
-        p[0] = "self." + p[1] + p[2] + p[3] + p[4] + "\n"
+        p[0] = p[1] + p[2] + p[3] + p[4] + "\n"
+
 
 # -----------------CLASS-------------------------------------------
 def p_class_definition(p):
     '''
-    class_definition : CLASS VAR LEFT_BR_CURLY change_tab_number class_declarations RIGHT_BR_CURLY SEMICOLON
+    class_definition : CLASS VAR LEFT_BR_CURLY change_tab_number change_inside_class class_declarations RIGHT_BR_CURLY SEMICOLON
     '''
-    p[0] = p[1] + " " + p[2] + ":\n" + p[5]
+    p[0] = p[1] + " " + p[2] + ":\n" + p[6]
     global num_of_tabs
+    global inClass
+    inClass = False
     num_of_tabs -= 1
+
+
+def p_var_list(p):
+    '''
+    var_list : value
+             | value COMMA var_list
+    '''
+    if len(p) == 2:
+        p[0] = p[1]
+    if len(p) == 4:
+        p[0] = str(p[1]) + ", " + str(p[3])
 
 
 def p_class_declaration(p):
@@ -512,7 +537,10 @@ def p_bool_value(p):
     bool_value : TRUE
         | FALSE
     '''
-    p[0] = p[1]
+    if p[1] == 'true':
+        p[0] = 'True'
+    else:
+        p[0] = 'False'
 
 
 def p_value(p):
@@ -546,7 +574,7 @@ def p_math_operation(p):
         | VAR operator number
         | number operator number
     '''
-    p[0] = str(p[1]) + p[2] + str(p[3])
+    p[0] = str(p[1]) + " " + p[2] + " " + str(p[3])
 
 
 def p_operation(p):
@@ -564,15 +592,18 @@ def p_get_array_element(p):
     p[0] = p[1] + p[2] + str(p[3]) + p[4]
 
 
-
 def p_assignment(p):
     '''
     assignment : VAR EQUAL value SEMICOLON
                | VAR EQUAL VAR SEMICOLON
+               | VAR EQUAL function_call
                | get_array_element EQUAL value SEMICOLON
                | get_array_element EQUAL VAR SEMICOLON
     '''
-    p[0] = p[1] + " " + p[2] + " " + str(p[3]) + "\n"
+    if len(p) == 4:
+        p[0] = p[1] + p[2] + p[3]
+    else:
+        p[0] = p[1] + " " + p[2] + " " + str(p[3]) + "\n"
 
 
 def p_var_declaration(p):
@@ -581,11 +612,14 @@ def p_var_declaration(p):
         | array_declaration
         | type VAR EQUAL value SEMICOLON
         | type VAR EQUAL VAR SEMICOLON
+        | type VAR EQUAL function_call
     '''
     if len(p) == 2:
         p[0] = p[1]
     elif len(p) == 4:
         p[0] = p[1] + p[2] + " = None\n"
+    elif len(p) == 5:
+        p[0] = p[2] + " " + p[3] + " " + p[4]
     elif len(p) == 6:
         p[0] = p[2] + " " + p[3] + " " + str(p[4]) + "\n"
 
@@ -614,9 +648,9 @@ def p_out(p):
             p[0] = p[2]
     elif len(p) == 4:
         if p[2] == 'endl':
-            p[0] = '"\\n"' + "," + p[3]
+            p[0] = '"\\n"' + ", " + p[3]
         else:
-            p[0] = p[2] + "," + p[3]
+            p[0] = p[2] + ", " + p[3]
 
 
 def p_in(p):
@@ -658,12 +692,15 @@ def p_returning(p):
     if type(p[2]) is int:
         p[0] = tabs + p[1] + " " + str(p[2]) + "\n"
     else:
-        p[0] = tabs + p[1] + " self." + str(p[2]) + "\n"
+        p[0] = tabs + p[1] + " " + str(p[2]) + "\n"
+
+
 def p_comment(p):
     '''
     comment : COMMENT
     '''
     p[0] = p[1]
+
 
 def p_empty(p):
     '''empty : '''
@@ -672,6 +709,8 @@ def p_empty(p):
 
 def p_error(p):
     print("Syntax error at '%s'\n" % p.value)
+    global wasError
+    wasError = True
 
 
 # -------------------------------------FUNCTIONS TO HANDLE ACTIONS------------------------------------------------------
@@ -681,16 +720,24 @@ def p_change_tab_number(p):
     num_of_tabs += 1
 
 
+def p_change_inside_class(p):
+    "change_inside_class : "
+    global inClass
+    inClass = True
+
 while True:
     event, values = window.read()
     if event == sg.WIN_CLOSED or event == "Exit":
         break
-    elif event == "Submit":
+    elif event == "Translate":
         with open(values["-IN-"]) as f:
             lines = f.readlines()
         file_name = values["-IN-"].split("/")[-1].split('.')[0] + '.py'
         code = "".join(lines)
         parser = yacc.yacc()
         parser.parse(code)
-        with open(r"C:\Users\Piotr\PycharmProjects\cppython\translator\Output" + "\\" + file_name, 'w') as file:
+        if wasError:
+            break
+        with open(r"C:\Users\piotr\PycharmProjects\cppython\translator\Output" + "\\" + file_name, 'w') as file:
             file.write(pythonCode)
+        break

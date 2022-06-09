@@ -1,0 +1,30 @@
+#include <iostream>
+using namespace std;
+
+int additionResult(int a, int b)
+{
+    int result = a + b;
+    return result;
+}
+
+float divisionResult(float a, float b)
+{
+    float result = a/b;
+    return result;
+}
+
+double subtractionResult(double a, double b)
+{
+    double result = a - b;
+    return result;
+}
+
+void functionsTest()
+{
+    int add = additionResult(10, 5);
+    float div = divisionResult(20, 3.5);
+    double sub = subtractionResult(19.32, 7.77);
+    cout<<add<<endl;
+    cout<<div<<endl;
+    cout<<sub<<endl;
+}

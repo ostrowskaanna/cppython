@@ -1,14 +1,28 @@
 #include <iostream>
 using namespace std;
 
-
-class Student
+class SampleClass
 {
-    string Name;
-    int Age;
+    string stringAttribute;
+    int intAttribute;
+    float floatAttribute;
 
-    void printNameAndAge()
+    void SampleMethod()
     {
-        cout<<"Name: "<<Name<<"Age: "<<Age;
+        int a = 4;
+        int b = 50;
+        for(int i=0; i<a; i++)
+        {
+            for(int j=100; j>b; j--)
+            {
+                cout<<i<<j;
+            }
+        }
+    }
+
+
+    string SampleStringMethod()
+    {
+        return "Test";
     }
 };

@@ -1,0 +1,26 @@
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    int a = 20;
+    int b = 10;
+    string text;
+    text = input();
+    cout<<text<<endl;
+    int MultiplicationResult = a*b;
+    int AdditionResult = a+b;
+    int SubtractionResult = a-b;
+    if(MultiplicationResult > 50)
+    {
+        cout<<"Result of multiplying a and b is higher than 50";
+    }
+    else
+    {
+        cout<<"Result of multiplying a and b is less than 50";
+    }
+    cout<<"Multiplication result: "<<MultiplicationResult<<endl;
+    cout<<"Addition result: "<<AdditionResult<<endl;
+    cout<<"Subtract result: "<<SubtractionResult;
+    return 0;
+}

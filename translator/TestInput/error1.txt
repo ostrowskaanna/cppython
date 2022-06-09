@@ -1,0 +1,32 @@
+#include <iostream>
+using namespace std;
+
+
+void printInForLoop(int numberOfIterations)
+{
+    for(int i=0; i<numberOfIterations; i++)
+    {
+        cout<<"Iteration number: "<<i<<endl;
+    }
+    $
+}
+
+void printInWhileLoop(int numberOfIterations, bool check)
+{
+    int i = 0;
+    while(i<numberOfIterations)
+    {
+        cout<<"Iteration number: "<<i<<endl;
+        if(i == 10)
+        {
+            if(check == true)
+            {
+                cout<<"This is iteration number 10"<<endl;
+            }
+            else
+            {
+                cout<<"Check is set to false";
+            }
+        }
+    }
+}
